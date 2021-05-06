@@ -1,0 +1,14 @@
+Warning:
+This Python interpreter is in a conda environment, but the environment has
+not been activated.  Libraries may fail to load.  To activate this environment
+please see https://conda.io/activation
+
+windows
+    管理员运行cmd 执行 activate
+Linux
+
+https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#activating-an-environment
+
+
+windows命令行中执行.py文件出现SyntaxError: unexpected character after line continuation character错误。
+没有退出解释器 exit()  .py文件只能在命令行模式执行

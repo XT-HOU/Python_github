@@ -1,0 +1,12 @@
+﻿
+tab:命令补齐
+查看系统版本：lsb_release -a
+强制解除yum锁定
+    rm -rf /var/run/yum.pid
+在/usr/bin下添加软连接
+    # ln -s 源文件/目录 目标文件/目录
+    ln -s /usr/local/anaconda3/bin/python3 /usr/bin/python3
+# 下载 ansible 全量依赖包
+    repotrack ansible
+# 离线安装(切换到下载目录)
+    rpm -Uvh --force --nodeps *.rpm

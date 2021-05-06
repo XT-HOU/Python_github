@@ -1,0 +1,42 @@
+centos7
+查看防火墙状态
+    systemctl status firewalld
+查看已开放的端口
+    firewall-cmd --list-ports
+开放端口（开放后需要要重启防火墙才生效）
+    firewall-cmd --zone=public --add-port=3338/tcp --permanent
+重启防火墙
+    firewall-cmd --reload
+关闭端口（关闭后需要要重启防火墙才生效）
+    firewall-cmd --zone=public --remove-port=3338/tcp --permanent
+开机启动防火墙
+    systemctl enable firewalld
+开启防火墙
+    systemctl start firewalld
+禁止防火墙开机启动
+    systemctl disable firewalld
+停止防火墙
+    systemctl stop firewalld
+
+
+centos6.5关闭防火墙命令
+
+1.永久性生效，重启后不会复原
+
+开启： chkconfig iptables on
+
+关闭： chkconfig iptables off
+
+2.即时生效，重启后复原
+
+开启： service iptables start
+
+关闭： service iptables stop
+
+3.查询TCP连接情况：
+
+ netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+
+4.查询端口占用情况：
+
+ netstat   -anp   |   grep  portno（例如：netstat –apn | grep 80）

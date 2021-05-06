@@ -1,0 +1,36 @@
+参考 https://zhuanlan.zhihu.com/p/75717350
+配置环境变量
+    D:\Anaconda（Python需要）
+    D:\Anaconda\Scripts（conda自带脚本）
+    D:\Anaconda\Library\mingw-w64\bin（使用C with python的时候）
+    D:\Anaconda\Library\usr\bin
+    D:\Anaconda\Library\bin（jupyter notebook动态库）
+查看信息
+    conda info
+
+修改清华镜像
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+
+错误修改
+CondaHTTPError: HTTP 000 CONNECTION FAILED for url <https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64
+/current_repodata.json>
+解决方法
+conda config --remove-key channels
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+
+
+
+
+
+
+
+
+
+
+
+
+

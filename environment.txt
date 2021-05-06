@@ -1,0 +1,13 @@
+aiofiles==0.6.0
+certifi==2020.12.5
+click==7.1.2
+Flask==1.1.2
+gevent==21.1.2
+itsdangerous==1.1.0
+Jinja2==2.11.3
+jsonrpclib-pelix==0.4.2
+MarkupSafe==1.1.1
+psutil==5.8.0
+Werkzeug==1.0.1
+wincertstore==0.2
+zope.event==4.5.0
