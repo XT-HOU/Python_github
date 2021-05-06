@@ -1,4 +1,4 @@
-﻿1. touch   qwe.txt（文件名 ）
+1. touch   qwe.txt（文件名 ）
     创建文件akk.txt文件
 2.vi akk.txt
     vi为进入vim编辑器命令，意为在vim编辑器中编辑qwe.txt文件

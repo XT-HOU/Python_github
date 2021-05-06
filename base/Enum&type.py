@@ -19,6 +19,6 @@ class Weekday(Enum):
 
 
 if __name__ == '__main__':
-    Weekday.SUN = 7
+    # Weekday.SUN = 7
     print(Weekday.SUN)
     print(Weekday.SUN.value)
