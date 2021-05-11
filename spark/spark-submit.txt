@@ -1,0 +1,65 @@
+spark-submit 参数
+--master MASTER_URL:设置集群的主URL,用于决定任务提交到何处执行。
+    常见选项有：
+    local：提交到本地服务执行，分配单个线程
+    local[k]:提交到本地服务器执行，分配k个线程
+    spark://HOST:PORT: 提交到standalone模式部署的spark集群中，并制定主节点的IP与端口
+    mesos://HOST:PORT: 提交到mesos模式部署的集群中，并制定主节点的ip与端口
+    yarn:提交到yarn模式部署的集群中
+--deploy-mode DEPLOY_MODE:设置driver启动的未知，可选项如下，默认为client
+    client:在客户端上启动driver，这样逻辑运算在client上执行，任务执行在cluster
+    cluster: 逻辑运算与任务执行均在cluster上，cluster模式暂时不支持于mesos集群或python应用程序
+--class classname:制定应用程序的类入口，即主类，仅针对java、scala程序，不作用于python程序
+--name NAME:应用程序的名称
+--jars JARS:用逗号隔开的driver本地jar包列表以及 executor 类路径，将程序代码及依赖资源打包成 jar 包
+--packages:包含 driver 和 executor 的 classpath 中的 jar 的 maven 坐标
+--exclude-packages:为了避免冲突，制定的参数--package 中不包含的 jars 包
+--repository: 附加的远程资源库（包含jars 包）等，可以通过maven坐标进行搜索
+--py-files :逗号隔开的 .zip、.egg、.py文件，这些文件会放置在 pythonpath 下，该参数仅针对 python 应用程序
+--files: 逗号隔开的文件列表，这些文件将存放于每一个工作节点进程目录下
+--conf PROP=VALUE: 指定 spark 配置属性的值， 格式为 PROP=VALUE
+    例如：-conf spark.executor.extraJavaOptions="-XX:MaxPermSize=256m"
+--properties-file FILE: 指定需要额外加载的配置文件，用逗号隔开，如果不指定，默认为 conf/spark-defaults.conf
+--driver-memory MEM: 配置 driver 内存，默认为1G
+--driver-java-options: 传递给 driver 的额外选项
+--driver-library-path: 传递给 driver 的额外的库路径
+--driver-class-path: 传递给 driver 的额外的类路径，用--jars 添加的jar 包会自动包含在类路径里
+--executor-memory MEM: 每个 excutor 的内存，默认是1G
+
+当'--master'参数设置为Standalone，‘--deploy-mode’参数设置为cluster时，如下选项可以设置：
+　　--driver-cores NUM：driver使用的内核数，默认为1
+当'--master'参数设置为Standalone或者Mesos，‘--deploy-mode’参数设置为cluster时，如下选项可以设置：
+　　--supervise:如果设置了该参数，driver失败是会重启
+　　--kill SUBMISSION_ID:如果设置了该参数，则会杀死指定SUBMISSION_ID的driver进程
+　　--status SUBMISSION_ID：如果设置了该参数，则请求返回指定SUBMISSION_ID的driver的状态
+当'--master'参数设置为Standalone或者Mesos时，如下选项可以设置：
+　　 --total-executor-cores NUM：设置集群中所有工作节点上executor使用的内核总数
+当'--master'参数设置为Standalone或者YARN时，如下选项可以设置：
+　　--executor-cores NUM：每个executor使用的核数
+当'--master'参数设置为YARN时，如下选项可以设置：
+ 　　--driver-cores NUM ：当--deploy-mode为cluster时，driver使用的内核数，默认为1
+ 　　--queue QUEUE_NAME ：将任务提交给哪个YARN队列，默认为YARN的默认队列
+　　--num-executors NUM：设置启动的executor数量，默认为2
+　　--archives ARCHIVES ：被每个executor提取到工作目录的档案列表，用逗号隔开
+
+执行python脚本
+$ spark-submit \
+--master local[2] \
+--num-executors 2 \
+--executor-memory 1G \
+ /home/hadoop/Download/test/firstApp.py
+
+执行Java脚本
+目录/spark-submit \
+--master spark://192.168.172.10:7077 \
+--executor-memory 2g \
+--total-executor-cores 10 \
+--driver-memory 4G \
+--class com.test.main.test test.jar
+
+参数：
+--master spark集群主节点的地址
+--executor-memory 每个Executor进程的内存
+--total-executor-cores 所有的executor使用的总CPU核数
+--driver-memory    设置Driver进程的内存
+--class 要运行的main函数类 类所在的jar包

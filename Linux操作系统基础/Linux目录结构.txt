@@ -3,6 +3,8 @@ opt:
 usr:
     usr 是 unix shared resources(共享资源) 的缩写，这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，
     类似于 windows 下的 program files 目录。
+usr/local:
+    目录是给用户放置自己的可执行程序的地方，推荐放在这里。
 usr/bin:
     系统用户使用的应用程序。下面的都是系统预装的可执行程序，会随着系统升级而改变。
 usr/local/bin:

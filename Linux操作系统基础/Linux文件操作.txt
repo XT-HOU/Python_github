@@ -20,4 +20,5 @@
     搜索文件，n 下一个
 11. du -h --max-depth=1 ${pwd}
     查看文件夹大小
-
+12. find / -name "mysql*"
+    查找文件 指定目录 文件名
