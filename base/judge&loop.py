@@ -18,5 +18,3 @@ num = 99
 while num > 0:
     num -= 2
 print(num)
-
-

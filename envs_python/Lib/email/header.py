@@ -8,7 +8,7 @@ __all__ = [
     'Header',
     'decode_header',
     'make_header',
-    ]
+]
 
 import re
 import binascii
@@ -18,6 +18,7 @@ import email.base64mime
 
 from email.errors import HeaderParseError
 from email import charset as _charset
+
 Charset = _charset.Charset
 
 NL = '\n'
@@ -51,13 +52,10 @@ fcre = re.compile(r'[\041-\176]+:$')
 # header injection attack.
 _embedded_header = re.compile(r'\n[^ \t]+:')
 
-
-
 # Helpers
 _max_append = email.quoprimime._max_append
 
 
-
 def decode_header(header):
     """Decode a message header value without converting charset.
 
@@ -75,7 +73,7 @@ def decode_header(header):
     # If it is a Header object, we can just return the encoded chunks.
     if hasattr(header, '_chunks'):
         return [(_charset._encode(string, str(charset)), str(charset))
-                    for string, charset in header._chunks]
+                for string, charset in header._chunks]
     # If no encoding, just return the header with no charset.
     if not ecre.search(header):
         return [(header, None)]
@@ -102,8 +100,8 @@ def decode_header(header):
     # between two encoded strings.
     droplist = []
     for n, w in enumerate(words):
-        if n>1 and w[1] and words[n-2][1] and words[n-1][0].isspace():
-            droplist.append(n-1)
+        if n > 1 and w[1] and words[n - 2][1] and words[n - 1][0].isspace():
+            droplist.append(n - 1)
     for d in reversed(droplist):
         del words[d]
 
@@ -119,7 +117,7 @@ def decode_header(header):
             word = email.quoprimime.header_decode(encoded_string)
             decoded_words.append((word, charset))
         elif encoding == 'b':
-            paderr = len(encoded_string) % 4   # Postel's law: add missing padding
+            paderr = len(encoded_string) % 4  # Postel's law: add missing padding
             if paderr:
                 encoded_string += '==='[:4 - paderr]
             try:
@@ -152,7 +150,6 @@ def decode_header(header):
     return collapsed
 
 
-
 def make_header(decoded_seq, maxlinelen=None, header_name=None,
                 continuation_ws=' '):
     """Create a Header from a sequence of pairs as returned by decode_header()
@@ -175,7 +172,6 @@ def make_header(decoded_seq, maxlinelen=None, header_name=None,
     return h
 
 
-
 class Header:
     def __init__(self, s=None, charset=None,
                  maxlinelen=None, header_name=None,
@@ -300,7 +296,7 @@ class Header:
             try:
                 s.encode(output_charset, errors)
             except UnicodeEncodeError:
-                if output_charset!='us-ascii':
+                if output_charset != 'us-ascii':
                     raise
                 charset = UTF8
         self._chunks.append((s, charset))
@@ -378,7 +374,7 @@ class Header:
                                    charset)
                 else:
                     sline = line.lstrip()
-                    fws = line[:len(line)-len(sline)]
+                    fws = line[:len(line) - len(sline)]
                     formatter.feed(fws, sline, charset)
             if len(lines) > 1:
                 formatter.newline()
@@ -387,7 +383,7 @@ class Header:
         value = formatter._str(linesep)
         if _embedded_header.search(value):
             raise HeaderParseError("header value appears to contain "
-                "an embedded header: {!r}".format(value))
+                                   "an embedded header: {!r}".format(value))
         return value
 
     def _normalize(self):
@@ -409,7 +405,6 @@ class Header:
         self._chunks = chunks
 
 
-
 class _ValueFormatter:
     def __init__(self, headerlen, maxlen, continuation_ws, splitchars):
         self._maxlen = maxlen
@@ -497,12 +492,12 @@ class _ValueFormatter:
         # where we would sometimes *introduce* FWS after a splitchar, or the
         # algorithm before that, where we would turn all white space runs into
         # single spaces or tabs.)
-        parts = re.split("(["+FWS+"]+)", fws+string)
+        parts = re.split("([" + FWS + "]+)", fws + string)
         if parts[0]:
             parts[:0] = ['']
         else:
             parts.pop(0)
-        for fws, part in zip(*[iter(parts)]*2):
+        for fws, part in zip(*[iter(parts)] * 2):
             self._append_chunk(fws, part)
 
     def _append_chunk(self, fws, string):
@@ -511,13 +506,13 @@ class _ValueFormatter:
             # Find the best split point, working backward from the end.
             # There might be none, on a long first line.
             for ch in self._splitchars:
-                for i in range(self._current_line.part_count()-1, 0, -1):
+                for i in range(self._current_line.part_count() - 1, 0, -1):
                     if ch.isspace():
                         fws = self._current_line[i][0]
-                        if fws and fws[0]==ch:
+                        if fws and fws[0] == ch:
                             break
-                    prevpart = self._current_line[i-1][1]
-                    if prevpart and prevpart[-1]==ch:
+                    prevpart = self._current_line[i - 1][1]
+                    if prevpart and prevpart[-1] == ch:
                         break
                 else:
                     continue
@@ -553,17 +548,17 @@ class _Accumulator(list):
         return popped
 
     def pop(self):
-        if self.part_count()==0:
+        if self.part_count() == 0:
             return ('', '')
         return super().pop()
 
     def __len__(self):
-        return sum((len(fws)+len(part) for fws, part in self),
+        return sum((len(fws) + len(part) for fws, part in self),
                    self._initial_size)
 
     def __str__(self):
         return EMPTYSTRING.join((EMPTYSTRING.join((fws, part))
-                                for fws, part in self))
+                                 for fws, part in self))
 
     def reset(self, startval=None):
         if startval is None:
@@ -572,7 +567,7 @@ class _Accumulator(list):
         self._initial_size = 0
 
     def is_onlyws(self):
-        return self._initial_size==0 and (not self or str(self).isspace())
+        return self._initial_size == 0 and (not self or str(self).isspace())
 
     def part_count(self):
         return super().__len__()

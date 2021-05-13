@@ -1,13 +1,22 @@
 aiofiles==0.6.0
+bcrypt==3.2.0
 certifi==2020.12.5
+cffi @ file:///C:/ci/cffi_1613247308275/work
 click==7.1.2
+cryptography @ file:///D:/PythonCode/Python_github/envs_python/Scripts/cryptography-3.4.7-cp36-abi3-win_amd64.whl
 Flask==1.1.2
 gevent==21.1.2
+greenlet @ file:///C:/ci/greenlet_1611958376725/work
 itsdangerous==1.1.0
 Jinja2==2.11.3
 jsonrpclib-pelix==0.4.2
 MarkupSafe==1.1.1
+paramiko==2.7.2
 psutil==5.8.0
+pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
+PyNaCl==1.4.0
+six==1.16.0
 Werkzeug==1.0.1
 wincertstore==0.2
 zope.event==4.5.0
+zope.interface @ file:///C:/ci/zope.interface_1616357230604/work

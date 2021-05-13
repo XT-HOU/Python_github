@@ -4,6 +4,7 @@ import email.message
 import email.errors
 from email import quoprimime
 
+
 class ContentManager:
 
     def __init__(self):
@@ -65,19 +66,25 @@ def get_text_content(msg, errors='replace'):
     content = msg.get_payload(decode=True)
     charset = msg.get_param('charset', 'ASCII')
     return content.decode(charset, errors=errors)
+
+
 raw_data_manager.add_get_handler('text', get_text_content)
 
 
 def get_non_text_content(msg):
     return msg.get_payload(decode=True)
+
+
 for maintype in 'audio image video application'.split():
     raw_data_manager.add_get_handler(maintype, get_non_text_content)
 
 
 def get_message_content(msg):
     return msg.get_payload(0)
+
+
 for subtype in 'rfc822 external-body'.split():
-    raw_data_manager.add_get_handler('message/'+subtype, get_message_content)
+    raw_data_manager.add_get_handler('message/' + subtype, get_message_content)
 
 
 def get_and_fixup_unknown_message_content(msg):
@@ -88,6 +95,8 @@ def get_and_fixup_unknown_message_content(msg):
     # model message/partial content as Message objects, so they are handled
     # here as well.  (How to reassemble them is out of scope for this comment :)
     return bytes(msg.get_payload(0))
+
+
 raw_data_manager.add_get_handler('message',
                                  get_and_fixup_unknown_message_content)
 
@@ -106,7 +115,7 @@ def _prepare_set(msg, maintype, subtype, headers):
                 msg[header.name] = header
         except email.errors.HeaderDefect as exc:
             raise ValueError("Invalid header: {}".format(
-                                header.fold(policy=msg.policy))) from exc
+                header.fold(policy=msg.policy))) from exc
 
 
 def _finalize_set(msg, disposition, filename, cid, params):
@@ -134,7 +143,7 @@ def _encode_base64(data, max_line_length):
     encoded_lines = []
     unencoded_bytes_per_line = max_line_length // 4 * 3
     for i in range(0, len(data), unencoded_bytes_per_line):
-        thisline = data[i:i+unencoded_bytes_per_line]
+        thisline = data[i:i + unencoded_bytes_per_line]
         encoded_lines.append(binascii.b2a_base64(thisline).decode('ascii'))
     return ''.join(encoded_lines)
 
@@ -142,9 +151,14 @@ def _encode_base64(data, max_line_length):
 def _encode_text(string, charset, cte, policy):
     lines = string.encode(charset).splitlines()
     linesep = policy.linesep.encode('ascii')
-    def embedded_body(lines): return linesep.join(lines) + linesep
-    def normal_body(lines): return b'\n'.join(lines) + b'\n'
-    if cte==None:
+
+    def embedded_body(lines):
+        return linesep.join(lines) + linesep
+
+    def normal_body(lines):
+        return b'\n'.join(lines) + b'\n'
+
+    if cte == None:
         # Use heuristics to decide on the "best" encoding.
         try:
             return '7bit', normal_body(lines).decode('ascii')
@@ -189,12 +203,14 @@ def set_text_content(msg, string, subtype="plain", charset='utf-8', cte=None,
                   replace=True)
     msg['Content-Transfer-Encoding'] = cte
     _finalize_set(msg, disposition, filename, cid, params)
+
+
 raw_data_manager.add_set_handler(str, set_text_content)
 
 
 def set_message_content(msg, message, subtype="rfc822", cte=None,
-                       disposition=None, filename=None, cid=None,
-                       params=None, headers=None):
+                        disposition=None, filename=None, cid=None,
+                        params=None, headers=None):
     if subtype == 'partial':
         raise ValueError("message/partial is not supported for Message objects")
     if subtype == 'rfc822':
@@ -222,12 +238,14 @@ def set_message_content(msg, message, subtype="rfc822", cte=None,
     msg.set_payload([message])
     msg['Content-Transfer-Encoding'] = cte
     _finalize_set(msg, disposition, filename, cid, params)
+
+
 raw_data_manager.add_set_handler(email.message.Message, set_message_content)
 
 
 def set_bytes_content(msg, data, maintype, subtype, cte='base64',
-                     disposition=None, filename=None, cid=None,
-                     params=None, headers=None):
+                      disposition=None, filename=None, cid=None,
+                      params=None, headers=None):
     _prepare_set(msg, maintype, subtype, headers)
     if cte == 'base64':
         data = _encode_base64(data, max_line_length=msg.policy.max_line_length)
@@ -246,5 +264,7 @@ def set_bytes_content(msg, data, maintype, subtype, cte='base64',
     msg.set_payload(data)
     msg['Content-Transfer-Encoding'] = cte
     _finalize_set(msg, disposition, filename, cid, params)
+
+
 for typ in (bytes, bytearray, memoryview):
     raw_data_manager.add_set_handler(typ, set_bytes_content)

@@ -1,8 +1,10 @@
 """Different kinds of SAX Exceptions"""
 import sys
+
 if sys.platform[:4] == "java":
     from java.lang import Exception
 del sys
+
 
 # ===== SAXEXCEPTION =====
 
@@ -119,6 +121,7 @@ class SAXNotSupportedException(SAXException):
     perform is requested (specifically setting a state or value). SAX
     applications and extensions may use this class for similar
     purposes."""
+
 
 # ===== SAXNOTSUPPORTEDEXCEPTION =====
 

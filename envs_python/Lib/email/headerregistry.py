@@ -13,6 +13,7 @@ from email import utils
 from email import errors
 from email import _header_value_parser as parser
 
+
 class Address:
 
     def __init__(self, display_name='', username='', domain='', addr_spec=None):
@@ -48,7 +49,7 @@ class Address:
             if rest:
                 raise ValueError("Invalid addr_spec; only '{}' "
                                  "could be parsed from '{}'".format(
-                                    a_s, addr_spec))
+                    a_s, addr_spec))
             if a_s.all_defects:
                 raise a_s.all_defects[0]
             username = a_s.local_part
@@ -75,7 +76,7 @@ class Address:
         according to RFC 5322 rules, but with no Content Transfer Encoding.
         """
         nameset = set(self.username)
-        if len(nameset) > len(nameset-parser.DOT_ATOM_ENDS):
+        if len(nameset) > len(nameset - parser.DOT_ATOM_ENDS):
             lp = parser.quote_string(self.username)
         else:
             lp = self.username
@@ -87,17 +88,17 @@ class Address:
 
     def __repr__(self):
         return "{}(display_name={!r}, username={!r}, domain={!r})".format(
-                        self.__class__.__name__,
-                        self.display_name, self.username, self.domain)
+            self.__class__.__name__,
+            self.display_name, self.username, self.domain)
 
     def __str__(self):
         nameset = set(self.display_name)
-        if len(nameset) > len(nameset-parser.SPECIALS):
+        if len(nameset) > len(nameset - parser.SPECIALS):
             disp = parser.quote_string(self.display_name)
         else:
             disp = self.display_name
         if disp:
-            addr_spec = '' if self.addr_spec=='<>' else self.addr_spec
+            addr_spec = '' if self.addr_spec == '<>' else self.addr_spec
             return "{} <{}>".format(disp, addr_spec)
         return self.addr_spec
 
@@ -139,16 +140,16 @@ class Group:
 
     def __repr__(self):
         return "{}(display_name={!r}, addresses={!r}".format(
-                 self.__class__.__name__,
-                 self.display_name, self.addresses)
+            self.__class__.__name__,
+            self.display_name, self.addresses)
 
     def __str__(self):
-        if self.display_name is None and len(self.addresses)==1:
+        if self.display_name is None and len(self.addresses) == 1:
             return str(self.addresses[0])
         disp = self.display_name
         if disp is not None:
             nameset = set(disp)
-            if len(nameset) > len(nameset-parser.SPECIALS):
+            if len(nameset) > len(nameset - parser.SPECIALS):
                 disp = parser.quote_string(disp)
         adrstr = ", ".join(str(x) for x in self.addresses)
         adrstr = ' ' + adrstr if adrstr else adrstr
@@ -164,7 +165,6 @@ class Group:
 # Header Classes #
 
 class BaseHeader(str):
-
     """Base class for message headers.
 
     Implements generic behavior and provides tools for subclasses.
@@ -255,7 +255,7 @@ class BaseHeader(str):
             parser.HeaderLabel([
                 parser.ValueTerminal(self.name, 'header-name'),
                 parser.ValueTerminal(':', 'header-sep')]),
-            ])
+        ])
         if self._parse_tree:
             header.append(
                 parser.CFWSList([parser.WhiteSpaceTerminal(' ', 'fws')]))
@@ -268,7 +268,6 @@ def _reconstruct_header(cls_name, bases, value):
 
 
 class UnstructuredHeader:
-
     max_count = None
     value_parser = staticmethod(parser.get_unstructured)
 
@@ -279,12 +278,10 @@ class UnstructuredHeader:
 
 
 class UniqueUnstructuredHeader(UnstructuredHeader):
-
     max_count = 1
 
 
 class DateHeader:
-
     """Header whose value consists of a single timestamp.
 
     Provides an additional attribute, datetime, which is either an aware
@@ -323,12 +320,10 @@ class DateHeader:
 
 
 class UniqueDateHeader(DateHeader):
-
     max_count = 1
 
 
 class AddressHeader:
-
     max_count = None
 
     @staticmethod
@@ -356,8 +351,8 @@ class AddressHeader:
             if not hasattr(value, '__iter__'):
                 value = [value]
             groups = [Group(None, [item]) if not hasattr(item, 'addresses')
-                                          else item
-                                    for item in value]
+                      else item
+                      for item in value]
             defects = []
         kwds['groups'] = groups
         kwds['defects'] = defects
@@ -378,12 +373,11 @@ class AddressHeader:
     def addresses(self):
         if self._addresses is None:
             self._addresses = tuple(address for group in self._groups
-                                            for address in group.addresses)
+                                    for address in group.addresses)
         return self._addresses
 
 
 class UniqueAddressHeader(AddressHeader):
-
     max_count = 1
 
 
@@ -391,19 +385,17 @@ class SingleAddressHeader(AddressHeader):
 
     @property
     def address(self):
-        if len(self.addresses)!=1:
+        if len(self.addresses) != 1:
             raise ValueError(("value of single address header {} is not "
-                "a single address").format(self.name))
+                              "a single address").format(self.name))
         return self.addresses[0]
 
 
 class UniqueSingleAddressHeader(SingleAddressHeader):
-
     max_count = 1
 
 
 class MIMEVersionHeader:
-
     max_count = 1
 
     value_parser = staticmethod(parser.parse_mime_version)
@@ -440,7 +432,6 @@ class MIMEVersionHeader:
 
 
 class ParameterizedMIMEHeader:
-
     # Mixin that handles the params dict.  Must be subclassed and
     # a property value_parser for the specific header provided.
 
@@ -456,8 +447,8 @@ class ParameterizedMIMEHeader:
         else:
             # The MIME RFCs specify that parameter ordering is arbitrary.
             kwds['params'] = {utils._sanitize(name).lower():
-                                    utils._sanitize(value)
-                               for name, value in parse_tree.params}
+                                  utils._sanitize(value)
+                              for name, value in parse_tree.params}
 
     def init(self, *args, **kw):
         self._params = kw.pop('params')
@@ -469,7 +460,6 @@ class ParameterizedMIMEHeader:
 
 
 class ContentTypeHeader(ParameterizedMIMEHeader):
-
     value_parser = staticmethod(parser.parse_content_type_header)
 
     def init(self, *args, **kw):
@@ -491,7 +481,6 @@ class ContentTypeHeader(ParameterizedMIMEHeader):
 
 
 class ContentDispositionHeader(ParameterizedMIMEHeader):
-
     value_parser = staticmethod(parser.parse_content_disposition_header)
 
     def init(self, *args, **kw):
@@ -505,7 +494,6 @@ class ContentDispositionHeader(ParameterizedMIMEHeader):
 
 
 class ContentTransferEncodingHeader:
-
     max_count = 1
 
     value_parser = staticmethod(parser.parse_content_transfer_encoding_header)
@@ -528,33 +516,33 @@ class ContentTransferEncodingHeader:
 # The header factory #
 
 _default_header_map = {
-    'subject':                      UniqueUnstructuredHeader,
-    'date':                         UniqueDateHeader,
-    'resent-date':                  DateHeader,
-    'orig-date':                    UniqueDateHeader,
-    'sender':                       UniqueSingleAddressHeader,
-    'resent-sender':                SingleAddressHeader,
-    'to':                           UniqueAddressHeader,
-    'resent-to':                    AddressHeader,
-    'cc':                           UniqueAddressHeader,
-    'resent-cc':                    AddressHeader,
-    'bcc':                          UniqueAddressHeader,
-    'resent-bcc':                   AddressHeader,
-    'from':                         UniqueAddressHeader,
-    'resent-from':                  AddressHeader,
-    'reply-to':                     UniqueAddressHeader,
-    'mime-version':                 MIMEVersionHeader,
-    'content-type':                 ContentTypeHeader,
-    'content-disposition':          ContentDispositionHeader,
-    'content-transfer-encoding':    ContentTransferEncodingHeader,
-    }
+    'subject': UniqueUnstructuredHeader,
+    'date': UniqueDateHeader,
+    'resent-date': DateHeader,
+    'orig-date': UniqueDateHeader,
+    'sender': UniqueSingleAddressHeader,
+    'resent-sender': SingleAddressHeader,
+    'to': UniqueAddressHeader,
+    'resent-to': AddressHeader,
+    'cc': UniqueAddressHeader,
+    'resent-cc': AddressHeader,
+    'bcc': UniqueAddressHeader,
+    'resent-bcc': AddressHeader,
+    'from': UniqueAddressHeader,
+    'resent-from': AddressHeader,
+    'reply-to': UniqueAddressHeader,
+    'mime-version': MIMEVersionHeader,
+    'content-type': ContentTypeHeader,
+    'content-disposition': ContentDispositionHeader,
+    'content-transfer-encoding': ContentTransferEncodingHeader,
+}
+
 
 class HeaderRegistry:
-
     """A header_factory and header registry."""
 
     def __init__(self, base_class=BaseHeader, default_class=UnstructuredHeader,
-                       use_default_map=True):
+                 use_default_map=True):
         """Create a header_factory that works with the Policy API.
 
         base_class is the class that will be the last class in the created
@@ -579,7 +567,7 @@ class HeaderRegistry:
 
     def __getitem__(self, name):
         cls = self.registry.get(name.lower(), self.default_class)
-        return type('_'+cls.__name__, (cls, self.base_class), {})
+        return type('_' + cls.__name__, (cls, self.base_class), {})
 
     def __call__(self, name, value):
         """Create a header instance for header 'name' from 'value'.

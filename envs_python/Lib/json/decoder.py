@@ -3,6 +3,7 @@
 import re
 
 from json import scanner
+
 try:
     from _json import scanstring as c_scanstring
 except ImportError:
@@ -27,6 +28,7 @@ class JSONDecodeError(ValueError):
     colno: The column corresponding to pos
 
     """
+
     # Note that this exception is used from _json
     def __init__(self, msg, doc, pos):
         lineno = doc.count('\n', 0, pos) + 1
@@ -49,12 +51,12 @@ _CONSTANTS = {
     'NaN': NaN,
 }
 
-
 STRINGCHUNK = re.compile(r'(.*?)(["\\\x00-\x1f])', FLAGS)
 BACKSLASH = {
     '"': '"', '\\': '\\', '/': '/',
     'b': '\b', 'f': '\f', 'n': '\n', 'r': '\r', 't': '\t',
 }
+
 
 def _decode_uXXXX(s, pos):
     esc = s[pos + 1:pos + 5]
@@ -66,8 +68,9 @@ def _decode_uXXXX(s, pos):
     msg = "Invalid \\uXXXX escape"
     raise JSONDecodeError(msg, s, pos)
 
+
 def py_scanstring(s, end, strict=True,
-        _b=BACKSLASH, _m=STRINGCHUNK.match):
+                  _b=BACKSLASH, _m=STRINGCHUNK.match):
     """Scan the string s for a JSON string. End is the index of the
     character in s after the quote that started the JSON string.
     Unescapes all valid JSON string escape sequences and raises ValueError
@@ -94,7 +97,7 @@ def py_scanstring(s, end, strict=True,
             break
         elif terminator != '\\':
             if strict:
-                #msg = "Invalid control character %r at" % (terminator,)
+                # msg = "Invalid control character %r at" % (terminator,)
                 msg = "Invalid control character {0!r} at".format(terminator)
                 raise JSONDecodeError(msg, s, end)
             else:
@@ -214,6 +217,7 @@ def JSONObject(s_and_end, strict, scan_once, object_hook, object_pairs_hook,
         pairs = object_hook(pairs)
     return pairs, end
 
+
 def JSONArray(s_and_end, scan_once, _w=WHITESPACE.match, _ws=WHITESPACE_STR):
     s, end = s_and_end
     values = []
@@ -282,8 +286,8 @@ class JSONDecoder(object):
     """
 
     def __init__(self, *, object_hook=None, parse_float=None,
-            parse_int=None, parse_constant=None, strict=True,
-            object_pairs_hook=None):
+                 parse_int=None, parse_constant=None, strict=True,
+                 object_pairs_hook=None):
         """``object_hook``, if specified, will be called with the result
         of every JSON object decoded and its return value will be used in
         place of the given ``dict``.  This can be used to provide custom
@@ -327,7 +331,6 @@ class JSONDecoder(object):
         self.parse_string = scanstring
         self.memo = {}
         self.scan_once = scanner.make_scanner(self)
-
 
     def decode(self, s, _w=WHITESPACE.match):
         """Return the Python representation of ``s`` (a ``str`` instance

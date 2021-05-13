@@ -37,7 +37,7 @@ __all__ = [
     'header_length',
     'quote',
     'unquote',
-    ]
+]
 
 import re
 
@@ -67,7 +67,6 @@ for c in (b' !"#$%&\'()*+,-./0123456789:;<>'
           b'?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`'
           b'abcdefghijklmnopqrstuvwxyz{|}~\t'):
     _QUOPRI_BODY_MAP[c] = chr(c)
-
 
 
 # Helpers
@@ -149,6 +148,7 @@ _QUOPRI_BODY_ENCODE_MAP = _QUOPRI_BODY_MAP[:]
 for c in b'\r\n':
     _QUOPRI_BODY_ENCODE_MAP[c] = chr(c)
 
+
 def body_encode(body, maxlinelen=76, eol=NL):
     """Encode with quoted-printable, wrapping at maxlinelen characters.
 
@@ -225,7 +225,6 @@ def body_encode(body, maxlinelen=76, eol=NL):
     return eol.join(encoded_body)
 
 
-
 # BAW: I'm not sure if the intent was for the signature of this function to be
 # the same as base64MIME.decode() or not...
 def decode(encoded, eol=NL):
@@ -255,12 +254,12 @@ def decode(encoded, eol=NL):
                 i += 1
             # Otherwise, c == "=".  Are we at the end of the line?  If so, add
             # a soft line break.
-            elif i+1 == n:
+            elif i + 1 == n:
                 i += 1
                 continue
             # Decode if in form =AB
-            elif i+2 < n and line[i+1] in hexdigits and line[i+2] in hexdigits:
-                decoded += unquote(line[i:i+3])
+            elif i + 2 < n and line[i + 1] in hexdigits and line[i + 2] in hexdigits:
+                decoded += unquote(line[i:i + 3])
                 i += 3
             # Otherwise, not in form =AB, pass literally
             else:
@@ -278,7 +277,6 @@ def decode(encoded, eol=NL):
 # For convenience and backwards compatibility w/ standard base64 module
 body_decode = decode
 decodestring = decode
-
 
 
 def _unquote_match(match):

@@ -24,6 +24,7 @@ def fact(n):
         return 1
     return n * fact(n - 1)
 
+
 def multi_result(x, y):
     # 返回多个结果（实质是返回tuple）
     return x, y
@@ -65,7 +66,6 @@ def args_named(name, age, *, city, job):
 
 
 args_named('Jack', 24, city='Beijing', job='Engineer')
-
 
 """参数组合
 在 Python 中定义函数，可以用必选参数、默认参数、可变参数、关键

@@ -22,8 +22,8 @@ expatreader -- Driver that allows use of the Expat parser with SAX.
 from .xmlreader import InputSource
 from .handler import ContentHandler, ErrorHandler
 from ._exceptions import SAXException, SAXNotRecognizedException, \
-                        SAXParseException, SAXNotSupportedException, \
-                        SAXReaderNotAvailable
+    SAXParseException, SAXNotSupportedException, \
+    SAXReaderNotAvailable
 
 
 def parse(source, handler, errorHandler=ErrorHandler()):
@@ -31,6 +31,7 @@ def parse(source, handler, errorHandler=ErrorHandler()):
     parser.setContentHandler(handler)
     parser.setErrorHandler(errorHandler)
     parser.parse(source)
+
 
 def parseString(string, handler, errorHandler=ErrorHandler()):
     import io
@@ -47,6 +48,7 @@ def parseString(string, handler, errorHandler=ErrorHandler()):
         inpsrc.setByteStream(io.BytesIO(string))
     parser.parse(inpsrc)
 
+
 # this is the parser list used by the make_parser function if no
 # alternatives are given as parameters to the function
 
@@ -58,6 +60,7 @@ if _false:
     import xml.sax.expatreader
 
 import os, sys
+
 if not sys.flags.ignore_environment and "PY_SAX_PARSER" in os.environ:
     default_parser_list = os.environ["PY_SAX_PARSER"].split(",")
 del os
@@ -67,7 +70,7 @@ if sys.platform[:4] == "java" and sys.registry.containsKey(_key):
     default_parser_list = sys.registry.getProperty(_key).split(",")
 
 
-def make_parser(parser_list = []):
+def make_parser(parser_list=[]):
     """Creates and returns a SAX parser.
 
     Creates the first parser it is able to instantiate of the ones
@@ -91,9 +94,10 @@ def make_parser(parser_list = []):
 
     raise SAXReaderNotAvailable("No parsers found", None)
 
+
 # --- Internal utility methods used by make_parser
 
-if sys.platform[ : 4] == "java":
+if sys.platform[: 4] == "java":
     def _create_parser(parser_name):
         from org.python.core import imp
         drv_module = imp.importName(parser_name, 0, globals())
@@ -101,7 +105,7 @@ if sys.platform[ : 4] == "java":
 
 else:
     def _create_parser(parser_name):
-        drv_module = __import__(parser_name,{},{},['create_parser'])
+        drv_module = __import__(parser_name, {}, {}, ['create_parser'])
         return drv_module.create_parser()
 
 del sys

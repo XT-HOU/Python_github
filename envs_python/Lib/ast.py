@@ -46,6 +46,7 @@ def literal_eval(node_or_string):
         node_or_string = parse(node_or_string, mode='eval')
     if isinstance(node_or_string, Expression):
         node_or_string = node_or_string.body
+
     def _convert_num(node):
         if isinstance(node, Constant):
             if isinstance(node.value, (int, float, complex)):
@@ -53,6 +54,7 @@ def literal_eval(node_or_string):
         elif isinstance(node, Num):
             return node.n
         raise ValueError('malformed node or string: ' + repr(node))
+
     def _convert_signed_num(node):
         if isinstance(node, UnaryOp) and isinstance(node.op, (UAdd, USub)):
             operand = _convert_num(node.operand)
@@ -61,6 +63,7 @@ def literal_eval(node_or_string):
             else:
                 return - operand
         return _convert_num(node)
+
     def _convert(node):
         if isinstance(node, Constant):
             return node.value
@@ -88,6 +91,7 @@ def literal_eval(node_or_string):
                 else:
                     return left - right
         return _convert_signed_num(node)
+
     return _convert(node_or_string)
 
 
@@ -101,6 +105,7 @@ def dump(node, annotate_fields=True, include_attributes=False):
     numbers and column offsets are not dumped by default.  If this is wanted,
     include_attributes can be set to true.
     """
+
     def _format(node):
         if isinstance(node, AST):
             args = []
@@ -125,6 +130,7 @@ def dump(node, annotate_fields=True, include_attributes=False):
         elif isinstance(node, list):
             return '[%s]' % ', '.join(_format(x) for x in node)
         return repr(node)
+
     if not isinstance(node, AST):
         raise TypeError('expected AST, got %r' % node.__class__.__name__)
     return _format(node)
@@ -137,7 +143,7 @@ def copy_location(new_node, old_node):
     """
     for attr in 'lineno', 'col_offset':
         if attr in old_node._attributes and attr in new_node._attributes \
-           and hasattr(old_node, attr):
+                and hasattr(old_node, attr):
             setattr(new_node, attr, getattr(old_node, attr))
     return new_node
 
@@ -150,6 +156,7 @@ def fix_missing_locations(node):
     recursively where not already set, by setting them to the values of the
     parent node.  It works recursively starting at *node*.
     """
+
     def _fix(node, lineno, col_offset):
         if 'lineno' in node._attributes:
             if not hasattr(node, 'lineno'):
@@ -163,6 +170,7 @@ def fix_missing_locations(node):
                 col_offset = node.col_offset
         for child in iter_child_nodes(node):
             _fix(child, lineno, col_offset)
+
     _fix(node, 1, 0)
     return node
 
@@ -215,7 +223,7 @@ def get_docstring(node, clean=True):
     """
     if not isinstance(node, (AsyncFunctionDef, FunctionDef, ClassDef, Module)):
         raise TypeError("%r can't have docstrings" % node.__class__.__name__)
-    if not(node.body and isinstance(node.body[0], Expr)):
+    if not (node.body and isinstance(node.body[0], Expr)):
         return None
     node = node.body[0].value
     if isinstance(node, Str):

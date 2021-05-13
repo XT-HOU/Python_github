@@ -19,13 +19,13 @@ __all__ = [
     'strict',
     'SMTP',
     'HTTP',
-    ]
+]
 
 linesep_splitter = re.compile(r'\n|\r')
 
+
 @_extend_docstrings
 class EmailPolicy(Policy):
-
     """+
     PROVISIONAL
 
@@ -140,7 +140,7 @@ class EmailPolicy(Policy):
         """
         if hasattr(value, 'name') and value.name.lower() == name.lower():
             return (name, value)
-        if isinstance(value, str) and len(value.splitlines())>1:
+        if isinstance(value, str) and len(value.splitlines()) > 1:
             # XXX this error message isn't quite right when we use splitlines
             # (see issue 22233), but I'm not sure what should happen here.
             raise ValueError("Header values may not contain linefeed "
@@ -197,7 +197,7 @@ class EmailPolicy(Policy):
         non-ASCII unicode rendered as encoded words.
 
         """
-        folded = self._fold(name, value, refold_binary=self.cte_type=='7bit')
+        folded = self._fold(name, value, refold_binary=self.cte_type == '7bit')
         charset = 'utf8' if self.utf8 else 'ascii'
         return folded.encode(charset, 'surrogateescape')
 
@@ -208,8 +208,8 @@ class EmailPolicy(Policy):
         lines = value.splitlines()
         refold = (self.refold_source == 'all' or
                   self.refold_source == 'long' and
-                    (lines and len(lines[0])+len(name)+2 > maxlen or
-                     any(len(x) > maxlen for x in lines[1:])))
+                  (lines and len(lines[0]) + len(name) + 2 > maxlen or
+                   any(len(x) > maxlen for x in lines[1:])))
         if refold or refold_binary and _has_surrogates(value):
             return self.header_factory(name, ''.join(lines)).fold(policy=self)
         return name + ': ' + self.linesep.join(lines) + self.linesep

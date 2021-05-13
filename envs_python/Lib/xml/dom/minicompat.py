@@ -100,10 +100,12 @@ class EmptyNodeList(tuple):
 
 def defproperty(klass, name, doc):
     get = getattr(klass, ("_get_" + name))
+
     def set(self, value, name=name):
         raise xml.dom.NoModificationAllowedErr(
             "attempt to modify read-only attribute " + repr(name))
+
     assert not hasattr(klass, "_set_" + name), \
-           "expected not to find _set_" + name
+        "expected not to find _set_" + name
     prop = property(get, set, doc=doc)
     setattr(klass, name, prop)

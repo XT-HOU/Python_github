@@ -41,7 +41,6 @@ NL = '\n'
 NeedMoreData = object()
 
 
-
 class BufferedSubFile(object):
     """A file-ish object that can have new data loaded into it.
 
@@ -50,6 +49,7 @@ class BufferedSubFile(object):
     (i.e. empty string) is returned instead.  This lets the parser adhere to a
     simple abstraction -- it parses until EOF closes the current message.
     """
+
     def __init__(self):
         # Text stream of the last partial line pushed into this object.
         # See issue 22233 for why this is a text stream and not a list.
@@ -132,7 +132,6 @@ class BufferedSubFile(object):
         return line
 
 
-
 class FeedParser:
     """A feed-style parser of email."""
 
@@ -189,7 +188,7 @@ class FeedParser:
         assert not self._msgstack
         # Look for final set of defects
         if root.get_content_maintype() == 'multipart' \
-               and not root.is_multipart():
+                and not root.is_multipart():
             defect = errors.MultipartInvariantViolationDefect()
             self.policy.handle_defect(root, defect)
         return root
@@ -521,7 +520,7 @@ class FeedParser:
                 self._cur.defects.append(defect)
                 continue
 
-            assert i>0, "_parse_headers fed line with no : and no leading WS"
+            assert i > 0, "_parse_headers fed line with no : and no leading WS"
             lastheader = line[:i]
             lastvalue = [line]
         # Done with all the lines, so handle the last header.

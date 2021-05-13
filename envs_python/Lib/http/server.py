@@ -31,7 +31,6 @@ XXX To do:
 - send error log to separate file
 """
 
-
 # See also:
 #
 # HTTP Working Group                                        T. Berners-Lee
@@ -98,7 +97,7 @@ import os
 import posixpath
 import select
 import shutil
-import socket # For gethostbyaddr()
+import socket  # For gethostbyaddr()
 import socketserver
 import sys
 import time
@@ -106,7 +105,6 @@ import urllib.parse
 from functools import partial
 
 from http import HTTPStatus
-
 
 # Default error message template
 DEFAULT_ERROR_MESSAGE = """\
@@ -128,9 +126,9 @@ DEFAULT_ERROR_MESSAGE = """\
 
 DEFAULT_ERROR_CONTENT_TYPE = "text/html;charset=utf-8"
 
-class HTTPServer(socketserver.TCPServer):
 
-    allow_reuse_address = 1    # Seems to make sense in testing environment
+class HTTPServer(socketserver.TCPServer):
+    allow_reuse_address = 1  # Seems to make sense in testing environment
 
     def server_bind(self):
         """Override server_bind to store the server name."""
@@ -145,7 +143,6 @@ class ThreadingHTTPServer(socketserver.ThreadingMixIn, HTTPServer):
 
 
 class BaseHTTPRequestHandler(socketserver.StreamRequestHandler):
-
     """HTTP request handler base class.
 
     The following explanation of HTTP serves to guide you through the
@@ -412,9 +409,9 @@ class BaseHTTPRequestHandler(socketserver.StreamRequestHandler):
                 return
             method = getattr(self, mname)
             method()
-            self.wfile.flush() #actually send the response if not already done.
+            self.wfile.flush()  # actually send the response if not already done.
         except socket.timeout as e:
-            #a read or a write timed out.  Discard this connection
+            # a read or a write timed out.  Discard this connection
             self.log_error("Request timed out: %r", e)
             self.close_connection = True
             return
@@ -462,9 +459,9 @@ class BaseHTTPRequestHandler(socketserver.StreamRequestHandler):
         #  - RFC7231: 6.3.6. 205(Reset Content)
         body = None
         if (code >= 200 and
-            code not in (HTTPStatus.NO_CONTENT,
-                         HTTPStatus.RESET_CONTENT,
-                         HTTPStatus.NOT_MODIFIED)):
+                code not in (HTTPStatus.NO_CONTENT,
+                             HTTPStatus.RESET_CONTENT,
+                             HTTPStatus.NOT_MODIFIED)):
             # HTML encode to prevent Cross Site Scripting attacks
             # (see bug #1100201)
             content = (self.error_message_format % {
@@ -504,8 +501,8 @@ class BaseHTTPRequestHandler(socketserver.StreamRequestHandler):
             if not hasattr(self, '_headers_buffer'):
                 self._headers_buffer = []
             self._headers_buffer.append(("%s %d %s\r\n" %
-                    (self.protocol_version, code, message)).encode(
-                        'latin-1', 'strict'))
+                                         (self.protocol_version, code, message)).encode(
+                'latin-1', 'strict'))
 
     def send_header(self, keyword, value):
         """Send a MIME header to the headers buffer."""
@@ -577,7 +574,7 @@ class BaseHTTPRequestHandler(socketserver.StreamRequestHandler):
         sys.stderr.write("%s - - [%s] %s\n" %
                          (self.address_string(),
                           self.log_date_time_string(),
-                          format%args))
+                          format % args))
 
     def version_string(self):
         """Return the server software version string."""
@@ -594,7 +591,7 @@ class BaseHTTPRequestHandler(socketserver.StreamRequestHandler):
         now = time.time()
         year, month, day, hh, mm, ss, x, y, z = time.localtime(now)
         s = "%02d/%3s/%04d %02d:%02d:%02d" % (
-                day, self.monthname[month], year, hh, mm, ss)
+            day, self.monthname[month], year, hh, mm, ss)
         return s
 
     weekdayname = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -625,7 +622,6 @@ class BaseHTTPRequestHandler(socketserver.StreamRequestHandler):
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
-
     """Simple HTTP request handler with GET and HEAD commands.
 
     This serves files from the current directory and any of its
@@ -732,7 +728,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.send_header("Content-type", ctype)
             self.send_header("Content-Length", str(fs[6]))
             self.send_header("Last-Modified",
-                self.date_time_string(fs.st_mtime))
+                             self.date_time_string(fs.st_mtime))
             self.end_headers()
             return f
         except:
@@ -783,9 +779,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 displayname = name + "@"
                 # Note: a link to a directory displays with @ and links with /
             r.append('<li><a href="%s">%s</a></li>'
-                    % (urllib.parse.quote(linkname,
-                                          errors='surrogatepass'),
-                       html.escape(displayname, quote=False)))
+                     % (urllib.parse.quote(linkname,
+                                           errors='surrogatepass'),
+                        html.escape(displayname, quote=False)))
         r.append('</ul>\n<hr>\n</body>\n</html>\n')
         encoded = '\n'.join(r).encode(enc, 'surrogateescape')
         f = io.BytesIO()
@@ -806,8 +802,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         """
         # abandon query parameters
-        path = path.split('?',1)[0]
-        path = path.split('#',1)[0]
+        path = path.split('?', 1)[0]
+        path = path.split('#', 1)[0]
         # Don't forget explicit trailing slash when normalizing. Issue17324
         trailing_slash = path.rstrip().endswith('/')
         try:
@@ -868,14 +864,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             return self.extensions_map['']
 
     if not mimetypes.inited:
-        mimetypes.init() # try to read system mime.types
+        mimetypes.init()  # try to read system mime.types
     extensions_map = mimetypes.types_map.copy()
     extensions_map.update({
-        '': 'application/octet-stream', # Default
+        '': 'application/octet-stream',  # Default
         '.py': 'text/plain',
         '.c': 'text/plain',
         '.h': 'text/plain',
-        })
+    })
 
 
 # Utilities for CGIHTTPRequestHandler
@@ -904,9 +900,9 @@ def _url_collapse_path(path):
     head_parts = []
     for part in path_parts[:-1]:
         if part == '..':
-            head_parts.pop() # IndexError if more '..' than prior parts
+            head_parts.pop()  # IndexError if more '..' than prior parts
         elif part and part != '.':
-            head_parts.append( part )
+            head_parts.append(part)
     if path_parts:
         tail_part = path_parts.pop()
         if tail_part:
@@ -927,8 +923,8 @@ def _url_collapse_path(path):
     return collapsed_path
 
 
-
 nobody = None
+
 
 def nobody_uid():
     """Internal routine to get nobody's uid"""
@@ -952,7 +948,6 @@ def executable(path):
 
 
 class CGIHTTPRequestHandler(SimpleHTTPRequestHandler):
-
     """Complete HTTP server with GET, HEAD and POST commands.
 
     GET and HEAD also support running CGI scripts.
@@ -1006,12 +1001,11 @@ class CGIHTTPRequestHandler(SimpleHTTPRequestHandler):
         """
         collapsed_path = _url_collapse_path(self.path)
         dir_sep = collapsed_path.find('/', 1)
-        head, tail = collapsed_path[:dir_sep], collapsed_path[dir_sep+1:]
+        head, tail = collapsed_path[:dir_sep], collapsed_path[dir_sep + 1:]
         if head in self.cgi_directories:
             self.cgi_info = head, tail
             return True
         return False
-
 
     cgi_directories = ['/cgi-bin', '/htbin']
 
@@ -1028,15 +1022,15 @@ class CGIHTTPRequestHandler(SimpleHTTPRequestHandler):
         """Execute a CGI script."""
         dir, rest = self.cgi_info
         path = dir + '/' + rest
-        i = path.find('/', len(dir)+1)
+        i = path.find('/', len(dir) + 1)
         while i >= 0:
             nextdir = path[:i]
-            nextrest = path[i+1:]
+            nextrest = path[i + 1:]
 
             scriptdir = self.translate_path(nextdir)
             if os.path.isdir(scriptdir):
                 dir, rest = nextdir, nextrest
-                i = path.find('/', len(dir)+1)
+                i = path.find('/', len(dir) + 1)
             else:
                 break
 
@@ -1096,8 +1090,8 @@ class CGIHTTPRequestHandler(SimpleHTTPRequestHandler):
                 if authorization[0].lower() == "basic":
                     try:
                         authorization = authorization[1].encode('ascii')
-                        authorization = base64.decodebytes(authorization).\
-                                        decode('ascii')
+                        authorization = base64.decodebytes(authorization). \
+                            decode('ascii')
                     except (binascii.Error, UnicodeError):
                         pass
                     else:
@@ -1147,7 +1141,7 @@ class CGIHTTPRequestHandler(SimpleHTTPRequestHandler):
             if '=' not in decoded_query:
                 args.append(decoded_query)
             nobody = nobody_uid()
-            self.wfile.flush() # Always flush before forking
+            self.wfile.flush()  # Always flush before forking
             pid = os.fork()
             if pid != 0:
                 # Parent
@@ -1193,7 +1187,7 @@ class CGIHTTPRequestHandler(SimpleHTTPRequestHandler):
                                  stdin=subprocess.PIPE,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE,
-                                 env = env
+                                 env=env
                                  )
             if self.command.lower() == "post" and nbytes > 0:
                 data = self.rfile.read(nbytes)
@@ -1237,18 +1231,19 @@ def test(HandlerClass=BaseHTTPRequestHandler,
             print("\nKeyboard interrupt received, exiting.")
             sys.exit(0)
 
+
 if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--cgi', action='store_true',
-                       help='Run as CGI Server')
+                        help='Run as CGI Server')
     parser.add_argument('--bind', '-b', default='', metavar='ADDRESS',
                         help='Specify alternate bind address '
                              '[default: all interfaces]')
     parser.add_argument('--directory', '-d', default=os.getcwd(),
                         help='Specify alternative directory '
-                        '[default:current directory]')
+                             '[default:current directory]')
     parser.add_argument('port', action='store',
                         default=8000, type=int,
                         nargs='?',

@@ -1,0 +1,25 @@
+1. touch   qwe.txt（文件名 ）
+    创建文件akk.txt文件
+2.vi akk.txt
+    vi为进入vim编辑器命令，意为在vim编辑器中编辑qwe.txt文件
+3.i
+    i意为insert为输入模式，输入i之后你就可以开始编辑这个txt文件了
+4.esc
+    退出编辑模式
+5.  ：wq
+    保存并退出(注意：在冒号后面需要加上一个空格，不然linux是不会识别出来的！)
+6. q!
+    退出不保存
+7. mkdir /usr/local/python3
+    #创建编译安装目录
+8.rm -f ifcfg-eth1
+    删除文件
+9. ls -a
+    查看隐藏文件
+10. vim + /word
+    搜索文件，n 下一个
+11. du -h --max-depth=1 ${pwd}
+    查看文件夹大小
+12. find / -name "mysql*"
+    查找文件 指定目录 文件名
+13. --./是当前目录;../是父级目录;/是根目录

@@ -18,7 +18,7 @@ def json2obj(s, class_name):
 
 
 def obj2json(a):
-    return json.dumps(a, default=lambda obj: obj.__dict__, sort_keys=True, ensure_ascii= False)
+    return json.dumps(a, default=lambda obj: obj.__dict__, sort_keys=True, ensure_ascii=False)
 
 
 # --------------------------------------------

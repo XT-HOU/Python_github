@@ -21,5 +21,4 @@ for name in readfile():
                     m.writelines(' '.join(line.split()))
                     m.write('\n')
 
-
 print(datetime.datetime.now())

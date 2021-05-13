@@ -13,9 +13,9 @@ import zipfile
 from importlib.util import source_from_cache
 from test.support import make_legacy_pyc, strip_python_stderr
 
-
 # Cached result of the expensive test performed in the function below.
 __cached_interp_requires_environment = None
+
 
 def interpreter_requires_environment():
     """
@@ -54,8 +54,9 @@ def interpreter_requires_environment():
 
 
 class _PythonRunResult(collections.namedtuple("_PythonRunResult",
-                                          ("rc", "out", "err"))):
+                                              ("rc", "out", "err"))):
     """Helper for reporting Python subprocess run results"""
+
     def fail(self, cmd_line):
         """Provide helpful details about failed subcommand runs"""
         # Limit to 80 lines to ASCII characters
@@ -125,8 +126,8 @@ def run_python_until_end(*args, **env_vars):
     env.update(env_vars)
     cmd_line.extend(args)
     proc = subprocess.Popen(cmd_line, stdin=subprocess.PIPE,
-                         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                         env=env, cwd=cwd)
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                            env=env, cwd=cwd)
     with proc:
         try:
             out, err = proc.communicate()
@@ -137,11 +138,13 @@ def run_python_until_end(*args, **env_vars):
     err = strip_python_stderr(err)
     return _PythonRunResult(rc, out, err), cmd_line
 
+
 def _assert_python(expected_success, *args, **env_vars):
     res, cmd_line = run_python_until_end(*args, **env_vars)
     if (res.rc and expected_success) or (not res.rc and not expected_success):
         res.fail(cmd_line)
     return res
+
 
 def assert_python_ok(*args, **env_vars):
     """
@@ -156,6 +159,7 @@ def assert_python_ok(*args, **env_vars):
     """
     return _assert_python(True, *args, **env_vars)
 
+
 def assert_python_failure(*args, **env_vars):
     """
     Assert that running the interpreter with `args` and optional environment
@@ -165,6 +169,7 @@ def assert_python_failure(*args, **env_vars):
     See assert_python_ok() for more options.
     """
     return _assert_python(False, *args, **env_vars)
+
 
 def spawn_python(*args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, **kw):
     """Run a Python subprocess with the given arguments.
@@ -188,6 +193,7 @@ def spawn_python(*args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, **kw):
                             stdout=stdout, stderr=stderr,
                             **kw)
 
+
 def kill_python(p):
     """Run the given Popen process until completion and return stdout."""
     p.stdin.close()
@@ -198,6 +204,7 @@ def kill_python(p):
     p.wait()
     subprocess._cleanup()
     return data
+
 
 def make_script(script_dir, script_basename, source, omit_suffix=False):
     script_filename = script_basename
@@ -211,8 +218,9 @@ def make_script(script_dir, script_basename, source, omit_suffix=False):
     importlib.invalidate_caches()
     return script_name
 
+
 def make_zip_script(zip_dir, zip_basename, script_name, name_in_zip=None):
-    zip_filename = zip_basename+os.extsep+'zip'
+    zip_filename = zip_basename + os.extsep + 'zip'
     zip_name = os.path.join(zip_dir, zip_filename)
     zip_file = zipfile.ZipFile(zip_name, 'w')
     if name_in_zip is None:
@@ -225,16 +233,18 @@ def make_zip_script(zip_dir, zip_basename, script_name, name_in_zip=None):
             name_in_zip = os.path.basename(script_name)
     zip_file.write(script_name, name_in_zip)
     zip_file.close()
-    #if test.support.verbose:
+    # if test.support.verbose:
     #    zip_file = zipfile.ZipFile(zip_name, 'r')
     #    print 'Contents of %r:' % zip_name
     #    zip_file.printdir()
     #    zip_file.close()
     return zip_name, os.path.join(zip_name, name_in_zip)
 
+
 def make_pkg(pkg_dir, init_source=''):
     os.mkdir(pkg_dir)
     make_script(pkg_dir, '__init__', init_source)
+
 
 def make_zip_pkg(zip_dir, zip_basename, pkg_name, script_basename,
                  source, depth=1, compiled=False):
@@ -248,9 +258,9 @@ def make_zip_pkg(zip_dir, zip_basename, pkg_name, script_basename,
         init_name = py_compile.compile(init_name, doraise=True)
         script_name = py_compile.compile(script_name, doraise=True)
         unlink.extend((init_name, script_name))
-    pkg_names = [os.sep.join([pkg_name]*i) for i in range(1, depth+1)]
+    pkg_names = [os.sep.join([pkg_name] * i) for i in range(1, depth + 1)]
     script_name_in_zip = os.path.join(pkg_names[-1], os.path.basename(script_name))
-    zip_filename = zip_basename+os.extsep+'zip'
+    zip_filename = zip_basename + os.extsep + 'zip'
     zip_name = os.path.join(zip_dir, zip_filename)
     zip_file = zipfile.ZipFile(zip_name, 'w')
     for name in pkg_names:
@@ -260,7 +270,7 @@ def make_zip_pkg(zip_dir, zip_basename, pkg_name, script_basename,
     zip_file.close()
     for name in unlink:
         os.unlink(name)
-    #if test.support.verbose:
+    # if test.support.verbose:
     #    zip_file = zipfile.ZipFile(zip_name, 'r')
     #    print 'Contents of %r:' % zip_name
     #    zip_file.printdir()

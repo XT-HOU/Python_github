@@ -125,10 +125,10 @@ class EnvBuilder:
         create_if_needed(path)
         create_if_needed(libpath)
         # Issue 21197: create lib64 as a symlink to lib on 64-bit non-OS X POSIX
-        if ((sys.maxsize > 2**32) and (os.name == 'posix') and
-            (sys.platform != 'darwin')):
+        if ((sys.maxsize > 2 ** 32) and (os.name == 'posix') and
+                (sys.platform != 'darwin')):
             link_path = os.path.join(env_dir, 'lib64')
-            if not os.path.exists(link_path):   # Issue #21643
+            if not os.path.exists(link_path):  # Issue #21643
                 os.symlink('lib', link_path)
         context.bin_path = binpath = os.path.join(env_dir, binname)
         context.bin_name = binname
@@ -163,13 +163,13 @@ class EnvBuilder:
             force_copy = not self.symlinks
             if not force_copy:
                 try:
-                    if not os.path.islink(dst): # can't link to itself!
+                    if not os.path.islink(dst):  # can't link to itself!
                         if relative_symlinks_ok:
                             assert os.path.dirname(src) == os.path.dirname(dst)
                             os.symlink(os.path.basename(src), dst)
                         else:
                             os.symlink(src, dst)
-                except Exception:   # may need to use a more specific exception
+                except Exception:  # may need to use a more specific exception
                     logger.warning('Unable to symlink %r to %r', src, dst)
                     force_copy = True
             if force_copy:
@@ -188,7 +188,7 @@ class EnvBuilder:
                     else:
                         os.symlink(src, dst)
                     return
-                except Exception:   # may need to use a more specific exception
+                except Exception:  # may need to use a more specific exception
                     logger.warning('Unable to symlink %r to %r', src, dst)
 
             # On Windows, we rewrite symlinks to our base python.exe into
@@ -289,7 +289,7 @@ class EnvBuilder:
         # environment vars, the current directory and anything else
         # intended for the global Python environment
         cmd = [context.env_exe, '-Im', 'ensurepip', '--upgrade',
-                                                    '--default-pip']
+               '--default-pip']
         subprocess.check_output(cmd, stderr=subprocess.STDOUT)
 
     def setup_scripts(self, context):
@@ -351,11 +351,11 @@ class EnvBuilder:
         binpath = context.bin_path
         plen = len(path)
         for root, dirs, files in os.walk(path):
-            if root == path: # at top-level, remove irrelevant dirs
+            if root == path:  # at top-level, remove irrelevant dirs
                 for d in dirs[:]:
                     if d not in ('common', os.name):
                         dirs.remove(d)
-                continue # ignore files in top level
+                continue  # ignore files in top level
             for f in files:
                 if (os.name == 'nt' and f.startswith('python')
                         and f.endswith(('.exe', '.pdb'))):
@@ -387,12 +387,13 @@ class EnvBuilder:
 
 
 def create(env_dir, system_site_packages=False, clear=False,
-                    symlinks=False, with_pip=False, prompt=None):
+           symlinks=False, with_pip=False, prompt=None):
     """Create a virtual environment in a directory."""
     builder = EnvBuilder(system_site_packages=system_site_packages,
                          clear=clear, symlinks=symlinks, with_pip=with_pip,
                          prompt=prompt)
     builder.create(env_dir)
+
 
 def main(args=None):
     compatible = True
@@ -443,9 +444,9 @@ def main(args=None):
                                                'environment creation.')
         parser.add_argument('--upgrade', default=False, action='store_true',
                             dest='upgrade', help='Upgrade the environment '
-                                               'directory to use this version '
-                                               'of Python, assuming Python '
-                                               'has been upgraded in-place.')
+                                                 'directory to use this version '
+                                                 'of Python, assuming Python '
+                                                 'has been upgraded in-place.')
         parser.add_argument('--without-pip', dest='with_pip',
                             default=True, action='store_false',
                             help='Skips installing or upgrading pip in the '
@@ -465,6 +466,7 @@ def main(args=None):
                              prompt=options.prompt)
         for d in options.dirs:
             builder.create(d)
+
 
 if __name__ == '__main__':
     rc = 1

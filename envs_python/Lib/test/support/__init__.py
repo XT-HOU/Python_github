@@ -110,16 +110,20 @@ __all__ = [
     "swap_attr", "Matcher", "set_memlimit", "SuppressCrashReport", "sortdict",
     "run_with_tz", "PGO", "missing_compiler_executable", "fd_count",
     "ALWAYS_EQ", "LARGEST", "SMALLEST"
-    ]
+]
+
 
 class Error(Exception):
     """Base class for regression test exceptions."""
 
+
 class TestFailed(Error):
     """Test failed."""
 
+
 class TestDidNotRun(Error):
     """Test did not run any subtests."""
+
 
 class ResourceDenied(unittest.SkipTest):
     """Test skipped because it requested a disallowed resource.
@@ -128,6 +132,7 @@ class ResourceDenied(unittest.SkipTest):
     has not be enabled.  It is used to distinguish between expected
     and unexpected skips.
     """
+
 
 @contextlib.contextmanager
 def _ignore_deprecated_imports(ignore=True):
@@ -177,6 +182,7 @@ def _save_and_remove_module(name, orig_modules):
             orig_modules[modname] = sys.modules[modname]
             del sys.modules[modname]
 
+
 def _save_and_block_module(name, orig_modules):
     """Helper function to save and block a module in sys.modules
 
@@ -201,6 +207,7 @@ def anticipate_failure(condition):
         return unittest.expectedFailure
     return lambda f: f
 
+
 def load_package_tests(pkg_dir, loader, standard_tests, pattern):
     """Generic load_tests implementation for simple test packages.
 
@@ -211,9 +218,9 @@ def load_package_tests(pkg_dir, loader, standard_tests, pattern):
     """
     if pattern is None:
         pattern = "test*"
-    top_dir = os.path.dirname(              # Lib
-                  os.path.dirname(              # test
-                      os.path.dirname(__file__)))   # support
+    top_dir = os.path.dirname(  # Lib
+        os.path.dirname(  # test
+            os.path.dirname(__file__)))  # support
     package_tests = loader.discover(start_dir=pkg_dir,
                                     top_level_dir=top_dir,
                                     pattern=pattern)
@@ -280,30 +287,36 @@ def get_attribute(obj, name):
     else:
         return attribute
 
-verbose = 1              # Flag set to 0 by regrtest.py
-use_resources = None     # Flag set to [] by regrtest.py
-max_memuse = 0           # Disable bigmem tests (they will still be run with
-                         # small sizes, to make sure they work.)
+
+verbose = 1  # Flag set to 0 by regrtest.py
+use_resources = None  # Flag set to [] by regrtest.py
+max_memuse = 0  # Disable bigmem tests (they will still be run with
+# small sizes, to make sure they work.)
 real_max_memuse = 0
-junit_xml_list = None    # list of testsuite XML elements
+junit_xml_list = None  # list of testsuite XML elements
 failfast = False
 
 # _original_stdout is meant to hold stdout at the time regrtest began.
 # This may be "the real" stdout, or IDLE's emulation of stdout, or whatever.
 # The point is to have some flavor of stdout the user can actually see.
 _original_stdout = None
+
+
 def record_original_stdout(stdout):
     global _original_stdout
     _original_stdout = stdout
 
+
 def get_original_stdout():
     return _original_stdout or sys.stdout
+
 
 def unload(name):
     try:
         del sys.modules[name]
     except KeyError:
         pass
+
 
 def _force_run(path, func, *args):
     try:
@@ -314,6 +327,7 @@ def _force_run(path, func, *args):
             print('re-run %s%r' % (func.__name__, args))
         os.chmod(path, stat.S_IRWXU)
         return func(*args)
+
 
 if sys.platform.startswith("win"):
     def _waitfor(func, pathname, waitall=False):
@@ -349,11 +363,14 @@ if sys.platform.startswith("win"):
         warnings.warn('tests may fail, delete still pending for ' + pathname,
                       RuntimeWarning, stacklevel=4)
 
+
     def _unlink(filename):
         _waitfor(os.unlink, filename)
 
+
     def _rmdir(dirname):
         _waitfor(os.rmdir, dirname)
+
 
     def _rmtree(path):
         def _rmtree_inner(path):
@@ -370,8 +387,10 @@ if sys.platform.startswith("win"):
                     _force_run(fullname, os.rmdir, fullname)
                 else:
                     _force_run(fullname, os.unlink, fullname)
+
         _waitfor(_rmtree_inner, path, waitall=True)
         _waitfor(lambda p: _force_run(p, os.rmdir, p), path)
+
 
     def _longpath(path):
         try:
@@ -389,6 +408,7 @@ if sys.platform.startswith("win"):
 else:
     _unlink = os.unlink
     _rmdir = os.rmdir
+
 
     def _rmtree(path):
         try:
@@ -409,11 +429,14 @@ else:
                     _force_run(path, os.rmdir, fullname)
                 else:
                     _force_run(path, os.unlink, fullname)
+
         _rmtree_inner(path)
         os.rmdir(path)
 
+
     def _longpath(path):
         return path
+
 
 def unlink(filename):
     try:
@@ -421,17 +444,20 @@ def unlink(filename):
     except (FileNotFoundError, NotADirectoryError):
         pass
 
+
 def rmdir(dirname):
     try:
         _rmdir(dirname)
     except FileNotFoundError:
         pass
 
+
 def rmtree(path):
     try:
         _rmtree(path)
     except FileNotFoundError:
         pass
+
 
 def make_legacy_pyc(source):
     """Move a PEP 3147/488 pyc file to its legacy pyc location.
@@ -445,6 +471,7 @@ def make_legacy_pyc(source):
     legacy_pyc = os.path.join(up_one, source + 'c')
     os.rename(pyc_file, legacy_pyc)
     return legacy_pyc
+
 
 def forget(modname):
     """'Forget' a module was ever imported.
@@ -461,6 +488,7 @@ def forget(modname):
         for opt in ('', 1, 2):
             unlink(importlib.util.cache_from_source(source, optimization=opt))
 
+
 # Check whether a gui is actually available
 def _is_gui_available():
     if hasattr(_is_gui_available, 'result'):
@@ -473,10 +501,12 @@ def _is_gui_available():
         import ctypes.wintypes
         UOI_FLAGS = 1
         WSF_VISIBLE = 0x0001
+
         class USEROBJECTFLAGS(ctypes.Structure):
             _fields_ = [("fInherit", ctypes.wintypes.BOOL),
                         ("fReserved", ctypes.wintypes.BOOL),
                         ("dwFlags", ctypes.wintypes.DWORD)]
+
         dll = ctypes.windll.user32
         h = dll.GetProcessWindowStation()
         if not h:
@@ -484,10 +514,10 @@ def _is_gui_available():
         uof = USEROBJECTFLAGS()
         needed = ctypes.wintypes.DWORD()
         res = dll.GetUserObjectInformationW(h,
-            UOI_FLAGS,
-            ctypes.byref(uof),
-            ctypes.sizeof(uof),
-            ctypes.byref(needed))
+                                            UOI_FLAGS,
+                                            ctypes.byref(uof),
+                                            ctypes.sizeof(uof),
+                                            ctypes.byref(needed))
         if not res:
             raise ctypes.WinError()
         if not bool(uof.dwFlags & WSF_VISIBLE):
@@ -510,10 +540,11 @@ def _is_gui_available():
             class ProcessSerialNumber(Structure):
                 _fields_ = [("highLongOfPSN", c_int),
                             ("lowLongOfPSN", c_int)]
+
             psn = ProcessSerialNumber()
             psn_p = pointer(psn)
-            if (  (app_services.GetCurrentProcess(psn_p) < 0) or
-                  (app_services.SetFrontProcess(psn_p) < 0) ):
+            if ((app_services.GetCurrentProcess(psn_p) < 0) or
+                    (app_services.SetFrontProcess(psn_p) < 0)):
                 reason = "cannot run without OS X gui process"
 
     # check on every platform whether tkinter can actually do anything
@@ -536,6 +567,7 @@ def _is_gui_available():
 
     return _is_gui_available.result
 
+
 def is_resource_enabled(resource):
     """Test whether a resource is enabled.
 
@@ -543,6 +575,7 @@ def is_resource_enabled(resource):
     all resources are assumed enabled unless use_resources has been set.
     """
     return use_resources is None or resource in use_resources
+
 
 def requires(resource, msg=None):
     """Raise ResourceDenied if the specified resource is not available."""
@@ -552,6 +585,7 @@ def requires(resource, msg=None):
         raise ResourceDenied(msg)
     if resource == 'gui' and not _is_gui_available():
         raise ResourceDenied(_is_gui_available.reason)
+
 
 def _requires_unix_version(sysname, min_version):
     """Decorator raising SkipTest if the OS is `sysname` and the version is less
@@ -589,6 +623,7 @@ def requires_freebsd_version(*min_version):
     """
     return _requires_unix_version('FreeBSD', min_version)
 
+
 def requires_linux_version(*min_version):
     """Decorator raising SkipTest if the OS is Linux and the Linux version is
     less than `min_version`.
@@ -598,6 +633,7 @@ def requires_linux_version(*min_version):
     """
     return _requires_unix_version('Linux', min_version)
 
+
 def requires_mac_ver(*min_version):
     """Decorator raising SkipTest if the OS is Mac OS X and the OS X
     version if less than min_version.
@@ -605,6 +641,7 @@ def requires_mac_ver(*min_version):
     For example, @requires_mac_ver(10, 5) raises SkipTest if the OS X version
     is lesser than 10.5.
     """
+
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kw):
@@ -621,8 +658,10 @@ def requires_mac_ver(*min_version):
                             "Mac OS X %s or higher required, not %s"
                             % (min_version_txt, version_txt))
             return func(*args, **kw)
+
         wrapper.min_version = min_version
         return wrapper
+
     return decorator
 
 
@@ -693,6 +732,7 @@ def find_unused_port(family=socket.AF_INET, socktype=socket.SOCK_STREAM):
     del tempsock
     return port
 
+
 def bind_port(sock, host=HOST):
     """Bind the socket to a free port and return the port number.  Relies on
     ephemeral ports in order to ensure we are using an unbound port.  This is
@@ -711,12 +751,12 @@ def bind_port(sock, host=HOST):
     if sock.family == socket.AF_INET and sock.type == socket.SOCK_STREAM:
         if hasattr(socket, 'SO_REUSEADDR'):
             if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) == 1:
-                raise TestFailed("tests should never set the SO_REUSEADDR "   \
+                raise TestFailed("tests should never set the SO_REUSEADDR " \
                                  "socket option on TCP/IP sockets!")
         if hasattr(socket, 'SO_REUSEPORT'):
             try:
                 if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 1:
-                    raise TestFailed("tests should never set the SO_REUSEPORT "   \
+                    raise TestFailed("tests should never set the SO_REUSEPORT " \
                                      "socket option on TCP/IP sockets!")
             except OSError:
                 # Python's socket module was compiled using modern headers
@@ -730,6 +770,7 @@ def bind_port(sock, host=HOST):
     port = sock.getsockname()[1]
     return port
 
+
 def bind_unix_socket(sock, addr):
     """Bind a unix socket, raising SkipTest if PermissionError is raised."""
     assert sock.family == socket.AF_UNIX
@@ -738,6 +779,7 @@ def bind_unix_socket(sock, addr):
     except PermissionError:
         sock.close()
         raise unittest.SkipTest('cannot bind AF_UNIX sockets')
+
 
 def _is_ipv6_enabled():
     """Check whether IPv6 is enabled on this host."""
@@ -754,10 +796,13 @@ def _is_ipv6_enabled():
                 sock.close()
     return False
 
+
 IPV6_ENABLED = _is_ipv6_enabled()
+
 
 def system_must_validate_cert(f):
     """Skip the test on TLS certificate validation failures."""
+
     @functools.wraps(f)
     def dec(*args, **kwargs):
         try:
@@ -767,7 +812,9 @@ def system_must_validate_cert(f):
                 raise unittest.SkipTest("system does not contain "
                                         "necessary certificates")
             raise
+
     return dec
+
 
 # A constant likely larger than the underlying OS pipe buffer size, to
 # make writes blocking.
@@ -824,37 +871,37 @@ TEST_HTTP_URL = "http://www.pythontest.net"
 # or None if there is no such character.
 FS_NONASCII = None
 for character in (
-    # First try printable and common characters to have a readable filename.
-    # For each character, the encoding list are just example of encodings able
-    # to encode the character (the list is not exhaustive).
+        # First try printable and common characters to have a readable filename.
+        # For each character, the encoding list are just example of encodings able
+        # to encode the character (the list is not exhaustive).
 
-    # U+00E6 (Latin Small Letter Ae): cp1252, iso-8859-1
-    '\u00E6',
-    # U+0130 (Latin Capital Letter I With Dot Above): cp1254, iso8859_3
-    '\u0130',
-    # U+0141 (Latin Capital Letter L With Stroke): cp1250, cp1257
-    '\u0141',
-    # U+03C6 (Greek Small Letter Phi): cp1253
-    '\u03C6',
-    # U+041A (Cyrillic Capital Letter Ka): cp1251
-    '\u041A',
-    # U+05D0 (Hebrew Letter Alef): Encodable to cp424
-    '\u05D0',
-    # U+060C (Arabic Comma): cp864, cp1006, iso8859_6, mac_arabic
-    '\u060C',
-    # U+062A (Arabic Letter Teh): cp720
-    '\u062A',
-    # U+0E01 (Thai Character Ko Kai): cp874
-    '\u0E01',
+        # U+00E6 (Latin Small Letter Ae): cp1252, iso-8859-1
+        '\u00E6',
+        # U+0130 (Latin Capital Letter I With Dot Above): cp1254, iso8859_3
+        '\u0130',
+        # U+0141 (Latin Capital Letter L With Stroke): cp1250, cp1257
+        '\u0141',
+        # U+03C6 (Greek Small Letter Phi): cp1253
+        '\u03C6',
+        # U+041A (Cyrillic Capital Letter Ka): cp1251
+        '\u041A',
+        # U+05D0 (Hebrew Letter Alef): Encodable to cp424
+        '\u05D0',
+        # U+060C (Arabic Comma): cp864, cp1006, iso8859_6, mac_arabic
+        '\u060C',
+        # U+062A (Arabic Letter Teh): cp720
+        '\u062A',
+        # U+0E01 (Thai Character Ko Kai): cp874
+        '\u0E01',
 
-    # Then try more "special" characters. "special" because they may be
-    # interpreted or displayed differently depending on the exact locale
-    # encoding and the font.
+        # Then try more "special" characters. "special" because they may be
+        # interpreted or displayed differently depending on the exact locale
+        # encoding and the font.
 
-    # U+00A0 (No-Break Space)
-    '\u00A0',
-    # U+20AC (Euro Sign)
-    '\u20AC',
+        # U+00A0 (No-Break Space)
+        '\u00A0',
+        # U+20AC (Euro Sign)
+        '\u20AC',
 ):
     try:
         # If Python is set up to use the legacy 'mbcs' in Windows,
@@ -875,6 +922,7 @@ if sys.platform == 'darwin':
     # decomposed Unicode, encoded using UTF-8. See QA1173:
     # http://developer.apple.com/mac/library/qa/qa2001/qa1173.html
     import unicodedata
+
     TESTFN_UNICODE = unicodedata.normalize('NFD', TESTFN_UNICODE)
 TESTFN_ENCODING = sys.getfilesystemencoding()
 
@@ -905,7 +953,7 @@ elif sys.platform != 'darwin':
     except UnicodeDecodeError:
         # 0xff will be encoded using the surrogate character u+DCFF
         TESTFN_UNENCODABLE = TESTFN \
-            + b'-\xff'.decode(TESTFN_ENCODING, 'surrogateescape')
+                             + b'-\xff'.decode(TESTFN_ENCODING, 'surrogateescape')
     else:
         # File system encoding (eg. ISO-8859-* encodings) can encode
         # the byte 0xff. Skip some unicode filename tests.
@@ -919,21 +967,21 @@ elif sys.platform != 'darwin':
 # encoding in strict mode.
 TESTFN_UNDECODABLE = None
 for name in (
-    # b'\xff' is not decodable by os.fsdecode() with code page 932. Windows
-    # accepts it to create a file or a directory, or don't accept to enter to
-    # such directory (when the bytes name is used). So test b'\xe7' first: it is
-    # not decodable from cp932.
-    b'\xe7w\xf0',
-    # undecodable from ASCII, UTF-8
-    b'\xff',
-    # undecodable from iso8859-3, iso8859-6, iso8859-7, cp424, iso8859-8, cp856
-    # and cp857
-    b'\xae\xd5'
-    # undecodable from UTF-8 (UNIX and Mac OS X)
-    b'\xed\xb2\x80', b'\xed\xb4\x80',
-    # undecodable from shift_jis, cp869, cp874, cp932, cp1250, cp1251, cp1252,
-    # cp1253, cp1254, cp1255, cp1257, cp1258
-    b'\x81\x98',
+        # b'\xff' is not decodable by os.fsdecode() with code page 932. Windows
+        # accepts it to create a file or a directory, or don't accept to enter to
+        # such directory (when the bytes name is used). So test b'\xe7' first: it is
+        # not decodable from cp932.
+        b'\xe7w\xf0',
+        # undecodable from ASCII, UTF-8
+        b'\xff',
+        # undecodable from iso8859-3, iso8859-6, iso8859-7, cp424, iso8859-8, cp856
+        # and cp857
+        b'\xae\xd5'
+        # undecodable from UTF-8 (UNIX and Mac OS X)
+        b'\xed\xb2\x80', b'\xed\xb4\x80',
+        # undecodable from shift_jis, cp869, cp874, cp932, cp1250, cp1251, cp1252,
+        # cp1253, cp1254, cp1255, cp1257, cp1258
+        b'\x81\x98',
 ):
     try:
         name.decode(TESTFN_ENCODING)
@@ -952,6 +1000,7 @@ SAVEDCWD = os.getcwd()
 # Set by libregrtest/main.py so we can skip tests that are not
 # useful for PGO
 PGO = False
+
 
 @contextlib.contextmanager
 def temp_dir(path=None, quiet=False):
@@ -991,6 +1040,7 @@ def temp_dir(path=None, quiet=False):
         # directory. The child has a different process id. (bpo-30028)
         if dir_created and pid == os.getpid():
             rmtree(path)
+
 
 @contextlib.contextmanager
 def change_cwd(path, quiet=False):
@@ -1039,6 +1089,7 @@ def temp_cwd(name='tempcwd', quiet=False):
         with change_cwd(temp_path, quiet=quiet) as cwd_dir:
             yield cwd_dir
 
+
 if hasattr(os, "umask"):
     @contextlib.contextmanager
     def temp_umask(umask):
@@ -1056,6 +1107,7 @@ TEST_HOME_DIR = os.path.dirname(TEST_SUPPORT_DIR)
 
 # TEST_DATA_DIR is used as a target download location for remote resources
 TEST_DATA_DIR = os.path.join(TEST_HOME_DIR, "data")
+
 
 def findfile(filename, subdir=None):
     """Try to find a file on sys.path or in the test directory.  If it is not
@@ -1075,10 +1127,12 @@ def findfile(filename, subdir=None):
         if os.path.exists(fn): return fn
     return filename
 
+
 def create_empty_file(filename):
     """Create an empty file. If the file already exists, truncate it."""
     fd = os.open(filename, os.O_WRONLY | os.O_CREAT | os.O_TRUNC)
     os.close(fd)
+
 
 def sortdict(dict):
     "Like repr(dict), but in sorted order."
@@ -1086,6 +1140,7 @@ def sortdict(dict):
     reprpairs = ["%r: %r" % pair for pair in items]
     withcommas = ", ".join(reprpairs)
     return "{%s}" % withcommas
+
 
 def make_bad_fd():
     """
@@ -1099,6 +1154,7 @@ def make_bad_fd():
         file.close()
         unlink(TESTFN)
 
+
 def check_syntax_error(testcase, statement, *, lineno=None, offset=None):
     with testcase.assertRaises(SyntaxError) as cm:
         compile(statement, '<test string>', 'exec')
@@ -1110,12 +1166,13 @@ def check_syntax_error(testcase, statement, *, lineno=None, offset=None):
     if offset is not None:
         testcase.assertEqual(err.offset, offset)
 
+
 def open_urlresource(url, *args, **kw):
     import urllib.request, urllib.parse
 
     check = kw.pop('check', None)
 
-    filename = urllib.parse.urlparse(url)[2].split('/')[-1] # '/': it's URL!
+    filename = urllib.parse.urlparse(url)[2].split('/')[-1]  # '/': it's URL!
 
     fn = os.path.join(TEST_DATA_DIR, filename)
 
@@ -1164,6 +1221,7 @@ class WarningsRecorder(object):
     """Convenience wrapper for the warnings list returned on
        entry to the warnings.catch_warnings() context manager.
     """
+
     def __init__(self, warnings_list):
         self._warnings = warnings_list
         self._last = 0
@@ -1209,7 +1267,7 @@ def _filterwarnings(filters, quiet=False):
             warning = w.message
             # Filter out the matching messages
             if (re.match(msg, str(warning), re.I) and
-                issubclass(warning.__class__, cat)):
+                    issubclass(warning.__class__, cat)):
                 seen = True
                 reraise.remove(w)
         if not seen and not quiet:
@@ -1300,7 +1358,6 @@ class CleanImport(object):
 
 
 class EnvironmentVarGuard(collections.abc.MutableMapping):
-
     """Class to help protect the environment variable properly.  Can be used as
     a context manager."""
 
@@ -1378,7 +1435,6 @@ class DirsOnSysPath(object):
 
 
 class TransientResource(object):
-
     """Raise ResourceDenied if an exception is raised while the context manager
     is in effect that matches the specified exception and attributes."""
 
@@ -1401,6 +1457,7 @@ class TransientResource(object):
                     break
             else:
                 raise ResourceDenied("an optional resource is not available")
+
 
 # Context managers that raise ResourceDenied when various issues
 # with the Internet connection manifest themselves as exceptions.
@@ -1464,14 +1521,14 @@ def transient_internet(resource_name, *, timeout=30.0, errnos=()):
     def filter_error(err):
         n = getattr(err, 'errno', None)
         if (isinstance(err, socket.timeout) or
-            (isinstance(err, socket.gaierror) and n in gai_errnos) or
-            (isinstance(err, urllib.error.HTTPError) and
-             500 <= err.code <= 599) or
-            (isinstance(err, urllib.error.URLError) and
+                (isinstance(err, socket.gaierror) and n in gai_errnos) or
+                (isinstance(err, urllib.error.HTTPError) and
+                 500 <= err.code <= 599) or
+                (isinstance(err, urllib.error.URLError) and
                  (("ConnectionRefusedError" in err.reason) or
                   ("TimeoutError" in err.reason) or
                   ("EOFError" in err.reason))) or
-            n in captured_errnos):
+                n in captured_errnos):
             if not verbose:
                 sys.stderr.write(denied.args[0] + "\n")
             raise denied from err
@@ -1519,6 +1576,7 @@ def captured_output(stream_name):
     finally:
         setattr(sys, stream_name, orig_stdout)
 
+
 def captured_stdout():
     """Capture the output of sys.stdout:
 
@@ -1528,6 +1586,7 @@ def captured_stdout():
     """
     return captured_output("stdout")
 
+
 def captured_stderr():
     """Capture the output of sys.stderr:
 
@@ -1536,6 +1595,7 @@ def captured_stderr():
        self.assertEqual(stderr.getvalue(), "hello\\n")
     """
     return captured_output("stderr")
+
 
 def captured_stdin():
     """Capture the input to sys.stdin:
@@ -1566,6 +1626,7 @@ def gc_collect():
     gc.collect()
     gc.collect()
 
+
 @contextlib.contextmanager
 def disable_gc():
     have_gc = gc.isenabled()
@@ -1594,28 +1655,32 @@ if hasattr(sys, "gettotalrefcount"):
     _align = '0P'
 _vheader = _header + 'n'
 
+
 def calcobjsize(fmt):
     return struct.calcsize(_header + fmt + _align)
+
 
 def calcvobjsize(fmt):
     return struct.calcsize(_vheader + fmt + _align)
 
 
-_TPFLAGS_HAVE_GC = 1<<14
-_TPFLAGS_HEAPTYPE = 1<<9
+_TPFLAGS_HAVE_GC = 1 << 14
+_TPFLAGS_HEAPTYPE = 1 << 9
+
 
 def check_sizeof(test, o, size):
     import _testcapi
     result = sys.getsizeof(o)
     # add GC header size
-    if ((type(o) == type) and (o.__flags__ & _TPFLAGS_HEAPTYPE) or\
-        ((type(o) != type) and (type(o).__flags__ & _TPFLAGS_HAVE_GC))):
+    if ((type(o) == type) and (o.__flags__ & _TPFLAGS_HEAPTYPE) or \
+            ((type(o) != type) and (type(o).__flags__ & _TPFLAGS_HAVE_GC))):
         size += _testcapi.SIZEOF_PYGC_HEAD
     msg = 'wrong size for %s: got %d, expected %d' \
-            % (type(o), result, size)
+          % (type(o), result, size)
     test.assertEqual(result, size, msg)
 
-#=======================================================================
+
+# =======================================================================
 # Decorator for running a function in a different locale, correctly resetting
 # it afterwards.
 
@@ -1646,12 +1711,15 @@ def run_with_locale(catstr, *locales):
             finally:
                 if locale and orig_locale:
                     locale.setlocale(category, orig_locale)
+
         inner.__name__ = func.__name__
         inner.__doc__ = func.__doc__
         return inner
+
     return decorator
 
-#=======================================================================
+
+# =======================================================================
 # Decorator for running a function in a specific timezone, correctly
 # resetting it afterwards.
 
@@ -1682,20 +1750,23 @@ def run_with_tz(tz):
         inner.__name__ = func.__name__
         inner.__doc__ = func.__doc__
         return inner
+
     return decorator
 
-#=======================================================================
+
+# =======================================================================
 # Big-memory-test support. Separate from 'resources' because memory use
 # should be configurable.
 
 # Some handy shorthands. Note that these are used for byte-limits as well
 # as size-limits, in the various bigmem tests
-_1M = 1024*1024
+_1M = 1024 * 1024
 _1G = 1024 * _1M
 _2G = 2 * _1G
 _4G = 4 * _1G
 
 MAX_Py_ssize_t = sys.maxsize
+
 
 def set_memlimit(limit):
     global max_memuse
@@ -1704,7 +1775,7 @@ def set_memlimit(limit):
         'k': 1024,
         'm': _1M,
         'g': _1G,
-        't': 1024*_1G,
+        't': 1024 * _1G,
     }
     m = re.match(r'(\d+(\.\d+)?) (K|M|G|T)b?$', limit,
                  re.IGNORECASE | re.VERBOSE)
@@ -1717,6 +1788,7 @@ def set_memlimit(limit):
     if memlimit < _2G - 1:
         raise ValueError('Memory limit %r too low to be useful' % (limit,))
     max_memuse = memlimit
+
 
 class _MemoryWatchdog:
     """An object which periodically watches the process' memory consumption
@@ -1761,6 +1833,7 @@ def bigmemtest(size, memuse, dry_run=True):
     may be less than the requested value. If 'dry_run' is false, it means the
     test doesn't support dummy runs when -M is not specified.
     """
+
     def decorator(f):
         def wrapper(self):
             size = wrapper.size
@@ -1771,7 +1844,7 @@ def bigmemtest(size, memuse, dry_run=True):
                 maxsize = size
 
             if ((real_max_memuse or not dry_run)
-                and real_max_memuse < maxsize * memuse):
+                    and real_max_memuse < maxsize * memuse):
                 raise unittest.SkipTest(
                     "not enough memory: %.1fG minimum needed"
                     % (size * memuse / (1024 ** 3)))
@@ -1794,13 +1867,16 @@ def bigmemtest(size, memuse, dry_run=True):
         wrapper.size = size
         wrapper.memuse = memuse
         return wrapper
+
     return decorator
+
 
 def bigaddrspacetest(f):
     """Decorator for tests that fill the address space."""
+
     def wrapper(self):
         if max_memuse < MAX_Py_ssize_t:
-            if MAX_Py_ssize_t >= 2**63 - 1 and max_memuse >= 2**31:
+            if MAX_Py_ssize_t >= 2 ** 63 - 1 and max_memuse >= 2 ** 31:
                 raise unittest.SkipTest(
                     "not enough memory: try a 32-bit build instead")
             else:
@@ -1809,9 +1885,11 @@ def bigaddrspacetest(f):
                     % (MAX_Py_ssize_t / (1024 ** 3)))
         else:
             return f(self)
+
     return wrapper
 
-#=======================================================================
+
+# =======================================================================
 # unittest integration.
 
 class BasicTestRunner:
@@ -1820,8 +1898,10 @@ class BasicTestRunner:
         test(result)
         return result
 
+
 def _id(obj):
     return obj
+
 
 def requires_resource(resource):
     if resource == 'gui' and not _is_gui_available():
@@ -1831,11 +1911,13 @@ def requires_resource(resource):
     else:
         return unittest.skip("resource {0!r} is not enabled".format(resource))
 
+
 def cpython_only(test):
     """
     Decorator for tests only applicable on CPython.
     """
     return impl_detail(cpython=True)(test)
+
 
 def impl_detail(msg=None, **guards):
     if check_impl_detail(**guards):
@@ -1850,13 +1932,15 @@ def impl_detail(msg=None, **guards):
         msg = msg.format(' or '.join(guardnames))
     return unittest.skip(msg)
 
+
 def _parse_guards(guards):
     # Returns a tuple ({platform_name: run_me}, default_value)
     if not guards:
         return ({'cpython': True}, False)
     is_true = list(guards.values())[0]
-    assert list(guards.values()) == [is_true] * len(guards)   # all True or all False
+    assert list(guards.values()) == [is_true] * len(guards)  # all True or all False
     return (guards, not is_true)
+
 
 # Use the following check to guard CPython's implementation-specific tests --
 # or to run them only on the implementation(s) guarded by the arguments.
@@ -1884,6 +1968,7 @@ def no_tracing(func):
                 return func(*args, **kwargs)
             finally:
                 sys.settrace(original_trace)
+
         return wrapper
 
 
@@ -1909,6 +1994,7 @@ def _filter_suite(suite, pred):
             if pred(test):
                 newtests.append(test)
     suite._tests = newtests
+
 
 def _run_suite(suite):
     """Run tests from a unittest.TestSuite-derived class."""
@@ -1961,7 +2047,6 @@ def _is_full_match_test(pattern):
 
 def set_match_tests(accept_patterns=None, ignore_patterns=None):
     global _match_test_func, _accept_test_patterns, _ignore_test_patterns
-
 
     if accept_patterns is None:
         accept_patterns = ()
@@ -2040,7 +2125,8 @@ def run_unittest(*classes):
     _filter_suite(suite, match_test)
     _run_suite(suite)
 
-#=======================================================================
+
+# =======================================================================
 # Check for the presence of docstrings.
 
 # Rather than trying to enumerate all the cases where docstrings may be
@@ -2048,6 +2134,7 @@ def run_unittest(*classes):
 
 def _check_docstrings():
     """Just used to check if docstrings are enabled"""
+
 
 MISSING_C_DOCSTRINGS = (check_impl_detail() and
                         sys.platform != 'win32' and
@@ -2060,7 +2147,7 @@ requires_docstrings = unittest.skipUnless(HAVE_DOCSTRINGS,
                                           "test requires docstrings")
 
 
-#=======================================================================
+# =======================================================================
 # doctest driver.
 
 def run_doctest(module, verbosity=None, optionflags=0):
@@ -2087,11 +2174,12 @@ def run_doctest(module, verbosity=None, optionflags=0):
     return f, t
 
 
-#=======================================================================
+# =======================================================================
 # Support for saving and restoring the imported modules.
 
 def modules_setup():
     return sys.modules.copy(),
+
 
 def modules_cleanup(oldmodules):
     # Encoders/decoders are registered permanently within the internal
@@ -2109,7 +2197,8 @@ def modules_cleanup(oldmodules):
     # Implicitly imported *real* modules should be left alone (see issue 10556).
     sys.modules.update(oldmodules)
 
-#=======================================================================
+
+# =======================================================================
 # Threading support to prevent reporting refleaks when running regrtest.py -R
 
 # Flag used by saved_test_environment of test.libregrtest.save_env,
@@ -2119,6 +2208,7 @@ def modules_cleanup(oldmodules):
 # For example, threading_cleanup() sets the flag is the function fails
 # to cleanup threads.
 environment_altered = False
+
 
 # NOTE: we use thread._count() rather than threading.enumerate() (or the
 # moral equivalent thereof) because a threading.Thread object is still alive
@@ -2130,6 +2220,7 @@ environment_altered = False
 
 def threading_setup():
     return _thread._count(), threading._dangling.copy()
+
 
 def threading_cleanup(*original_values):
     global environment_altered
@@ -2166,6 +2257,7 @@ def reap_threads(func):
     """Use this function when threads are being used.  This will
     ensure that the threads are cleaned up even when the test fails.
     """
+
     @functools.wraps(func)
     def decorator(*args):
         key = threading_setup()
@@ -2173,6 +2265,7 @@ def reap_threads(func):
             return func(*args)
         finally:
             threading_cleanup(*key)
+
     return decorator
 
 
@@ -2286,6 +2379,7 @@ def start_threads(threads, unlock=None):
                 faulthandler.dump_traceback(sys.stdout)
                 raise AssertionError('Unable to join %d threads' % len(started))
 
+
 @contextlib.contextmanager
 def swap_attr(obj, attr, new_val):
     """Temporary swap out an attribute with a new object.
@@ -2316,6 +2410,7 @@ def swap_attr(obj, attr, new_val):
         finally:
             if hasattr(obj, attr):
                 delattr(obj, attr)
+
 
 @contextlib.contextmanager
 def swap_item(obj, item, new_val):
@@ -2348,6 +2443,7 @@ def swap_item(obj, item, new_val):
             if item in obj:
                 del obj[item]
 
+
 def strip_python_stderr(stderr):
     """Strip the stderr of a Python process from potential debug output
     emitted by the interpreter.
@@ -2358,22 +2454,26 @@ def strip_python_stderr(stderr):
     stderr = re.sub(br"\[\d+ refs, \d+ blocks\]\r?\n?", b"", stderr).strip()
     return stderr
 
+
 requires_type_collecting = unittest.skipIf(hasattr(sys, 'getcounts'),
-                        'types are immortal if COUNT_ALLOCS is defined')
+                                           'types are immortal if COUNT_ALLOCS is defined')
+
 
 def args_from_interpreter_flags():
     """Return a list of command-line arguments reproducing the current
     settings in sys.flags and sys.warnoptions."""
     return subprocess._args_from_interpreter_flags()
 
+
 def optim_args_from_interpreter_flags():
     """Return a list of command-line arguments reproducing the current
     optimization settings in sys.flags."""
     return subprocess._optim_args_from_interpreter_flags()
 
-#============================================================
+
+# ============================================================
 # Support for assertions about logging.
-#============================================================
+# ============================================================
 
 class TestHandler(logging.handlers.BufferingHandler):
     def __init__(self, matcher):
@@ -2403,8 +2503,8 @@ class TestHandler(logging.handlers.BufferingHandler):
                 break
         return result
 
-class Matcher(object):
 
+class Matcher(object):
     _partial_matches = ('msg', 'message')
 
     def matches(self, d, **kwargs):
@@ -2438,6 +2538,8 @@ class Matcher(object):
 
 
 _can_symlink = None
+
+
 def can_symlink():
     global _can_symlink
     if _can_symlink is not None:
@@ -2453,13 +2555,17 @@ def can_symlink():
     _can_symlink = can
     return can
 
+
 def skip_unless_symlink(test):
     """Skip decorator for tests that require functional symlink"""
     ok = can_symlink()
     msg = "Requires functional symlink implementation"
     return test if ok else unittest.skip(msg)(test)
 
+
 _can_xattr = None
+
+
 def can_xattr():
     global _can_xattr
     if _can_xattr is not None:
@@ -2490,13 +2596,17 @@ def can_xattr():
     _can_xattr = can
     return can
 
+
 def skip_unless_xattr(test):
     """Skip decorator for tests that require functional extended attributes"""
     ok = can_xattr()
     msg = "no non-broken extended attribute support"
     return test if ok else unittest.skip(msg)(test)
 
+
 _bind_nix_socket_error = None
+
+
 def skip_unless_bind_unix_socket(test):
     """Decorator for tests requiring a functional bind() for unix sockets."""
     if not hasattr(socket, 'AF_UNIX'):
@@ -2589,9 +2699,9 @@ def check__all__(test_case, module, name_of_module=None, extra=(),
     """
 
     if name_of_module is None:
-        name_of_module = (module.__name__, )
+        name_of_module = (module.__name__,)
     elif isinstance(name_of_module, str):
-        name_of_module = (name_of_module, )
+        name_of_module = (name_of_module,)
 
     expected = set(extra)
 
@@ -2646,9 +2756,9 @@ class SuppressCrashReport:
                                     msvcrt.CRT_ERROR,
                                     msvcrt.CRT_ASSERT]:
                     old_mode = msvcrt.CrtSetReportMode(report_type,
-                            msvcrt.CRTDBG_MODE_FILE)
+                                                       msvcrt.CRTDBG_MODE_FILE)
                     old_file = msvcrt.CrtSetReportFile(report_type,
-                            msvcrt.CRTDBG_FILE_STDERR)
+                                                       msvcrt.CRTDBG_FILE_STDERR)
                     self.old_modes[report_type] = old_mode, old_file
 
         else:
@@ -2749,8 +2859,8 @@ def run_in_subinterp(code):
     else:
         if tracemalloc.is_tracing():
             raise unittest.SkipTest("run_in_subinterp() cannot be used "
-                                     "if tracemalloc module is tracing "
-                                     "memory allocations")
+                                    "if tracemalloc module is tracing "
+                                    "memory allocations")
     import _testcapi
     return _testcapi.run_in_subinterp(code)
 
@@ -2792,7 +2902,7 @@ def missing_compiler_executable(cmd_names=[]):
         cmd = getattr(compiler, name)
         if cmd_names:
             assert cmd is not None, \
-                    "the '%s' executable is not configured" % name
+                "the '%s' executable is not configured" % name
         elif cmd is None:
             continue
         if spawn.find_executable(cmd[0]) is None:
@@ -2800,6 +2910,8 @@ def missing_compiler_executable(cmd_names=[]):
 
 
 _is_android_emulator = None
+
+
 def setswitchinterval(interval):
     # Setting a very low gil interval on the Android emulator causes python
     # to hang (issue #26939).
@@ -2808,7 +2920,7 @@ def setswitchinterval(interval):
         global _is_android_emulator
         if _is_android_emulator is None:
             _is_android_emulator = (subprocess.check_output(
-                               ['getprop', 'ro.kernel.qemu']).strip() == b'1')
+                ['getprop', 'ro.kernel.qemu']).strip() == b'1')
         if _is_android_emulator:
             interval = minimum_interval
     return sys.setswitchinterval(interval)
@@ -2936,6 +3048,7 @@ def with_pymalloc():
 class FakePath:
     """Simple implementing of the path protocol.
     """
+
     def __init__(self, path):
         self.path = path
 
@@ -2944,7 +3057,7 @@ class FakePath:
 
     def __fspath__(self):
         if (isinstance(self.path, BaseException) or
-            isinstance(self.path, type) and
+                isinstance(self.path, type) and
                 issubclass(self.path, BaseException)):
             raise self.path
         else:
@@ -2955,33 +3068,44 @@ class _ALWAYS_EQ:
     """
     Object that is equal to anything.
     """
+
     def __eq__(self, other):
         return True
+
     def __ne__(self, other):
         return False
 
+
 ALWAYS_EQ = _ALWAYS_EQ()
+
 
 @functools.total_ordering
 class _LARGEST:
     """
     Object that is greater than anything (except itself).
     """
+
     def __eq__(self, other):
         return isinstance(other, _LARGEST)
+
     def __lt__(self, other):
         return False
 
+
 LARGEST = _LARGEST()
+
 
 @functools.total_ordering
 class _SMALLEST:
     """
     Object that is less than anything (except itself).
     """
+
     def __eq__(self, other):
         return isinstance(other, _SMALLEST)
+
     def __gt__(self, other):
         return False
+
 
 SMALLEST = _SMALLEST()

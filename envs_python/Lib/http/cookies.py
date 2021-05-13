@@ -138,6 +138,7 @@ _nulljoin = ''.join
 _semispacejoin = '; '.join
 _spacejoin = ' '.join
 
+
 #
 # Define an exception visible to External modules
 #
@@ -170,6 +171,7 @@ _Translator.update({
 
 _is_legal_key = re.compile('[%s]+' % re.escape(_LegalChars)).fullmatch
 
+
 def _quote(str):
     r"""Quote a string for use in a cookie header.
 
@@ -185,6 +187,7 @@ def _quote(str):
 
 _OctalPatt = re.compile(r"\\[0-3][0-7][0-7]")
 _QuotePatt = re.compile(r"[\\].")
+
 
 def _unquote(str):
     # If there aren't any doublequotes,
@@ -210,7 +213,7 @@ def _unquote(str):
     while 0 <= i < n:
         o_match = _OctalPatt.search(str, i)
         q_match = _QuotePatt.search(str, i)
-        if not o_match and not q_match:              # Neither matched
+        if not o_match and not q_match:  # Neither matched
             res.append(str[i:])
             break
         # else:
@@ -219,15 +222,16 @@ def _unquote(str):
             j = o_match.start(0)
         if q_match:
             k = q_match.start(0)
-        if q_match and (not o_match or k < j):     # QuotePatt matched
+        if q_match and (not o_match or k < j):  # QuotePatt matched
             res.append(str[i:k])
-            res.append(str[k+1])
+            res.append(str[k + 1])
             i = k + 2
-        else:                                      # OctalPatt matched
+        else:  # OctalPatt matched
             res.append(str[i:j])
-            res.append(chr(int(str[j+1:j+4], 8)))
+            res.append(chr(int(str[j + 1:j + 4], 8)))
             i = j + 4
     return _nulljoin(res)
+
 
 # The _getdate() routine is used to set the expiration time in the cookie's HTTP
 # header.  By default, _getdate() returns the current time in the appropriate
@@ -241,6 +245,7 @@ _weekdayname = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 _monthname = [None,
               'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
               'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
 
 def _getdate(future=0, weekdayname=_weekdayname, monthname=_monthname):
     from time import gmtime, time
@@ -273,14 +278,14 @@ class Morsel(dict):
     # variant on the left to the appropriate traditional
     # formatting on the right.
     _reserved = {
-        "expires"  : "expires",
-        "path"     : "Path",
-        "comment"  : "Comment",
-        "domain"   : "Domain",
-        "max-age"  : "Max-Age",
-        "secure"   : "Secure",
-        "httponly" : "HttpOnly",
-        "version"  : "Version",
+        "expires": "expires",
+        "path": "Path",
+        "comment": "Comment",
+        "domain": "Domain",
+        "max-age": "Max-Age",
+        "secure": "Secure",
+        "httponly": "HttpOnly",
+        "version": "Version",
     }
 
     _flags = {'secure', 'httponly'}
@@ -429,7 +434,7 @@ class Morsel(dict):
 # result, the parsing rules here are less strict.
 #
 
-_LegalKeyChars  = r"\w\d!#%&'~_`><@,:/\$\*\+\-\.\^\|\)\(\?\}\{\="
+_LegalKeyChars = r"\w\d!#%&'~_`><@,:/\$\*\+\-\.\^\|\)\(\?\}\{\="
 _LegalValueChars = _LegalKeyChars + r'\[\]'
 _CookiePattern = re.compile(r"""
     \s*                            # Optional whitespace at start of cookie
@@ -448,7 +453,7 @@ _CookiePattern = re.compile(r"""
     )?                             # End of optional value group
     \s*                            # Any number of spaces.
     (\s+|;|$)                      # Ending either at space, semicolon, or EOS.
-    """, re.ASCII | re.VERBOSE)    # re.ASCII may be removed if safe.
+    """, re.ASCII | re.VERBOSE)  # re.ASCII may be removed if safe.
 
 
 # At long last, here is the cookie class.  Using this class is almost just like
@@ -534,10 +539,10 @@ class BaseCookie(dict):
         return
 
     def __parse_string(self, str, patt=_CookiePattern):
-        i = 0                 # Our starting point
-        n = len(str)          # Length of string
-        parsed_items = []     # Parsed (type, key, value) triples
-        morsel_seen = False   # A key=value pair was previously encountered
+        i = 0  # Our starting point
+        n = len(str)  # Length of string
+        parsed_items = []  # Parsed (type, key, value) triples
+        morsel_seen = False  # A key=value pair was previously encountered
 
         TYPE_ATTRIBUTE = 1
         TYPE_KEYVALUE = 2
@@ -582,7 +587,7 @@ class BaseCookie(dict):
                 return
 
         # The cookie string is valid, apply it.
-        M = None         # current morsel
+        M = None  # current morsel
         for tp, key, value in parsed_items:
             if tp == TYPE_ATTRIBUTE:
                 assert M is not None
@@ -601,6 +606,7 @@ class SimpleCookie(BaseCookie):
     calls the builtin str() to convert the value to a string.  Values
     received from HTTP are kept as strings.
     """
+
     def value_decode(self, val):
         return _unquote(val), val
 

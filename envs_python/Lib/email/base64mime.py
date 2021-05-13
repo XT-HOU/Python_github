@@ -31,8 +31,7 @@ __all__ = [
     'decodestring',
     'header_encode',
     'header_length',
-    ]
-
+]
 
 from base64 import b64encode
 from binascii import b2a_base64, a2b_base64
@@ -45,7 +44,6 @@ EMPTYSTRING = ''
 MISC_LEN = 7
 
 
-
 # Helpers
 def header_length(bytearray):
     """Return the length of s when it is encoded with base64."""
@@ -57,7 +55,6 @@ def header_length(bytearray):
     return n
 
 
-
 def header_encode(header_bytes, charset='iso-8859-1'):
     """Encode a single header line with Base64 encoding in a given charset.
 
@@ -72,7 +69,6 @@ def header_encode(header_bytes, charset='iso-8859-1'):
     return '=?%s?b?%s?=' % (charset, encoded)
 
 
-
 def body_encode(s, maxlinelen=76, eol=NL):
     r"""Encode a string with base64.
 
@@ -98,7 +94,6 @@ def body_encode(s, maxlinelen=76, eol=NL):
     return EMPTYSTRING.join(encvec)
 
 
-
 def decode(string):
     """Decode a raw base64 string, returning a bytes object.
 

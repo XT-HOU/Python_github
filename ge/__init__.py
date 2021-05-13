@@ -2,5 +2,5 @@
 # -*- coding:utf-8 -*-
 
 import ge.model
-names = model.names
 
+names = model.names

@@ -14,6 +14,7 @@ from xml.sax.handler import property_xml_string, property_interning_dict
 
 # xml.parsers.expat does not raise ImportError in Jython
 import sys
+
 if sys.platform[:4] == "java":
     raise SAXReaderNotAvailable("expat not available in Java", None)
 del sys
@@ -40,11 +41,14 @@ except ImportError:
         return o
 else:
     import weakref
+
     _mkproxy = weakref.proxy
     del weakref, _weakref
 
+
 class _ClosedParser:
     pass
+
 
 # --- ExpatLocator
 
@@ -54,6 +58,7 @@ class ExpatLocator(xmlreader.Locator):
     This uses a weak reference to the parser object to avoid creating
     a circular reference between the parser and the content handler.
     """
+
     def __init__(self, parser):
         self._ref = _mkproxy(parser)
 
@@ -87,7 +92,7 @@ class ExpatLocator(xmlreader.Locator):
 class ExpatParser(xmlreader.IncrementalParser, xmlreader.Locator):
     """SAX driver for the pyexpat C module."""
 
-    def __init__(self, namespaceHandling=0, bufsize=2**16-20):
+    def __init__(self, namespaceHandling=0, bufsize=2 ** 16 - 20):
         xmlreader.IncrementalParser.__init__(self, bufsize)
         self._source = xmlreader.InputSource()
         self._parser = None
@@ -203,7 +208,7 @@ class ExpatParser(xmlreader.IncrementalParser, xmlreader.Locator):
 
     # IncrementalParser methods
 
-    def feed(self, data, isFinal = 0):
+    def feed(self, data, isFinal=0):
         if not self._parsing:
             self.reset()
             self._parsing = 1
@@ -233,11 +238,11 @@ class ExpatParser(xmlreader.IncrementalParser, xmlreader.Locator):
 
     def close(self):
         if (self._entity_stack or self._parser is None or
-            isinstance(self._parser, _ClosedParser)):
+                isinstance(self._parser, _ClosedParser)):
             # If we are completing an external entity, do nothing here
             return
         try:
-            self.feed("", isFinal = 1)
+            self.feed("", isFinal=1)
             self._cont_handler.endDocument()
             self._parsing = 0
             # break cycle created by expat handlers pointing to our methods
@@ -254,7 +259,7 @@ class ExpatParser(xmlreader.IncrementalParser, xmlreader.Locator):
 
     def _reset_cont_handler(self):
         self._parser.ProcessingInstructionHandler = \
-                                    self._cont_handler.processingInstruction
+            self._cont_handler.processingInstruction
         self._parser.CharacterDataHandler = self._cont_handler.characters
 
     def _reset_lex_handler_prop(self):
@@ -282,7 +287,7 @@ class ExpatParser(xmlreader.IncrementalParser, xmlreader.Locator):
             self._parser.EndElementHandler = self.end_element_ns
         else:
             self._parser = expat.ParserCreate(self._source.getEncoding(),
-                                              intern = self._interning)
+                                              intern=self._interning)
             self._parser.StartElementHandler = self.start_element
             self._parser.EndElementHandler = self.end_element
 
@@ -295,9 +300,9 @@ class ExpatParser(xmlreader.IncrementalParser, xmlreader.Locator):
         self._decl_handler_prop = None
         if self._lex_handler_prop:
             self._reset_lex_handler_prop()
-#         self._parser.DefaultHandler =
-#         self._parser.DefaultHandlerExpand =
-#         self._parser.NotStandaloneHandler =
+        #         self._parser.DefaultHandler =
+        #         self._parser.DefaultHandlerExpand =
+        #         self._parser.NotStandaloneHandler =
         self._parser.ExternalEntityRefHandler = self.external_entity_ref
         try:
             self._parser.SkippedEntityHandler = self.skipped_entity_handler
@@ -428,18 +433,21 @@ class ExpatParser(xmlreader.IncrementalParser, xmlreader.Locator):
     def skipped_entity_handler(self, name, is_pe):
         if is_pe:
             # The SAX spec requires to report skipped PEs with a '%'
-            name = '%'+name
+            name = '%' + name
         self._cont_handler.skippedEntity(name)
+
 
 # ---
 
 def create_parser(*args, **kwargs):
     return ExpatParser(*args, **kwargs)
 
+
 # ---
 
 if __name__ == "__main__":
     import xml.sax.saxutils
+
     p = create_parser()
     p.setContentHandler(xml.sax.saxutils.XMLGenerator())
     p.setErrorHandler(xml.sax.ErrorHandler())

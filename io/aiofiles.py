@@ -32,7 +32,7 @@ async def test():
         async for line in fp.read():
             async with aiofiles.open("/io/aa.txt", "a", encoding="utf-8") as f:
                 await f.write(line)
-                    # print(line)
+                # print(line)
 
 
 if __name__ == "__main__":

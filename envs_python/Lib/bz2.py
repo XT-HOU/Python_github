@@ -18,15 +18,13 @@ from threading import RLock
 
 from _bz2 import BZ2Compressor, BZ2Decompressor
 
-
-_MODE_CLOSED   = 0
-_MODE_READ     = 1
+_MODE_CLOSED = 0
+_MODE_READ = 1
 # Value 2 no longer used
-_MODE_WRITE    = 3
+_MODE_WRITE = 3
 
 
 class BZ2File(_compression.BaseStream):
-
     """A file object providing transparent bzip2 (de)compression.
 
     A BZ2File can act as a wrapper for an existing file object, or refer
@@ -100,7 +98,7 @@ class BZ2File(_compression.BaseStream):
 
         if self._mode == _MODE_READ:
             raw = _compression.DecompressReader(self._fp,
-                BZ2Decompressor, trailing_error=OSError)
+                                                BZ2Decompressor, trailing_error=OSError)
             self._buffer = io.BufferedReader(raw)
         else:
             self._pos = 0

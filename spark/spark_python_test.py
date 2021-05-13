@@ -29,7 +29,7 @@ def longtime_fun():
     # spark()
     long_fun()
     end_time = datetime.datetime.now()
-    print("计算总时长 %d 秒" % (end_time-start_time).seconds)
+    print("计算总时长 %d 秒" % (end_time - start_time).seconds)
 
 
 if __name__ == '__main__':

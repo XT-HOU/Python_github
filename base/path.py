@@ -3,7 +3,6 @@
 
 import os
 
-
 print("===获取当前文件目录===")
 # 当前脚本工作的目录路径
 print(os.getcwd())
@@ -21,5 +20,3 @@ print(os.path.dirname(os.getcwd()))
 print("==== 设置路径为当前文件上层目录的test_case文件夹====")
 path = os.path.join(os.path.dirname(os.getcwd()), "test_case")
 print(path)
-
-

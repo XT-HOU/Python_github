@@ -7,7 +7,7 @@ __all__ = [
     'add_alias',
     'add_charset',
     'add_codec',
-    ]
+]
 
 from functools import partial
 
@@ -17,12 +17,10 @@ import email.quoprimime
 from email import errors
 from email.encoders import encode_7or8bit
 
-
-
 # Flags for types of header encodings
-QP          = 1 # Quoted-Printable
-BASE64      = 2 # Base64
-SHORTEST    = 3 # the shorter of QP and base64, but only for headers
+QP = 1  # Quoted-Printable
+BASE64 = 2  # Base64
+SHORTEST = 3  # the shorter of QP and base64, but only for headers
 
 # In "=?charset?q?hello_world?=", the =?, ?q?, and ?= add up to 7
 RFC2047_CHROME_LEN = 7
@@ -31,37 +29,35 @@ DEFAULT_CHARSET = 'us-ascii'
 UNKNOWN8BIT = 'unknown-8bit'
 EMPTYSTRING = ''
 
-
-
 # Defaults
 CHARSETS = {
     # input        header enc  body enc output conv
-    'iso-8859-1':  (QP,        QP,      None),
-    'iso-8859-2':  (QP,        QP,      None),
-    'iso-8859-3':  (QP,        QP,      None),
-    'iso-8859-4':  (QP,        QP,      None),
+    'iso-8859-1': (QP, QP, None),
+    'iso-8859-2': (QP, QP, None),
+    'iso-8859-3': (QP, QP, None),
+    'iso-8859-4': (QP, QP, None),
     # iso-8859-5 is Cyrillic, and not especially used
     # iso-8859-6 is Arabic, also not particularly used
     # iso-8859-7 is Greek, QP will not make it readable
     # iso-8859-8 is Hebrew, QP will not make it readable
-    'iso-8859-9':  (QP,        QP,      None),
-    'iso-8859-10': (QP,        QP,      None),
+    'iso-8859-9': (QP, QP, None),
+    'iso-8859-10': (QP, QP, None),
     # iso-8859-11 is Thai, QP will not make it readable
-    'iso-8859-13': (QP,        QP,      None),
-    'iso-8859-14': (QP,        QP,      None),
-    'iso-8859-15': (QP,        QP,      None),
-    'iso-8859-16': (QP,        QP,      None),
-    'windows-1252':(QP,        QP,      None),
-    'viscii':      (QP,        QP,      None),
-    'us-ascii':    (None,      None,    None),
-    'big5':        (BASE64,    BASE64,  None),
-    'gb2312':      (BASE64,    BASE64,  None),
-    'euc-jp':      (BASE64,    None,    'iso-2022-jp'),
-    'shift_jis':   (BASE64,    None,    'iso-2022-jp'),
-    'iso-2022-jp': (BASE64,    None,    None),
-    'koi8-r':      (BASE64,    BASE64,  None),
-    'utf-8':       (SHORTEST,  BASE64, 'utf-8'),
-    }
+    'iso-8859-13': (QP, QP, None),
+    'iso-8859-14': (QP, QP, None),
+    'iso-8859-15': (QP, QP, None),
+    'iso-8859-16': (QP, QP, None),
+    'windows-1252': (QP, QP, None),
+    'viscii': (QP, QP, None),
+    'us-ascii': (None, None, None),
+    'big5': (BASE64, BASE64, None),
+    'gb2312': (BASE64, BASE64, None),
+    'euc-jp': (BASE64, None, 'iso-2022-jp'),
+    'shift_jis': (BASE64, None, 'iso-2022-jp'),
+    'iso-2022-jp': (BASE64, None, None),
+    'koi8-r': (BASE64, BASE64, None),
+    'utf-8': (SHORTEST, BASE64, 'utf-8'),
+}
 
 # Aliases for other commonly-used names for character sets.  Map
 # them to the real ones used in email.
@@ -84,27 +80,25 @@ ALIASES = {
     'latin-8': 'iso-8859-14',
     'latin_9': 'iso-8859-15',
     'latin-9': 'iso-8859-15',
-    'latin_10':'iso-8859-16',
-    'latin-10':'iso-8859-16',
-    'cp949':   'ks_c_5601-1987',
-    'euc_jp':  'euc-jp',
-    'euc_kr':  'euc-kr',
-    'ascii':   'us-ascii',
-    }
-
+    'latin_10': 'iso-8859-16',
+    'latin-10': 'iso-8859-16',
+    'cp949': 'ks_c_5601-1987',
+    'euc_jp': 'euc-jp',
+    'euc_kr': 'euc-kr',
+    'ascii': 'us-ascii',
+}
 
 # Map charsets to their Unicode codec strings.
 CODEC_MAP = {
-    'gb2312':      'eucgb2312_cn',
-    'big5':        'big5_tw',
+    'gb2312': 'eucgb2312_cn',
+    'big5': 'big5_tw',
     # Hack: We don't want *any* conversion for stuff marked us-ascii, as all
     # sorts of garbage might be sent to us in the guise of 7-bit us-ascii.
     # Let that stuff pass through without conversion to/from Unicode.
-    'us-ascii':    None,
-    }
+    'us-ascii': None,
+}
 
 
-
 # Convenience functions for extending the above mappings
 def add_charset(charset, header_enc=None, body_enc=None, output_charset=None):
     """Add character set properties to the global registry.
@@ -153,7 +147,6 @@ def add_codec(charset, codecname):
     CODEC_MAP[charset] = codecname
 
 
-
 # Convenience function for encoding strings, taking into account
 # that they might be unknown-8bit (ie: have surrogate-escaped bytes)
 def _encode(string, codec):
@@ -163,7 +156,6 @@ def _encode(string, codec):
         return string.encode(codec)
 
 
-
 class Charset:
     """Map character sets to their email properties.
 
@@ -208,6 +200,7 @@ class Charset:
                   to the output_charset.  If no conversion codec is necessary,
                   this attribute will have the same value as the input_codec.
     """
+
     def __init__(self, input_charset=DEFAULT_CHARSET):
         # RFC 2046, $4.1.2 says charsets are not case sensitive.  We coerce to
         # unicode because its .lower() is locale insensitive.  If the argument

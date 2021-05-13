@@ -17,6 +17,7 @@ from email import errors
 from email._policybase import Policy, compat32
 from email import charset as _charset
 from email._encoded_words import decode_b
+
 Charset = _charset.Charset
 
 SEMISPACE = '; '
@@ -35,7 +36,8 @@ def _splitparam(param):
     if not sep:
         return a.strip(), None
     return a.strip(), b.strip()
-
+
+
 def _formatparam(param, value=None, quote=True):
     """Convenience function to format and return a key=value pair.
 
@@ -70,6 +72,7 @@ def _formatparam(param, value=None, quote=True):
     else:
         return param
 
+
 def _parseparam(s):
     # RDM This might be a Header, so for now stringify it.
     s = ';' + str(s)
@@ -84,7 +87,7 @@ def _parseparam(s):
         f = s[:end]
         if '=' in f:
             i = f.index('=')
-            f = f[:i].strip().lower() + '=' + f[i+1:].strip()
+            f = f[:i].strip().lower() + '=' + f[i + 1:].strip()
         plist.append(f.strip())
         s = s[end:]
     return plist
@@ -101,7 +104,6 @@ def _unquotevalue(value):
         return utils.unquote(value)
 
 
-
 class Message:
     """Basic message object.
 
@@ -117,6 +119,7 @@ class Message:
     you must use the explicit API to set or get all the headers.  Not all of
     the mapping methods are implemented.
     """
+
     def __init__(self, policy=compat32):
         self.policy = policy
         self._headers = []
@@ -950,7 +953,6 @@ class MIMEPart(Message):
             policy = default
         Message.__init__(self, policy)
 
-
     def as_string(self, unixfrom=False, maxheaderlen=None, policy=None):
         """Return the entire formatted message as a string.
 
@@ -1027,6 +1029,7 @@ class MIMEPart(Message):
                    ('text', 'html'),
                    ('multipart', 'related'),
                    ('multipart', 'alternative')}
+
     def iter_attachments(self):
         """Return an iterator over the non-main parts of a multipart.
 
@@ -1073,7 +1076,7 @@ class MIMEPart(Message):
         # Otherwise we more or less invert the remaining logic in get_body.
         # This only really works in edge cases (ex: non-text related or
         # alternatives) if the sending agent sets content-disposition.
-        seen = []   # Only skip the first example of each candidate type.
+        seen = []  # Only skip the first example of each candidate type.
         for part in parts:
             maintype, subtype = part.get_content_type().split('/')
             if ((maintype, subtype) in self._body_types and

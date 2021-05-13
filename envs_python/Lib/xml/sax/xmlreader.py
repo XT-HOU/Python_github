@@ -88,6 +88,7 @@ class XMLReader:
         "Sets the value of a SAX2 property."
         raise SAXNotRecognizedException("Property '%s' not recognized" % name)
 
+
 class IncrementalParser(XMLReader):
     """This interface adds three extra methods to the XMLReader
     interface that allow XML parsers to support incremental
@@ -108,7 +109,7 @@ class IncrementalParser(XMLReader):
     IncrementalParser interface as a convenience to SAX 2.0 driver
     writers."""
 
-    def __init__(self, bufsize=2**16):
+    def __init__(self, bufsize=2 ** 16):
         self._bufsize = bufsize
         XMLReader.__init__(self)
 
@@ -160,6 +161,7 @@ class IncrementalParser(XMLReader):
         reset are undefined."""
         raise NotImplementedError("This method must be implemented!")
 
+
 # ===== LOCATOR =====
 
 class Locator:
@@ -184,6 +186,7 @@ class Locator:
         "Return the system identifier for the current event."
         return None
 
+
 # ===== INPUTSOURCE =====
 
 class InputSource:
@@ -202,12 +205,12 @@ class InputSource:
     allowed to modify InputSource objects passed to it from the
     application, although it may make copies and modify those."""
 
-    def __init__(self, system_id = None):
+    def __init__(self, system_id=None):
         self.__system_id = system_id
         self.__public_id = None
-        self.__encoding  = None
-        self.__bytefile  = None
-        self.__charfile  = None
+        self.__encoding = None
+        self.__bytefile = None
+        self.__charfile = None
 
     def setPublicId(self, public_id):
         "Sets the public identifier of this InputSource."
@@ -273,6 +276,7 @@ class InputSource:
         "Get the character stream for this input source."
         return self.__charfile
 
+
 # ===== ATTRIBUTESIMPL =====
 
 class AttributesImpl:
@@ -335,6 +339,7 @@ class AttributesImpl:
     def values(self):
         return list(self._attrs.values())
 
+
 # ===== ATTRIBUTESNSIMPL =====
 
 class AttributesNSImpl(AttributesImpl):
@@ -375,6 +380,7 @@ def _test():
     XMLReader()
     IncrementalParser()
     Locator()
+
 
 if __name__ == "__main__":
     _test()

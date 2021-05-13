@@ -2,6 +2,7 @@ import unittest
 import test.support
 from ctypes import *
 
+
 class AnonTest(unittest.TestCase):
 
     def test_anon(self):
@@ -24,17 +25,17 @@ class AnonTest(unittest.TestCase):
     def test_anon_nonseq(self):
         # TypeError: _anonymous_ must be a sequence
         self.assertRaises(TypeError,
-                              lambda: type(Structure)("Name",
-                                                      (Structure,),
-                                                      {"_fields_": [], "_anonymous_": 42}))
+                          lambda: type(Structure)("Name",
+                                                  (Structure,),
+                                                  {"_fields_": [], "_anonymous_": 42}))
 
     def test_anon_nonmember(self):
         # AttributeError: type object 'Name' has no attribute 'x'
         self.assertRaises(AttributeError,
-                              lambda: type(Structure)("Name",
-                                                      (Structure,),
-                                                      {"_fields_": [],
-                                                       "_anonymous_": ["x"]}))
+                          lambda: type(Structure)("Name",
+                                                  (Structure,),
+                                                  {"_fields_": [],
+                                                   "_anonymous_": ["x"]}))
 
     @test.support.cpython_only
     def test_issue31490(self):
@@ -68,6 +69,7 @@ class AnonTest(unittest.TestCase):
         self.assertEqual(Y.b.offset, sizeof(c_int))
         self.assertEqual(Y._.offset, sizeof(c_int))
         self.assertEqual(Y.y.offset, sizeof(c_int) * 2)
+
 
 if __name__ == "__main__":
     unittest.main()

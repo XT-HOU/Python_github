@@ -10,3 +10,5 @@ tab:命令补齐
     repotrack ansible
 # 离线安装(切换到下载目录)
     rpm -Uvh --force --nodeps *.rpm
+# 查看所有服务centos6.5
+    netstat -atunlp

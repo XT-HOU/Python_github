@@ -32,8 +32,8 @@ _BLOCKSIZE = 512
 
 error = OSError
 
-class _Database(collections.abc.MutableMapping):
 
+class _Database(collections.abc.MutableMapping):
     # The on-disk directory and data files can remain in mutually
     # inconsistent states for an arbitrarily long time (see comments
     # at the end of __setitem__).  This is only repaired when _commit()
@@ -42,8 +42,8 @@ class _Database(collections.abc.MutableMapping):
     # already have gotten rebound to None.  Since it's crucial that
     # _commit() finish successfully, we can't ignore shutdown races
     # here, and _commit() must not reference any globals.
-    _os = _os       # for _commit()
-    _io = _io       # for _commit()
+    _os = _os  # for _commit()
+    _io = _io  # for _commit()
 
     def __init__(self, filebasename, mode, flag='c'):
         self._mode = mode
@@ -150,7 +150,7 @@ class _Database(collections.abc.MutableMapping):
         if isinstance(key, str):
             key = key.encode('utf-8')
         self._verify_open()
-        pos, siz = self._index[key]     # may raise KeyError
+        pos, siz = self._index[key]  # may raise KeyError
         with _io.open(self._datfile, 'rb') as f:
             f.seek(pos)
             dat = f.read(siz)
@@ -165,7 +165,7 @@ class _Database(collections.abc.MutableMapping):
             f.seek(0, 2)
             pos = int(f.tell())
             npos = ((pos + _BLOCKSIZE - 1) // _BLOCKSIZE) * _BLOCKSIZE
-            f.write(b'\0'*(npos-pos))
+            f.write(b'\0' * (npos - pos))
             pos = npos
             f.write(val)
         return (pos, len(val))
@@ -271,6 +271,7 @@ class _Database(collections.abc.MutableMapping):
             return iter(self._index)
         except TypeError:
             raise error('DBM object has already been closed') from None
+
     __iter__ = iterkeys
 
     def __len__(self):

@@ -6,6 +6,7 @@ import test.support
 from ctypes import *
 from ctypes.util import find_library
 
+
 # On some systems, loading the OpenGL libraries needs the RTLD_GLOBAL mode.
 class Test_OpenGL_libs(unittest.TestCase):
     @classmethod

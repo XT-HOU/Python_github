@@ -3,6 +3,7 @@ import unittest
 import sys
 from ctypes import *
 
+
 class BytesTest(unittest.TestCase):
     def test_c_char(self):
         x = c_char(b"x")

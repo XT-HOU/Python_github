@@ -32,13 +32,13 @@ _nodeTypes_with_children = (xml.dom.Node.ELEMENT_NODE,
 
 
 class Node(xml.dom.Node):
-    namespaceURI = None # this is non-null only for elements and attributes
+    namespaceURI = None  # this is non-null only for elements and attributes
     parentNode = None
     ownerDocument = None
     nextSibling = None
     previousSibling = None
 
-    prefix = EMPTY_PREFIX # non-null only for NS elements and attributes
+    prefix = EMPTY_PREFIX  # non-null only for NS elements and attributes
 
     def __bool__(self):
         return True
@@ -102,7 +102,7 @@ class Node(xml.dom.Node):
             newChild.nextSibling = refChild
             refChild.previousSibling = newChild
             if index:
-                node = self.childNodes[index-1]
+                node = self.childNodes[index - 1]
                 node.nextSibling = newChild
                 newChild.previousSibling = node
             else:
@@ -147,7 +147,7 @@ class Node(xml.dom.Node):
         newChild.parentNode = self
         oldChild.parentNode = None
         if (newChild.nodeType in _nodeTypes_with_children
-            or oldChild.nodeType in _nodeTypes_with_children):
+                or oldChild.nodeType in _nodeTypes_with_children):
             _clear_id_cache(self)
         newChild.nextSibling = oldChild.nextSibling
         newChild.previousSibling = oldChild.previousSibling
@@ -276,9 +276,10 @@ class Node(xml.dom.Node):
     def __exit__(self, et, ev, tb):
         self.unlink()
 
+
 defproperty(Node, "firstChild", doc="First child node, or None.")
-defproperty(Node, "lastChild",  doc="Last child node, or None.")
-defproperty(Node, "localName",  doc="Namespace-local name of this node.")
+defproperty(Node, "lastChild", doc="Last child node, or None.")
+defproperty(Node, "localName", doc="Namespace-local name of this node.")
 
 
 def _append_child(self, node):
@@ -291,6 +292,7 @@ def _append_child(self, node):
     childNodes.append(node)
     node.parentNode = self
 
+
 def _in_document(node):
     # return True iff node is part of a document tree
     while node is not None:
@@ -299,29 +301,33 @@ def _in_document(node):
         node = node.parentNode
     return False
 
+
 def _write_data(writer, data):
     "Writes datachars to writer."
     if data:
         data = data.replace("&", "&amp;").replace("<", "&lt;"). \
-                    replace("\"", "&quot;").replace(">", "&gt;")
+            replace("\"", "&quot;").replace(">", "&gt;")
         writer.write(data)
+
 
 def _get_elements_by_tagName_helper(parent, name, rc):
     for node in parent.childNodes:
         if node.nodeType == Node.ELEMENT_NODE and \
-            (name == "*" or node.tagName == name):
+                (name == "*" or node.tagName == name):
             rc.append(node)
         _get_elements_by_tagName_helper(node, name, rc)
     return rc
+
 
 def _get_elements_by_tagName_ns_helper(parent, nsURI, localName, rc):
     for node in parent.childNodes:
         if node.nodeType == Node.ELEMENT_NODE:
             if ((localName == "*" or node.localName == localName) and
-                (nsURI == "*" or node.namespaceURI == nsURI)):
+                    (nsURI == "*" or node.namespaceURI == nsURI)):
                 rc.append(node)
             _get_elements_by_tagName_ns_helper(node, nsURI, localName, rc)
     return rc
+
 
 class DocumentFragment(Node):
     nodeType = Node.DOCUMENT_FRAGMENT_NODE
@@ -342,8 +348,8 @@ class DocumentFragment(Node):
 
 
 class Attr(Node):
-    __slots__=('_name', '_value', 'namespaceURI',
-               '_prefix', 'childNodes', '_localName', 'ownerDocument', 'ownerElement')
+    __slots__ = ('_name', '_value', 'namespaceURI',
+                 '_prefix', 'childNodes', '_localName', 'ownerDocument', 'ownerElement')
     nodeType = Node.ATTRIBUTE_NODE
     attributes = None
     specified = False
@@ -462,8 +468,9 @@ class Attr(Node):
         else:
             return info.getAttributeType(self.nodeName)
 
-defproperty(Attr, "isId",       doc="True if this attribute is an ID.")
-defproperty(Attr, "localName",  doc="Namespace-local name of this attribute.")
+
+defproperty(Attr, "isId", doc="True if this attribute is an ID.")
+defproperty(Attr, "localName", doc="Namespace-local name of this attribute.")
 defproperty(Attr, "schemaType", doc="Schema type for this attribute.")
 
 
@@ -630,6 +637,7 @@ class NamedNodeMap(object):
     def __setstate__(self, state):
         self._attrs, self._attrsNS, self._ownerElement = state
 
+
 defproperty(NamedNodeMap, "length",
             doc="Number of nodes in the NamedNodeMap.")
 
@@ -656,12 +664,14 @@ class TypeInfo(object):
     def _get_namespace(self):
         return self.namespace
 
+
 _no_type = TypeInfo(None, None)
 
+
 class Element(Node):
-    __slots__=('ownerDocument', 'parentNode', 'tagName', 'nodeName', 'prefix',
-               'namespaceURI', '_localName', 'childNodes', '_attrs', '_attrsNS',
-               'nextSibling', 'previousSibling')
+    __slots__ = ('ownerDocument', 'parentNode', 'tagName', 'nodeName', 'prefix',
+                 'namespaceURI', '_localName', 'childNodes', '_attrs', '_attrsNS',
+                 'nextSibling', 'previousSibling')
     nodeType = Node.ELEMENT_NODE
     nodeValue = None
     schemaType = _no_type
@@ -737,7 +747,7 @@ class Element(Node):
         attr = self.getAttributeNode(attname)
         if attr is None:
             attr = Attr(attname)
-            attr.value = value # also sets nodeValue
+            attr.value = value  # also sets nodeValue
             attr.ownerDocument = self.ownerDocument
             self.setAttributeNode(attr)
         elif value != attr.value:
@@ -850,7 +860,7 @@ class Element(Node):
         # indent = current indentation
         # addindent = indentation to add to higher levels
         # newl = newline string
-        writer.write(indent+"<" + self.tagName)
+        writer.write(indent + "<" + self.tagName)
 
         attrs = self._get_attributes()
         a_names = sorted(attrs.keys())
@@ -862,16 +872,16 @@ class Element(Node):
         if self.childNodes:
             writer.write(">")
             if (len(self.childNodes) == 1 and
-                self.childNodes[0].nodeType == Node.TEXT_NODE):
+                    self.childNodes[0].nodeType == Node.TEXT_NODE):
                 self.childNodes[0].writexml(writer, '', '', '')
             else:
                 writer.write(newl)
                 for node in self.childNodes:
-                    node.writexml(writer, indent+addindent, addindent, newl)
+                    node.writexml(writer, indent + addindent, addindent, newl)
                 writer.write(indent)
             writer.write("</%s>%s" % (self.tagName, newl))
         else:
-            writer.write("/>%s"%(newl))
+            writer.write("/>%s" % (newl))
 
     def _get_attributes(self):
         self._ensure_attributes()
@@ -904,6 +914,7 @@ class Element(Node):
             self.ownerDocument._magic_id_count += 1
             _clear_id_cache(self)
 
+
 defproperty(Element, "attributes",
             doc="NamedNodeMap of attributes on the element.")
 defproperty(Element, "localName",
@@ -920,6 +931,7 @@ def _set_attribute_node(element, attr):
     # breaks the cycle since the references to the attribute
     # dictionaries are tossed.
     attr.ownerElement = element
+
 
 class Childless:
     """Mixin that makes childless-ness easy to implement and avoids
@@ -973,23 +985,27 @@ class ProcessingInstruction(Childless, Node):
     # nodeValue is an alias for data
     def _get_nodeValue(self):
         return self.data
+
     def _set_nodeValue(self, value):
         self.data = value
+
     nodeValue = property(_get_nodeValue, _set_nodeValue)
 
     # nodeName is an alias for target
     def _get_nodeName(self):
         return self.target
+
     def _set_nodeName(self, value):
         self.target = value
+
     nodeName = property(_get_nodeName, _set_nodeName)
 
     def writexml(self, writer, indent="", addindent="", newl=""):
-        writer.write("%s<?%s %s?>%s" % (indent,self.target, self.data, newl))
+        writer.write("%s<?%s %s?>%s" % (indent, self.target, self.data, newl))
 
 
 class CharacterData(Childless, Node):
-    __slots__=('_data', 'ownerDocument','parentNode', 'previousSibling', 'nextSibling')
+    __slots__ = ('_data', 'ownerDocument', 'parentNode', 'previousSibling', 'nextSibling')
 
     def __init__(self):
         self.ownerDocument = self.parentNode = None
@@ -999,10 +1015,12 @@ class CharacterData(Childless, Node):
 
     def _get_length(self):
         return len(self.data)
+
     __len__ = _get_length
 
     def _get_data(self):
         return self._data
+
     def _set_data(self, data):
         self._data = data
 
@@ -1024,7 +1042,7 @@ class CharacterData(Childless, Node):
             raise xml.dom.IndexSizeErr("offset cannot be beyond end of data")
         if count < 0:
             raise xml.dom.IndexSizeErr("count cannot be negative")
-        return self.data[offset:offset+count]
+        return self.data[offset:offset + count]
 
     def appendData(self, arg):
         self.data = self.data + arg
@@ -1046,7 +1064,7 @@ class CharacterData(Childless, Node):
         if count < 0:
             raise xml.dom.IndexSizeErr("count cannot be negative")
         if count:
-            self.data = self.data[:offset] + self.data[offset+count:]
+            self.data = self.data[:offset] + self.data[offset + count:]
 
     def replaceData(self, offset, count, arg):
         if offset < 0:
@@ -1057,7 +1075,8 @@ class CharacterData(Childless, Node):
             raise xml.dom.IndexSizeErr("count cannot be negative")
         if count:
             self.data = "%s%s%s" % (
-                self.data[:offset], arg, self.data[offset+count:])
+                self.data[:offset], arg, self.data[offset + count:])
+
 
 defproperty(CharacterData, "length", doc="Length of the string data.")
 
@@ -1147,6 +1166,7 @@ class Text(CharacterData):
         else:
             return info.isElementContent()
 
+
 defproperty(Text, "isWhitespaceInElementContent",
             doc="True iff this text node contains only whitespace"
                 " and is in element content.")
@@ -1161,6 +1181,7 @@ def _get_containing_element(node):
             return c
         c = c.parentNode
     return None
+
 
 def _get_containing_entref(node):
     c = node.parentNode
@@ -1259,6 +1280,7 @@ class ReadOnlySequentialNamedNodeMap(object):
     def __setstate__(self, state):
         self._seq = state[0]
 
+
 defproperty(ReadOnlySequentialNamedNodeMap, "length",
             doc="Number of entries in the NamedNodeMap.")
 
@@ -1277,6 +1299,7 @@ class Identified:
 
     def _get_systemId(self):
         return self.systemId
+
 
 class DocumentType(Identified, Childless, Node):
     nodeType = Node.DOCUMENT_TYPE_NODE
@@ -1336,7 +1359,8 @@ class DocumentType(Identified, Childless, Node):
             writer.write(" [")
             writer.write(self.internalSubset)
             writer.write("]")
-        writer.write(">"+newl)
+        writer.write(">" + newl)
+
 
 class Entity(Identified, Node):
     attributes = None
@@ -1377,6 +1401,7 @@ class Entity(Identified, Node):
     def replaceChild(self, newChild, oldChild):
         raise xml.dom.HierarchyRequestErr(
             "cannot replace children of an entity node")
+
 
 class Notation(Identified, Childless, Node):
     nodeType = Node.NOTATION_NODE
@@ -1431,7 +1456,7 @@ class DOMImplementation(DOMImplementationLS):
         if add_root_element:
             prefix, localname = _nssplit(qualifiedName)
             if prefix == "xml" \
-               and namespaceURI != "http://www.w3.org/XML/1998/namespace":
+                    and namespaceURI != "http://www.w3.org/XML/1998/namespace":
                 raise xml.dom.NamespaceErr("illegal use of 'xml' prefix")
             if prefix and not namespaceURI:
                 raise xml.dom.NamespaceErr(
@@ -1465,6 +1490,7 @@ class DOMImplementation(DOMImplementationLS):
     # internal
     def _create_document(self):
         return Document()
+
 
 class ElementInfo(object):
     """Object that represents content-model information for an element.
@@ -1508,13 +1534,15 @@ class ElementInfo(object):
     def __setstate__(self, state):
         self.tagName = state
 
+
 def _clear_id_cache(node):
     if node.nodeType == Node.DOCUMENT_NODE:
         node._id_cache.clear()
         node._id_search_stack = None
     elif _in_document(node):
         node.ownerDocument._id_cache.clear()
-        node.ownerDocument._id_search_stack= None
+        node.ownerDocument._id_search_stack = None
+
 
 class Document(Node, DocumentLS):
     __slots__ = ('_elem_info', 'doctype',
@@ -1529,7 +1557,6 @@ class Document(Node, DocumentLS):
     attributes = None
     parentNode = None
     previousSibling = nextSibling = None
-
 
     # Document attributes from Level 3 (WD 9 April 2002)
 
@@ -1594,7 +1621,7 @@ class Document(Node, DocumentLS):
             node.parentNode.removeChild(node)
 
         if node.nodeType == Node.ELEMENT_NODE \
-           and self._get_documentElement():
+                and self._get_documentElement():
             raise xml.dom.HierarchyRequestErr(
                 "two document elements disallowed")
         return Node.appendChild(self, node)
@@ -1788,7 +1815,7 @@ class Document(Node, DocumentLS):
 
     def writexml(self, writer, indent="", addindent="", newl="", encoding=None):
         if encoding is None:
-            writer.write('<?xml version="1.0" ?>'+newl)
+            writer.write('<?xml version="1.0" ?>' + newl)
         else:
             writer.write('<?xml version="1.0" encoding="%s"?>%s' % (
                 encoding, newl))
@@ -1808,14 +1835,14 @@ class Document(Node, DocumentLS):
         if namespaceURI != EMPTY_NAMESPACE:
             if ':' in name:
                 prefix, localName = name.split(':', 1)
-                if (  prefix == "xmlns"
-                      and namespaceURI != xml.dom.XMLNS_NAMESPACE):
+                if (prefix == "xmlns"
+                        and namespaceURI != xml.dom.XMLNS_NAMESPACE):
                     raise xml.dom.NamespaceErr(
                         "illegal use of 'xmlns' prefix")
             else:
-                if (  name == "xmlns"
-                      and namespaceURI != xml.dom.XMLNS_NAMESPACE
-                      and n.nodeType == Node.ATTRIBUTE_NODE):
+                if (name == "xmlns"
+                        and namespaceURI != xml.dom.XMLNS_NAMESPACE
+                        and n.nodeType == Node.ATTRIBUTE_NODE):
                     raise xml.dom.NamespaceErr(
                         "illegal use of the 'xmlns' attribute")
                 prefix = None
@@ -1849,6 +1876,7 @@ class Document(Node, DocumentLS):
         # interpreted as meaning "no, don't call the handler unless a
         # new node is created."
         return n
+
 
 defproperty(Document, "documentElement",
             doc="Top-level element of this document.")
@@ -1951,6 +1979,7 @@ def _do_pulldom_parse(func, args, kwargs):
     events.clear()
     return rootNode
 
+
 def parse(file, parser=None, bufsize=None):
     """Parse a file into a DOM by filename or file object."""
     if parser is None and not bufsize:
@@ -1959,7 +1988,8 @@ def parse(file, parser=None, bufsize=None):
     else:
         from xml.dom import pulldom
         return _do_pulldom_parse(pulldom.parse, (file,),
-            {'parser': parser, 'bufsize': bufsize})
+                                 {'parser': parser, 'bufsize': bufsize})
+
 
 def parseString(string, parser=None):
     """Parse a file into a DOM from a string."""
@@ -1970,6 +2000,7 @@ def parseString(string, parser=None):
         from xml.dom import pulldom
         return _do_pulldom_parse(pulldom.parseString, (string,),
                                  {'parser': parser})
+
 
 def getDOMImplementation(features=None):
     if features:

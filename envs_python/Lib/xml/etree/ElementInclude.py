@@ -56,11 +56,13 @@ XINCLUDE = "{http://www.w3.org/2001/XInclude}"
 XINCLUDE_INCLUDE = XINCLUDE + "include"
 XINCLUDE_FALLBACK = XINCLUDE + "fallback"
 
+
 ##
 # Fatal include error.
 
 class FatalIncludeError(SyntaxError):
     pass
+
 
 ##
 # Default loader.  This loader reads an included resource from disk.
@@ -84,6 +86,7 @@ def default_loader(href, parse, encoding=None):
         with open(href, 'r', encoding=encoding) as file:
             data = file.read()
     return data
+
 
 ##
 # Expand XInclude directives.
@@ -112,7 +115,7 @@ def include(elem, loader=None):
                 if node is None:
                     raise FatalIncludeError(
                         "cannot load %r as %r" % (href, parse)
-                        )
+                    )
                 node = copy.copy(node)
                 if e.tail:
                     node.tail = (node.tail or "") + e.tail
@@ -122,9 +125,9 @@ def include(elem, loader=None):
                 if text is None:
                     raise FatalIncludeError(
                         "cannot load %r as %r" % (href, parse)
-                        )
+                    )
                 if i:
-                    node = elem[i-1]
+                    node = elem[i - 1]
                     node.tail = (node.tail or "") + text + (e.tail or "")
                 else:
                     elem.text = (elem.text or "") + text + (e.tail or "")
@@ -137,7 +140,7 @@ def include(elem, loader=None):
         elif e.tag == XINCLUDE_FALLBACK:
             raise FatalIncludeError(
                 "xi:fallback tag must be child of xi:include (%r)" % e.tag
-                )
+            )
         else:
             include(e, loader)
         i = i + 1

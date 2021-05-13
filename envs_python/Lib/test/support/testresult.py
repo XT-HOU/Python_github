@@ -13,6 +13,7 @@ import xml.etree.ElementTree as ET
 
 from datetime import datetime
 
+
 class RegressionTestResult(unittest.TextTestResult):
     separator1 = '=' * 70 + '\n'
     separator2 = '-' * 70 + '\n'
@@ -153,6 +154,7 @@ class RegressionTestResult(unittest.TextTestResult):
         e.set('failures', str(len(self.failures)))
         return e
 
+
 class QuietRegressionTestRunner:
     def __init__(self, stream, buffer=False):
         self.result = RegressionTestResult(stream, None, 0)
@@ -162,6 +164,7 @@ class QuietRegressionTestRunner:
         test(self.result)
         return self.result
 
+
 def get_test_runner_class(verbosity, buffer=False):
     if verbosity:
         return functools.partial(unittest.TextTestRunner,
@@ -170,8 +173,10 @@ def get_test_runner_class(verbosity, buffer=False):
                                  verbosity=verbosity)
     return functools.partial(QuietRegressionTestRunner, buffer=buffer)
 
+
 def get_test_runner(stream, verbosity, capture_output=False):
     return get_test_runner_class(verbosity, capture_output)(stream)
+
 
 if __name__ == '__main__':
     class TestTests(unittest.TestCase):
@@ -190,6 +195,7 @@ if __name__ == '__main__':
             print('stdout', file=sys.stdout)
             print('stderr', file=sys.stderr)
             raise RuntimeError('error message')
+
 
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestTests))

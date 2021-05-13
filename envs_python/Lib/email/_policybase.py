@@ -12,11 +12,10 @@ __all__ = [
     'Policy',
     'Compat32',
     'compat32',
-    ]
+]
 
 
 class _PolicyBase:
-
     """Policy Object basic framework.
 
     This class is useless unless subclassed.  A subclass should define
@@ -46,15 +45,15 @@ class _PolicyBase:
         """
         for name, value in kw.items():
             if hasattr(self, name):
-                super(_PolicyBase,self).__setattr__(name, value)
+                super(_PolicyBase, self).__setattr__(name, value)
             else:
                 raise TypeError(
                     "{!r} is an invalid keyword argument for {}".format(
                         name, self.__class__.__name__))
 
     def __repr__(self):
-        args = [ "{}={!r}".format(name, value)
-                 for name, value in self.__dict__.items() ]
+        args = ["{}={!r}".format(name, value)
+                for name, value in self.__dict__.items()]
         return "{}({})".format(self.__class__.__name__, ', '.join(args))
 
     def clone(self, **kw):
@@ -96,6 +95,7 @@ def _append_doc(doc, added_doc):
     added_doc = added_doc.split('\n', 1)[1]
     return doc + '\n' + added_doc
 
+
 def _extend_docstrings(cls):
     if cls.__doc__ and cls.__doc__.startswith('+'):
         cls.__doc__ = _append_doc(cls.__bases__[0].__doc__, cls.__doc__)
@@ -110,7 +110,6 @@ def _extend_docstrings(cls):
 
 
 class Policy(_PolicyBase, metaclass=abc.ABCMeta):
-
     r"""Controls for how messages are interpreted and formatted.
 
     Most of the classes and many of the methods in the email package accept
@@ -270,7 +269,6 @@ class Policy(_PolicyBase, metaclass=abc.ABCMeta):
 
 @_extend_docstrings
 class Compat32(Policy):
-
     """+
     This particular policy is the backward compatibility Policy.  It
     replicates the behavior of the email package version 5.1.
@@ -334,7 +332,7 @@ class Compat32(Policy):
         header is used, with its existing line breaks and/or binary data.
 
         """
-        folded = self._fold(name, value, sanitize=self.cte_type=='7bit')
+        folded = self._fold(name, value, sanitize=self.cte_type == '7bit')
         return folded.encode('ascii', 'surrogateescape')
 
     def _fold(self, name, value, sanitize):

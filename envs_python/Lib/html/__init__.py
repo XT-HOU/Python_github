@@ -5,7 +5,6 @@ General functions for HTML manipulation.
 import re as _re
 from html.entities import html5 as _html5
 
-
 __all__ = ['escape', 'unescape']
 
 
@@ -16,7 +15,7 @@ def escape(s, quote=True):
     characters, both double quote (") and single quote (') characters are also
     translated.
     """
-    s = s.replace("&", "&amp;") # Must be done first!
+    s = s.replace("&", "&amp;")  # Must be done first!
     s = s.replace("<", "&lt;")
     s = s.replace(">", "&gt;")
     if quote:
@@ -29,9 +28,9 @@ def escape(s, quote=True):
 
 _invalid_charrefs = {
     0x00: '\ufffd',  # REPLACEMENT CHARACTER
-    0x0d: '\r',      # CARRIAGE RETURN
+    0x0d: '\r',  # CARRIAGE RETURN
     0x80: '\u20ac',  # EURO SIGN
-    0x81: '\x81',    # <control>
+    0x81: '\x81',  # <control>
     0x82: '\u201a',  # SINGLE LOW-9 QUOTATION MARK
     0x83: '\u0192',  # LATIN SMALL LETTER F WITH HOOK
     0x84: '\u201e',  # DOUBLE LOW-9 QUOTATION MARK
@@ -43,10 +42,10 @@ _invalid_charrefs = {
     0x8a: '\u0160',  # LATIN CAPITAL LETTER S WITH CARON
     0x8b: '\u2039',  # SINGLE LEFT-POINTING ANGLE QUOTATION MARK
     0x8c: '\u0152',  # LATIN CAPITAL LIGATURE OE
-    0x8d: '\x8d',    # <control>
+    0x8d: '\x8d',  # <control>
     0x8e: '\u017d',  # LATIN CAPITAL LETTER Z WITH CARON
-    0x8f: '\x8f',    # <control>
-    0x90: '\x90',    # <control>
+    0x8f: '\x8f',  # <control>
+    0x90: '\x90',  # <control>
     0x91: '\u2018',  # LEFT SINGLE QUOTATION MARK
     0x92: '\u2019',  # RIGHT SINGLE QUOTATION MARK
     0x93: '\u201c',  # LEFT DOUBLE QUOTATION MARK
@@ -59,7 +58,7 @@ _invalid_charrefs = {
     0x9a: '\u0161',  # LATIN SMALL LETTER S WITH CARON
     0x9b: '\u203a',  # SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
     0x9c: '\u0153',  # LATIN SMALL LIGATURE OE
-    0x9d: '\x9d',    # <control>
+    0x9d: '\x9d',  # <control>
     0x9e: '\u017e',  # LATIN SMALL LETTER Z WITH CARON
     0x9f: '\u0178',  # LATIN CAPITAL LETTER Y WITH DIAERESIS
 }
@@ -108,7 +107,7 @@ def _replace_charref(s):
         if s in _html5:
             return _html5[s]
         # find the longest matching name (as defined by the standard)
-        for x in range(len(s)-1, 1, -1):
+        for x in range(len(s) - 1, 1, -1):
             if s[:x] in _html5:
                 return _html5[s[:x]] + s[x:]
         else:
@@ -118,6 +117,7 @@ def _replace_charref(s):
 _charref = _re.compile(r'&(#[0-9]+;?'
                        r'|#[xX][0-9a-fA-F]+;?'
                        r'|[^\t\n\f <&#;]{1,32};?)')
+
 
 def unescape(s):
     """

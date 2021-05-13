@@ -40,3 +40,5 @@ centos6.5关闭防火墙命令
 4.查询端口占用情况：
 
  netstat   -anp   |   grep  portno（例如：netstat -anp | grep 80）
+5. 查看所有服务centos6.5
+    netstat -atunlp
