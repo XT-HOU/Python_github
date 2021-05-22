@@ -22,6 +22,6 @@ def home():
 if __name__ == '__main__':
     # ip地址为空默认为本地地址，放到服务器时要为空
     server = pywsgi.WSGIServer(('127.0.0.1', 5000), app)
-    print('server start......')
+    print('Service is start http on port 5000......')
     server.serve_forever()
     # app.run()

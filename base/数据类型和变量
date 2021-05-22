@@ -13,6 +13,7 @@
 字符串：
     格式化字符串 %s字符串，%d整数，%f浮点数，%x十六进制整数
     "I %s China" %("love")
+    """""" 保持原有字符串形式
 
 元组tuple:
      tuple:一旦初始化就不能修改;classmate = ("Bob","Tracy")

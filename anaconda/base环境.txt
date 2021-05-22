@@ -1,0 +1,13 @@
+Linux终端出现"(base)" 安装anaconda3
+默认激活conda的base环境
+单次关闭base环境
+    conda deactivate
+单次激活base环境
+    conda activate
+永久关闭base环境
+    1.conda config --show
+    2.conda config --set auto_activate_base False
+
+
+window激活base环境
+    cmd下输入activate
