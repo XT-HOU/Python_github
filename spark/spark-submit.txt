@@ -43,8 +43,9 @@ spark-submit 参数
 　　--archives ARCHIVES ：被每个executor提取到工作目录的档案列表，用逗号隔开
 
 执行python脚本
-$ spark-submit \
---master local[2] \
+# spark-submit \
+--master yarn \
+--deploy-mode cluster \
 --num-executors 2 \
 --executor-memory 1G \
  /home/hadoop/Download/test/firstApp.py

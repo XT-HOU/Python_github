@@ -13,7 +13,7 @@ app = Flask(__name__)
 # app.debug = True
 # 系统类型
 os_type = platform.system()
-
+os_name = platform.node()
 # 提交的编排App集合
 app_list = []
 ssh_list = []

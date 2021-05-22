@@ -9,9 +9,9 @@ __author__ = "HOU"
 import time
 import threading
 
-from globals import app_list, os_type
+from globals import app_list
 from default import Default, AppState
-from app_ssh import send_cmd_windows, send_cmd_linux
+from app_ssh import send_cmd
 
 
 def app_thread():
@@ -81,10 +81,7 @@ def actions_deal(actions):
         type = action.shell_type
         name = action.shell_nameNode
         # 发送 shell 命令
-        if os_type == Default.OS_WINDOWS.value:
-            send_cmd_windows(type, path, name)
-        elif os_type == Default.OS_LINUX.value:
-            send_cmd_linux(type, path, name)
+        send_cmd(type, path, name)
         # 移除指标模型
         remove_actions.append(action)
 

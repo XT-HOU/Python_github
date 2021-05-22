@@ -50,7 +50,7 @@ def main():
     # 开始计算
     app_thread()
     # ip地址为空默认为本地地址，放到服务器时要为空
-    server = pywsgi.WSGIServer(('', 5000), app)
+    server = pywsgi.WSGIServer(('127.0.0.1', 5000), app)
     print('Service is start http on port 5000......')
     server.serve_forever()
 

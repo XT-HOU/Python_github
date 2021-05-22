@@ -44,7 +44,4 @@ class ScriptType(Enum):
 
 
 if __name__ == '__main__':
-    print(Default.APP_LIST_LEN.value)
-    action_sort = [1, 6, 9, 0]
-    action_sort.sort(key=lambda x: x)
-    print(action_sort)
+    pass
