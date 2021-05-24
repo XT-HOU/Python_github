@@ -9,7 +9,7 @@ __author__ = "HOU"
 import time
 import threading
 
-from globals import app_list
+from globals import app_list, logger
 from default import Default, AppState
 from app_ssh import send_cmd
 
@@ -20,7 +20,8 @@ def app_thread():
     """
     t = threading.Thread(target=start_fun)
     t.start()
-    print("启动计算线程......")
+    t.join()
+    logger.info("启动计算线程......")
 
 
 def start_fun():
@@ -39,7 +40,7 @@ def start_fun():
                 if len(private_app) > 0:
                     apps_deal(private_app)
         except Exception as e:
-            print(e)
+            logger.error(e)
 
 
 def apps_deal(apps):
@@ -53,14 +54,14 @@ def apps_deal(apps):
             # 确定执行顺序
             actions.sort(key=lambda x: x.level)
             # 指标模型计算
-            actions_deal(actions)
+            actions_deal(app, actions)
             # 发送完后移除编排
             if len(actions) == 0:
                 apps_remove(app, apps)
         except Exception as e:
             # 移除错误 app
             apps_remove(app, apps)
-            print(e)
+            logger.error(e)
 
 
 def apps_remove(app, apps):
@@ -71,19 +72,20 @@ def apps_remove(app, apps):
     app_list.remove(app)
 
 
-def actions_deal(actions):
+def actions_deal(app, actions):
     """
         指标模型分布式计算
     """
     remove_actions = []
-    for action in actions:
-        path = action.shell_path
-        type = action.shell_type
-        name = action.shell_nameNode
-        # 发送 shell 命令
-        send_cmd(type, path, name)
-        # 移除指标模型
-        remove_actions.append(action)
+    if app.state == AppState.APP_STATE0:
+        for action in actions:
+            path = action.shell_path
+            type = action.shell_type
+            name = action.shell_nameNode
+            # 发送 shell 命令
+            send_cmd(type, path, name)
+            # 移除指标模型
+            remove_actions.append(action)
 
     for action in remove_actions:
         actions.remove(action)

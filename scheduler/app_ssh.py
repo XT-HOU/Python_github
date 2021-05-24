@@ -9,7 +9,7 @@ __author__ = "HOU"
 import paramiko
 import os
 from default import ScriptType, Default
-from globals import ssh_list, os_type, os_name
+from globals import ssh_list, os_type, os_name, logger
 from spark_submit import get_cmd
 
 # windows 下是否开启远程连接
@@ -24,7 +24,7 @@ def start_ssh():
     ssh_list.append(ssh)
     global open_shell
     open_shell = True
-    print('连接-%s-成功' % os_name)
+    logger.info('连接-%s-成功' % os_name)
 
 
 def send_cmd_windows(script_type, path, filename):
@@ -46,7 +46,7 @@ def send_cmd_windows(script_type, path, filename):
     elif script_type == ScriptType.SCRIPT_JAVA.value:
         cmd = "暂不支持Java"
     stdin, stdout, stderr = ssh_list[0].exec_command(cmd)
-    print(cmd)
+    logger.info(cmd)
     # 接收输出或错误信息
     # result = stdout.read()
     # if not result:
@@ -70,7 +70,7 @@ def send_cmd_linux(script_type, path, filename):
     elif script_type == ScriptType.SCRIPT_JAVA.value:
         cmd = "暂不支持Java"
     os.system(cmd)
-    print(cmd)
+    logger.info(cmd)
 
 
 def send_cmd(script_type, path, filename):

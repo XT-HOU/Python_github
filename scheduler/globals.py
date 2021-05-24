@@ -8,6 +8,8 @@ __author__ = "HOU"
 
 from flask import Flask
 import platform
+import threading
+import log
 
 app = Flask(__name__)
 # app.debug = True
@@ -16,6 +18,11 @@ os_type = platform.system()
 os_name = platform.node()
 # 提交的编排App集合
 app_list = []
+# 互斥锁
+lock = threading.Lock()
+# 日志对象
+logger = log.get_logger()
+# Windows 下远程连接对象
 ssh_list = []
 # 编排AppxmlDemo
 app_xml = """<workflowApp path="/usr/local/code" id="123456789" name="任务单_编排名_time" type="0" state="0">

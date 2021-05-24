@@ -12,7 +12,7 @@ import json
 from gevent import pywsgi
 from flask import request
 
-from globals import app, app_list
+from globals import app, app_list, logger
 from xml_manage import app_xml_obj, app_judge, set_app_state
 from default import Default
 from cal_thread import app_thread
@@ -78,7 +78,7 @@ def main():
     app_thread()
     # ip地址为空默认为本地地址，放到服务器时要为空
     server = pywsgi.WSGIServer(('127.0.0.1', 5000), app)
-    print('Service is start http on port 5000......')
+    logger.info('Service is start http on port 5000......')
     server.serve_forever()
 
 
