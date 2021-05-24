@@ -18,7 +18,7 @@ os_name = platform.node()
 app_list = []
 ssh_list = []
 # 编排AppxmlDemo
-app_xml = """<workflowApp path="/usr/local/code" name="任务单_编排名_time" type="0" state="0">
+app_xml = """<workflowApp path="/usr/local/code" id="123456789" name="任务单_编排名_time" type="0" state="0">
 	<start to="start-node"/>
 	<action name="start-node" level="2" >
 		<shell path="/usr/python" type = "python3" >

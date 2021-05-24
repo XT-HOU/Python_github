@@ -25,6 +25,7 @@ def app_thread():
 
 def start_fun():
     while True:
+        time.sleep(10)
         # 公共空间 app
         public_app = [item for item in app_list if item.type == Default.PUBLIC_APP.value
                       and item.state == AppState.APP_STATE0.value]
@@ -39,7 +40,6 @@ def start_fun():
                     apps_deal(private_app)
         except Exception as e:
             print(e)
-        time.sleep(1)
 
 
 def apps_deal(apps):

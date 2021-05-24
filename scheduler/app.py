@@ -13,9 +13,39 @@ from gevent import pywsgi
 from flask import request
 
 from globals import app, app_list
-from xml_manage import app_xml, app_judge
+from xml_manage import app_xml_obj, app_judge, set_app_state
 from default import Default
 from cal_thread import app_thread
+
+
+@app.route('/appInfo', methods=['POST'])
+def app_info():
+    """方法注释：
+    获取评估流程编排xml
+    :return: 提交是否成功
+    """
+    bp_xml = request.form.get('xml')
+    bp_model = app_xml_obj(bp_xml)
+    if app_judge(bp_model):
+        app_list.append(bp_model)
+        return json.dumps({'result': Default.OK.value, 'msg': None})
+    else:
+        return json.dumps({'result': Default.NO.value, 'msg': Default.MSG_LEN.value})
+
+
+@app.route('/appState', methods=['POST'])
+def change_state():
+    """方法注释：
+        修改编排状态
+    :return: 修改是否成功
+    """
+    app_state = request.form.get('app_state')
+    app_id = request.form.get('app_id')
+    msg = set_app_state(app_id, app_state)
+    if msg is None:
+        return json.dumps({'result': Default.OK.value, 'msg': msg})
+    else:
+        return json.dumps({'result': Default.NO.value, 'msg': msg})
 
 
 @app.route('/serInfo', methods=['GET'])
@@ -28,19 +58,16 @@ def get_server_info():
     return json.dumps(data)
 
 
-@app.route('/appInfo', methods=['POST'])
-def app_info():
+@app.route('/getAppInfo', methods=['GET'])
+def get_app_list():
     """方法注释：
-    获取评估流程编排xml
-    :return: 提交是否成功
+        获取当前执行编排信息
+    :return: json格式数据
     """
-    bp_xml = request.form.get('xml')
-    bp_model = app_xml(bp_xml)
-    if app_judge(bp_model):
-        app_list.append(bp_model)
-        return json.dumps({'result': Default.OK.value, 'msg': None})
-    else:
-        return json.dumps({'result': Default.OK.value, 'msg': Default.MSG_LEN.value})
+    data = []
+    for app_item in app_list:
+        data.append(str(app_item.__dict__))
+    return json.dumps(data)
 
 
 def main():

@@ -4,6 +4,8 @@
 """模块注释：
     面向对象用法总结
 """
+import json
+
 """访问限制：
     在 Python 中，实例的变量名如果以__开头，就变成了一个私有变量（ private），只有内部可以访问，外部不能访问
     在Python中，通过单下划线”_”来实现模块级别的私有化，一般约定以单下划线”_”开头的变量、函数为模块私有的，
@@ -29,7 +31,7 @@
 
 # 新建类类名首字母大写
 class Student(object):
-    __slots__ = ('__name', 'score')
+    # __slots__ = ('__name', 'score')
 
     # 初始化，私有函数
     def __init__(self, name, score):
@@ -41,6 +43,8 @@ class Student(object):
 
 
 s = Student('hou', 99)
+print(s.__dict__)
+print(json.dumps(s, default=lambda x: x.__dict__))
 s.print_score()
 """继承：
     当子类和父类都存在相同的 run()方法时，我们说，子类的 run()覆盖了父类的 run()，在代码运行的时候，总是会调用子类的 run()。

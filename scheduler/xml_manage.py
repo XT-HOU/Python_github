@@ -6,18 +6,21 @@
 """
 __author__ = "HOU"
 
+import json
+
 from lxml import objectify
 
-from globals import app_list
-from default import Default
+from globals import app_list, app_xml
+from default import Default, AppState
 
 
-def app_xml(app_xml):
+def app_xml_obj(app_xml):
     """方法注释：
         编排xml转对象
     """
     xml = objectify.fromstring(app_xml)
     app = WorkflowApp()
+    app.id = xml.attrib['id']
     app.name = xml.attrib['name']
     app.type = xml.attrib['type']
     app.path = xml.attrib['path']
@@ -28,11 +31,40 @@ def app_xml(app_xml):
     return app
 
 
+def get_actions(xml):
+    """方法注释：
+        构建评估模型集合
+    :param xml: 编排xml
+    :return: 返回评估模型集合
+    """
+    action_list = []
+    for item in xml.action:
+        action = Action()
+        action.name = item.attrib['name']
+        action.level = item.attrib['level']
+        action.shell_path = item.shell.attrib['path']
+        action.shell_type = item.shell.attrib['type']
+        action.shell_nameNode = item.shell.nameNode
+        action.shell_exec = item.shell.exec
+        action.shell_argument = item.shell.argument
+        action_list.append(action)
+    return action_list
+
+
 class WorkflowApp(object):
     """
         编排xml对象
     """
-    __slots__ = ('__name', '__type', '__path', '__state', '__start', '__action')
+    # __slots__ = ('__id', '__name', '__type', '__path', '__state', '__start', '__action')
+
+    @property
+    def id(self):
+        """ 编排id"""
+        return self.__id
+
+    @id.setter
+    def id(self, value):
+        self.__id = value
 
     @property
     def name(self):
@@ -112,26 +144,6 @@ class Action(object):
         self.__level = value
 
 
-def get_actions(xml):
-    """方法注释：
-        构建评估模型集合
-    :param xml: 编排xml
-    :return: 返回评估模型集合
-    """
-    action_list = []
-    for item in xml.action:
-        action = Action()
-        action.name = item.attrib['name']
-        action.level = item.attrib['level']
-        action.shell_path = item.shell.attrib['path']
-        action.shell_type = item.shell.attrib['type']
-        action.shell_nameNode = item.shell.nameNode
-        action.shell_exec = item.shell.exec
-        action.shell_argument = item.shell.argument
-        action_list.append(action)
-    return action_list
-
-
 def app_judge(pb_model):
     """方法注释：
         判断编排 App 是否符合提交条件
@@ -144,5 +156,19 @@ def app_judge(pb_model):
         return False
 
 
+def set_app_state(app_id, app_state):
+    """方法注释：
+        更改编排 App 计算状态
+    """
+    # 判断是否存在
+    exit_app = [one for one in app_list if one.id == app_id]
+    if len(exit_app) == 1:
+        exit_app[0].state = app_state
+    else:
+        return "编排：%s 不存在%d" % (app_id, len(exit_app))
+
+
 if __name__ == '__main__':
-    app_xml(globals.app_xml)
+    app = app_xml_obj(app_xml)
+    app_list.append(app)
+    # print(str(app.__dict__))

@@ -15,6 +15,7 @@ class Default(Enum):
     '''编排提交上限'''
     MSG_LEN = "达到提交上限：%d" % APP_LIST_LEN
     OK = 'OK'
+    NO = 'NO'
     PUBLIC_APP = '0'
     '''公共空间'''
     PRIVATE_APP = '1'
@@ -28,9 +29,9 @@ class Default(Enum):
 @unique
 class AppState(Enum):
     APP_STATE0 = '0'
-    '''编排状态0：正常提交 1：暂停'''
+    '''编排状态-0：正常提交; 1：暂停'''
     APP_STATE1 = '1'
-    '''编排状态0：正常提交 1：暂停'''
+    '''编排状态-0：正常提交; 1：暂停'''
 
 
 @unique
