@@ -7,6 +7,7 @@
 import time
 import datetime
 import math
+from pyspark import SparkContext
 
 
 def spark():
@@ -33,4 +34,5 @@ def longtime_fun():
 
 
 if __name__ == '__main__':
+    sc = SparkContext("local", "first app")
     longtime_fun()

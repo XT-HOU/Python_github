@@ -16,7 +16,7 @@ def get_logger():
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)  # Log等级总开关
     # 日志文件输出
-    # logger.addHandler(get_fh_file())
+    logger.addHandler(get_fh_file())
     # 日志控制台输出
     logger.addHandler(get_fh_console())
     return logger
