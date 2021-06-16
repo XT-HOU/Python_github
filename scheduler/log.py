@@ -25,7 +25,7 @@ def get_logger():
 def get_fh_console():
     # 创建一个handler，用于输出到控制台
     ch = logging.StreamHandler()
-    ch.setLevel(logging.WARNING)  # 输出到console的log等级的开关
+    ch.setLevel(logging.INFO)  # 输出到console的log等级的开关
     # 第四步和第五步分别加入以下代码即可
     formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
     ch.setFormatter(formatter)

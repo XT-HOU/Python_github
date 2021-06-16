@@ -11,7 +11,7 @@ import threading
 
 from globals import app_list, logger
 from default import Default, AppState
-from app_ssh import send_cmd
+import app_ssh
 
 
 def app_thread():
@@ -20,13 +20,12 @@ def app_thread():
     """
     t = threading.Thread(target=start_fun)
     t.start()
-    t.join()
     logger.info("启动计算线程......")
 
 
 def start_fun():
     while True:
-        time.sleep(10)
+        time.sleep(1)
         # 公共空间 app
         public_app = [item for item in app_list if item.type == Default.PUBLIC_APP.value
                       and item.state == AppState.APP_STATE0.value]
@@ -77,15 +76,18 @@ def actions_deal(app, actions):
         指标模型分布式计算
     """
     remove_actions = []
-    if app.state == AppState.APP_STATE0:
+    if app.state == AppState.APP_STATE0.value:
         for action in actions:
             path = action.shell_path
             type = action.shell_type
             name = action.shell_nameNode
             # 发送 shell 命令
-            send_cmd(type, path, name)
-            # 移除指标模型
-            remove_actions.append(action)
+            res = app_ssh.send_cmd(type, path, name)
+            if res == Default.OK.value:
+                # 移除指标模型
+                remove_actions.append(action)
+            else:
+                break
 
     for action in remove_actions:
         actions.remove(action)

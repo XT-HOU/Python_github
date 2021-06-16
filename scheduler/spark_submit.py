@@ -15,13 +15,13 @@ def get_cmd(executors='1', cores='2', memory='2G'):
     :param memory: 每个 excutor 的内存
     :return:
     """
-    cmd = 'spark-submit ' \
-          ' --master yarn' \
-          ' --deploy-mode cluster' \
-          ' --num-executors %s' \
-          ' --driver-cores %s' \
-          ' --executor-memory %s' % (executors, cores, memory)
-    return cmd
+    cmd_submit = 'spark-submit ' \
+                 ' --master yarn' \
+                 ' --deploy-mode cluster' \
+                 ' --num-executors %s' \
+                 ' --driver-cores %s' \
+                 ' --executor-memory %s' % (executors, cores, memory)
+    return cmd_submit
 
 
 if __name__ == '__main__':

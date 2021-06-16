@@ -7,7 +7,8 @@
 import time
 import datetime
 import math
-from pyspark import SparkContext
+import os
+# from pyspark import SparkContext
 
 
 def spark():
@@ -34,5 +35,11 @@ def longtime_fun():
 
 
 if __name__ == '__main__':
-    sc = SparkContext("local", "first app")
-    longtime_fun()
+    # sc = SparkContext("local", "first app")
+    # longtime_fun()
+    cmd_cpu = "ssh root@192.168.8.9 free -t"
+    res = os.popen(cmd_cpu).readlines()
+    print(res)
+    ress = ' '.join(res[-1].split()).split(" ")
+    print(' '.join(res[-1].split()).split(" "))
+    print(int(ress[2])/int(ress[1])*100)

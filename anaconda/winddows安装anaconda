@@ -1,5 +1,5 @@
 参考 https://zhuanlan.zhihu.com/p/75717350
-配置环境变量
+配置环境变量path
     D:\Anaconda（Python需要）
     D:\Anaconda\Scripts（conda自带脚本）
     D:\Anaconda\Library\mingw-w64\bin（使用C with python的时候）

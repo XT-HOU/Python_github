@@ -9,8 +9,12 @@ __author__ = "HOU"
 import pymysql
 
 
-def select_data():
-    return {}
+def get_data():
+    """方法注释：
+        获取计算所用数据
+    :return:
+    """
+    pass
 
 
 def select_data1():

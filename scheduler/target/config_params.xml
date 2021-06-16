@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<params>
+    <task id="1" type="任务单">123456789 </task>
+    <beg_time id="2" type="配置参数">2021-03-05 00:00:00 </beg_time>
+    <end_time id="3" type="配置参数">2021-03-05 08:00:00 </end_time>
+</params>
+
