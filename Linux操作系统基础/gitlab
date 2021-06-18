@@ -1,0 +1,34 @@
+设置存储目录
+
+默认情况下omnibus-gitlab 将仓库数据存储在 /var/opt/gitlab/git-data目录下，仓库存放在子目录 repositories里面。
+以可以通过修改/etc/gitlab/gitlab.rb 的这一行来自定义 git-data 的父目录。
+    vim /etc/gitlab/gitlab.rb
+# 把注释取消然后指定新的仓库存储位置
+    git_data_dirs({ "default" => { "path" => "/home/gitlab-data" } })
+注： /home/gitlab-data 是我新挂载的目录，
+注意 ：目标路径和其子路径必须不能为软链接。
+
+在没有数据的情况下
+    gitlab-ctl stop
+    gitlab-ctl reconfigure //使修改生效
+有数据的情况下
+如果 /var/opt/gitlab/git-data 目录已经存在Git仓库数据， 你可以用下面的命令把数据迁移到新的位置:
+# 准备迁移之前要停止GitLab服务，防止用户写入数据。
+    gitlab-ctl stop
+# 注意 'repositories'后面不带斜杠，而
+# '/home/gitlab-data'后面是有斜杠的。
+    rsync -av /var/opt/gitlab/git-data/repositories /home/gitlab-data/
+    gitlab-ctl reconfigure
+# 再次检查下  /home/gitlab-data 的目录. 正常情况应该有下面这个子目录:
+# repositories
+    ls  /home/gitlab-data/
+
+
+
+设置存储仓库数据的备用目录
+
+注意的是：自GitLab 8.10开始,可以通过在/etc/gitlab/gitlab.rb文件中添加下面的几行配置， 来增加多个 git 数据存储目录。
+git_data_dirs({
+  "default" => { "path" => "/var/opt/gitlab/git-data" },  //默认存储目录
+  "alternative" => { "path" => " /home/gitlab-data" }     //备用存储目录
+})
