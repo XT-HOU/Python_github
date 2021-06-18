@@ -14,3 +14,12 @@
 --编译安装
 解压： tar –zxvf mysql-5.6.14.tar.gz
 进入目录： cd mysql-5.6.14
+
+--下载RPM(glibc-devel.i686)包及其依赖
+    yum install --downloaddir=/download/rpmname_package/ --downloadonly glibc-devel.i686
+
+    downloadonly只下载不安装
+    downloaddir下载的rpm包的存放路径
+--批量安装：
+    把所有的rpm包放在一个目录下。切换安装目录
+    rpm -Uvh --force --nodeps *rpm

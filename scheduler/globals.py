@@ -19,6 +19,12 @@ os_type = platform.system()
 os_name = platform.node()
 """系统名字"""
 
+hosts = []
+"""服务器信息"""
+
+host_master = '192.168.43.8'
+"""主节点"""
+
 app_list = []
 """# 提交的编排App集合"""
 

@@ -7,20 +7,26 @@ serverA 免密登录 serverB 原理
     serverA 接到 serverB 发来的信息后，会使用私钥进行解密，然后将解密后的字符串发送给 serverB
     serverB 接到 serverA 发来的信息后，会给先前生成的字符串进行比对，如果一直，则允许免密登录
 
-serverA 生成秘钥，遇到提示直接敲回车即可
-    cd ~/.ssh (找不到 .ssh 目录 运行 ssh)
-    ssh-keygen
-
-移动 id_rsa.pub 文件
-    # 将 serverA ~/.ssh目录中的 id_rsa.pub 这个文件拷贝到你要登录的 serverB 的~/.ssh目录中
-    scp ~/.ssh/id_rsa.pub 192.168.0.101:~/.ssh/
-    # 然后在 serverB 运行以下命令来将公钥导入到~/.ssh/authorized_keys这个文件中
-    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-
-    # 另外要注意请务必要将服务器上
-    ~/.ssh权限设置为700
-    ~/.ssh/authorized_keys的权限设置为600
-    # 这是linux的安全要求，如果权限不对，自动登录将不会生效
-
-验证免密登录
-    ssh 192.168.101
+三台服务器
+    修改主机名 vim /etc/hostname 内容为：hadoop01(reboot 生效)
+    查看主机名 uname -n
+    修改主机名与 IP 的映射关系 vim /etc/hosts 内容为：192.168.43.8 hadoop01
+    43.8(hadoop01)/43.9(hadoop02)/43.10(hadoop03)
+43.8(hadoop01)运行
+    ssh-keygen -t rsa
+    cat d_rsa.pub >> authorized_keys
+    chmod 700 .ssh
+    chmod 600 authorized_keys
+43.9(hadoop02)运行
+    ssh-keygen -t rsa
+    cat d_rsa.pub >> authorized_keys
+    chmod 700 .ssh
+    chmod 600 authorized_keys
+    ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop01
+43.10(hadoop03)运行
+    ssh-keygen -t rsa
+    cat d_rsa.pub >> authorized_keys
+    chmod 700 .ssh
+    chmod 600 authorized_keys
+    ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop01
+最后把 hadoop01 的 authorized_keys 文件copy 到 其它电脑的 ~/.ssh 目录下

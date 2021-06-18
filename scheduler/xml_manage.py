@@ -8,9 +8,9 @@ __author__ = "HOU"
 
 import json
 
-from lxml import objectify
+from lxml import objectify, etree
 
-from globals import app_list, app_xml
+from globals import app_list, app_xml, hosts
 from default import Default, AppState
 
 
@@ -168,7 +168,27 @@ def set_app_state(app_id, app_state):
         return "编排：%s 不存在%d" % (app_id, len(exit_app))
 
 
+class Config(object):
+    pass
+
+
+def get_config():
+    """方法注释：
+        读取配置文件
+    """
+    cfg = etree.parse("scheduler.cfg")
+    result = etree.tostring(cfg, pretty_print=True)
+    xml = objectify.fromstring(result)
+
+    for item in xml.hosts.host:
+        host = Config()
+        host.type = item.attrib['type']
+        host.ip = item
+        hosts.append(host)
+
+
 if __name__ == '__main__':
-    app = app_xml_obj(app_xml)
-    app_list.append(app)
+    # app = app_xml_obj(app_xml)
+    # app_list.append(app)
     # print(str(app.__dict__))
+    get_config()

@@ -19,3 +19,4 @@ vim /etc/udev/rules.d/70-persistent-net.rules
         TYPE="Ethernet"                 以太网
         UUID="ff81ee50-87bb-4d6a-ab92-8973ef29edff"
         NAME="System eth1"
+

@@ -9,7 +9,7 @@ __author__ = "HOU"
 import paramiko
 import os
 from default import ScriptType, Default
-from globals import ssh_list, os_type, os_name, logger, global_dict
+from globals import ssh_list, os_type, os_name, logger, global_dict, host_master
 from spark_submit import get_cmd
 
 
@@ -17,11 +17,10 @@ def start_ssh():
     ssh_list.clear()
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname='192.168.8.9', port=22, username='root', password='314315')
+    ssh.connect(hostname=host_master, port=22, username='root', password='314315')
     ssh_list.append(ssh)
     global_dict["open_shell"] = True
     logger.info('连接-%s-成功' % os_name)
-
 
 
 def send_cmd_windows(script_type, path, filename):
@@ -39,7 +38,7 @@ def send_cmd_windows(script_type, path, filename):
         cmd = None
         spark_cmd = get_cmd()
         if script_type == ScriptType.SCRIPT_PYTHON.value:
-            cmd = 'ssh root@192.168.8.9 "%s /python3 %s/%s"' % (spark_cmd, path, filename)
+            cmd = 'ssh root@%s "%s /python3 %s/%s"' % (host_master, spark_cmd, path, filename)
         elif script_type == ScriptType.SCRIPT_JAVA.value:
             cmd = "暂不支持Java"
         stdin, stdout, stderr = ssh_list[0].exec_command(cmd)
@@ -69,7 +68,7 @@ def send_cmd_linux(script_type, path, filename):
         cmd = ''
         spark_cmd = get_cmd()
         if script_type == ScriptType.SCRIPT_PYTHON.value:
-            cmd = 'ssh root@192.168.8.9 "%s /python3 %s/%s"' % (spark_cmd, path, filename)
+            cmd = 'ssh root@%s "%s /python3 %s/%s"' % (host_master, spark_cmd, path, filename)
         elif script_type == ScriptType.SCRIPT_JAVA.value:
             cmd = "暂不支持Java"
         os.system(cmd)

@@ -1,0 +1,16 @@
+yum源地址
+    cd /etc/yum.repos.d/
+--备份源文件
+    mkdir /etc/yum.repos.d/backup
+    mv /etc/yum.repos.d/*.* /etc/yum.repos.d/backup
+--使用阿里云yum源（centos7）
+    wget -O /etc/yum.repos.d/CentOS7-Aliyun.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+    wget -O /etc/yum.repos.d/epel-7-Aliyun.repo http://mirrors.aliyun.com/repo/epel-7.repo
+--更新缓存
+    yum clean all
+    yum makecache
+    #查看源列表
+    yum repolist all
+
+
+阿里云的各种源可以点击http://mirrors.aliyun.com/repo/

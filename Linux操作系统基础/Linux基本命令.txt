@@ -12,3 +12,10 @@ tab:命令补齐
     rpm -Uvh --force --nodeps *.rpm
 # 查看所有服务centos6.5
     netstat -atunlp
+# 关机/重起
+    7= poweroff reboot
+# 重启 网络服务
+    systemctl restart network
+# 修改计算机名
+    centos6 = vim /etc/sysconfig/network
+    centos7 = vim /etc/hostname
