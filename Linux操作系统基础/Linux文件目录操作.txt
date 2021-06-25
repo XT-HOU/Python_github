@@ -22,8 +22,12 @@
     du -h --max-depth=1 ${pwd}
     查看指定文件夹大小
     du -h /home
+--列表查看文件大小
+    ls -lht
 --查找文件 指定目录 文件名
     find / -name "mysql*"
+--删除所有包含gitlab文件
+    find / -name gitlab | xargs rm -rf
 --目录说明
     ./是当前目录;../是父级目录;/是根目录
 --复制文件

@@ -30,5 +30,7 @@
 注意的是：自GitLab 8.10开始,可以通过在/etc/gitlab/gitlab.rb文件中添加下面的几行配置， 来增加多个 git 数据存储目录。
 git_data_dirs({
   "default" => { "path" => "/var/opt/gitlab/git-data" },  //默认存储目录
-  "alternative" => { "path" => " /home/gitlab-data" }     //备用存储目录
+  "alternative" => { "path" => "/home/gitlab-data" }     //备用存储目录
 })
+
+ gitlab-ctl reconfigure

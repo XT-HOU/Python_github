@@ -8,6 +8,7 @@
 __author__ = 'HOU'
 
 import psutil
+import pymysql
 
 
 def get_server_info():
@@ -27,6 +28,25 @@ def get_server_info():
     server_dict = {'server_memory': server_memory, 'server_disk_usage': server_disk_usage, 'server_cpu': server_cpu}
     return server_dict
 
+
+def select_data1():
+    # 打开数据库连接
+    db = pymysql.connect(host='192.168.43.61', port=3306, user='root', password='314315', db='basedb',
+                         charset='utf8', cursorclass=pymysql.cursors.DictCursor)
+
+    # 使用 cursor() 方法创建一个游标对象 cursor
+    cursor = db.cursor()
+
+    # 使用 execute()  方法执行 SQL 查询
+    cursor.execute("SELECT * FROM sys_config")
+
+    # 使用 fetchone() 方法获取单条数据.
+    data = cursor.fetchall()
+
+    return data
+
+    # 关闭数据库连接
+    db.close()
 
 if __name__ == '__main__':
     get_server_info()

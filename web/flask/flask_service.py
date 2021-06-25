@@ -15,8 +15,9 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    data = server_source.get_server_info()
-    return json.dumps(data)
+    data = server_source.select_data1()
+    print(data)
+    return json.dumps({'code': 200, 'data': data})
 
 
 if __name__ == '__main__':

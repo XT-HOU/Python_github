@@ -2,9 +2,13 @@
 # -*- coding:utf-8 -*-
 
 """模块注释：
-    插入数据脚本
+    插入数据脚本，调用webapi接口
 """
 __author__ = "HOU"
+
+import json
+import requests
+import pandas as pd
 
 
 def insert_data():
