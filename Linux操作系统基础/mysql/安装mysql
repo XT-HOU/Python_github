@@ -16,7 +16,7 @@ https://my.oschina.net/linch/blog/1825249
     chown -R mysql.mysql /data/mysql/
 --初始化mysql 切换到 mysql 目录
     cd mysql
-    ./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql/ --datadir=/data/mysql
+    ./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql/ --datadir=/data/mysql/
 --编辑 /etc/my.cnf （初始化的时候mysql会自动生成一个配置文件）
     vim /etc/my.cnf
 
@@ -36,6 +36,8 @@ https://my.oschina.net/linch/blog/1825249
     character-set-server=utf8
     # 创建新表时将使用的默认存储引擎
     default-storage-engine=INNODB
+
+
 --把mysql放到本地系统服务中
     cp -a ./support-files/mysql.server /etc/init.d/mysqld
 --创建 mysql 链接

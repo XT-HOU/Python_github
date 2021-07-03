@@ -14,10 +14,14 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def home():
+def select():
     data = server_source.select_data1()
-    print(data)
     return json.dumps({'code': 200, 'data': data})
+
+
+@app.route('/insert', methods=['GET', 'POST'])
+def insert():
+    return json.dumps({'code': 200, 'msg': '插入数据成功'})
 
 
 if __name__ == '__main__':

@@ -13,6 +13,10 @@ import log
 
 app = Flask(__name__)
 # app.debug = True
+
+app_name = None
+"""# 指标模型名称"""
+
 os_type = platform.system()
 """# 系统类型"""
 
@@ -22,7 +26,7 @@ os_name = platform.node()
 hosts = []
 """服务器信息"""
 
-host_master = '192.168.43.8'
+host_master = '192.168.43.61'
 """主节点"""
 
 app_list = []

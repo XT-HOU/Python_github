@@ -14,18 +14,18 @@ serverA 免密登录 serverB 原理
     43.8(hadoop01)/43.9(hadoop02)/43.10(hadoop03)
 43.8(hadoop01)运行
     ssh-keygen -t rsa
-    cat d_rsa.pub >> authorized_keys
+    cat id_rsa.pub >> authorized_keys
     chmod 700 .ssh
     chmod 600 authorized_keys
 43.9(hadoop02)运行
     ssh-keygen -t rsa
-    cat d_rsa.pub >> authorized_keys
+    cat id_rsa.pub >> authorized_keys
     chmod 700 .ssh
     chmod 600 authorized_keys
     ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop01
 43.10(hadoop03)运行
     ssh-keygen -t rsa
-    cat d_rsa.pub >> authorized_keys
+    cat id_rsa.pub >> authorized_keys
     chmod 700 .ssh
     chmod 600 authorized_keys
     ssh-copy-id -i ~/.ssh/id_rsa.pub hadoop01

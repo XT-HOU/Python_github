@@ -7,11 +7,46 @@
 """
 __author__ = "HOU"
 
-from target_data import get_data
-from result_data import insert_data
-from algorithm import target_caluate
+import target_data
+import result_data
+import algorithm
+import target_params
+import globals
+import datetime
+from pyspark import SparkContext
+
+
+def main():
+    """方法注释：
+        指标模型执行顺序
+    :return:
+    """
+    target_params.get_params()
+    # 多个
+    target_data.add_data()
+    algorithm.target_caluate()
+    #
+    result_data.insert_data()
+
+
+def run():
+    """方法注释：
+        提交spark
+    :return:
+    """
+    SparkContext('local', globals.app_name)
+    start_time = datetime.datetime.now()
+    print("---------------------start----------------------")
+    main()
+    end_time = datetime.datetime.now()
+    print("total_time: %d sec" % (end_time - start_time).seconds)
+    print("---------------------end----------------------")
+
 
 if __name__ == '__main__':
-    get_data()
-    target_caluate()
-    insert_data()
+    try:
+        run()
+    except Exception as ret:
+        globals.logger.error(ret)
+    finally:
+        pass

@@ -9,6 +9,7 @@ __author__ = "HOU"
 import pymysql
 import requests
 import json
+from target_params import data_in, logger
 from pandas import json_normalize
 
 
@@ -16,13 +17,17 @@ def post_data():
     """方法注释：
         获取计算所用数据,post 方式
     """
-    url = "https://api.douban.com/v2/book/1220563"
+    url = "http://127.0.0.1:5000"
     headers = {'content-type': 'application/json'}
     requestData = {"certificate_no": "56565656565656", "auth_code": "123456"}
     ret = requests.post(url, json=requestData, data=headers)
     if ret.status_code == 200:
-        text = json.loads(ret.text)
-    print(text)
+        data_json = json.loads(ret.text)['data']
+        data_frame = json_to_dataframe(data_json)
+        return data_frame
+    else:
+        logger.error(ret.status_code + ':' + ret.text)
+        return None
 
 
 def get_data():
@@ -30,13 +35,28 @@ def get_data():
         获取计算所用数据,get 方式
     """
     url = "http://127.0.0.1:5000"
-    ret = requests.get(url)
-    data_json = json.loads(ret.text)['data']
-    data_frame = json_normalize(data_json)
-    print(data_frame)
+    params = {'table_name', 'user'}
+    ret = requests.get(url, params=params)
+    if ret.status_code == 200:
+        data_json = json.loads(ret.text)['data']
+        data_frame = json_to_dataframe(data_json)
+        return data_frame
+    else:
+        logger.error("没有数据" + ret.status_code + ':' + ret.text)
+        return None
 
-    json_records = data_frame.to_json(orient="records")
-    print(json_records)
+
+def json_to_dataframe(data_json):
+    data_frame = json_normalize(data_json)
+    return data_frame
+
+
+def add_data():
+    """方法注释：
+        数据缓存，供下一步使用
+    :return:
+    """
+    data_in['key'] = get_data()
 
 
 def select_data1():

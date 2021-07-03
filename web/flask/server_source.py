@@ -48,5 +48,6 @@ def select_data1():
     # 关闭数据库连接
     db.close()
 
+
 if __name__ == '__main__':
     get_server_info()
