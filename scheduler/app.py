@@ -16,6 +16,7 @@ from globals import app, app_list, logger
 from xml_manage import app_xml_obj, app_judge, set_app_state
 from default import Default
 from cal_thread import app_thread
+from app_ssh import get_source
 
 
 @app.route('/appInfo', methods=['POST'])
@@ -54,7 +55,7 @@ def get_server_info():
     内存使用情况，磁盘使用情况，CPU 使用情况
     :return: json格式数据
     """
-    data = service.get_server_info()
+    data = get_source()
     return json.dumps(data)
 
 
@@ -77,7 +78,7 @@ def main():
     # 开始计算
     app_thread()
     # ip地址为空默认为本地地址，放到服务器时要为空
-    server = pywsgi.WSGIServer(('127.0.0.1', 5000), app)
+    server = pywsgi.WSGIServer(('', 5000), app)
     logger.info('Service is start http on port 5000......')
     server.serve_forever()
 

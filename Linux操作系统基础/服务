@@ -1,0 +1,4 @@
+--服务后台运行
+nohup python3 -u app.py > app.log 2>&1 &
+--查看服务
+netstat -tunpl
