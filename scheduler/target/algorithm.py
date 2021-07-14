@@ -24,10 +24,10 @@ def target_caluate():
     """
     df = creat_data_frame()
     # 计算用到的数据
-    data = data_in['key']
-    if data == None:
+    if data_in.get('table_name') is None:
         logger.error("没有数据")
         return
+    data = data_in['table_name']
     # data_frame.loc[0] = ['xx', 'xx', 'xx']
     df_insert = pd.DataFrame({'姓名': ['mason', 'mario'], 'sex': ['m', 'f'], 'age': [21, 22]})
     data_frame1 = df.append(df_insert, ignore_index=True)

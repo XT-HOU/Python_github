@@ -11,9 +11,7 @@ import target_data
 import result_data
 import algorithm
 import target_params
-import globals
 import datetime
-from pyspark import SparkContext
 
 
 def main():
@@ -34,7 +32,6 @@ def run():
         提交spark
     :return:
     """
-    SparkContext('local', globals.app_name)
     start_time = datetime.datetime.now()
     print("---------------------start----------------------")
     main()
@@ -47,6 +44,6 @@ if __name__ == '__main__':
     try:
         run()
     except Exception as ret:
-        globals.logger.error(ret)
+        target_params.logger.error(ret)
     finally:
-        pass
+        target_params.spark.stop()

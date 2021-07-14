@@ -15,6 +15,6 @@ pip download -r environment.txt -d ./pip_packages
 #从当前环境的网络中下载 environment.txt中写的包，下载到当前目录下的 pip_packages 目录中，这时候你会发现，里面有很多依赖，还有一些whl文件
 4、离线安装
 
-pip install --no-index --find-links=d:\packages -r environment.txt --use-feature=2020-resolver
+pip install --no-index --find-links=d:\packages -r environment.txt
 
 # --find-links指定的是包文件的存放地址，-r指定的是txt文件的位置

@@ -16,5 +16,10 @@
         <type>配置参数</type>
         <value>2021-03-05 08:00:00</value>
     </param>
+    <param id="4">
+        <name>target_name</name>
+        <type>配置参数</type>
+        <value>飞行性能</value>
+    </param>
 </params>
 

@@ -1,10 +1,10 @@
 参考 https://zhuanlan.zhihu.com/p/75717350
 配置环境变量path
-    D:\Anaconda（Python需要）
-    D:\Anaconda\Scripts（conda自带脚本）
-    D:\Anaconda\Library\mingw-w64\bin（使用C with python的时候）
-    D:\Anaconda\Library\usr\bin
-    D:\Anaconda\Library\bin（jupyter notebook动态库）
+    C:\Anaconda3（Python需要）
+    C:\Anaconda3\Scripts（conda自带脚本）
+    C:\Anaconda3\Library\mingw-w64\bin（使用C with python的时候）
+    C:\Anaconda3\Library\usr\bin
+    C:\Anaconda3\Library\bin（jupyter notebook动态库）
 查看信息
     conda info
 

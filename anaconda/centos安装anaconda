@@ -24,7 +24,7 @@ vim pip.conf
 index-url = https://mirrors.aliyun.com/pypi/simple
 
 修改pipenv安装源
-在自己的虚拟环境中找到Pipfile文件,将其中的url = "https://pypi.org/simple"修改为你需要的国内镜像,如https://mirrors.aliyun.com/pypi/simple/
+在自己的虚拟环境中找到 Pipfile 文件,将其中的url = "https://pypi.org/simple"修改为你需要的国内镜像,如https://mirrors.aliyun.com/pypi/simple/
 
 [root@localhost myproject]# vim Pipfile
 

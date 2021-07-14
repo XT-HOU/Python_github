@@ -2,11 +2,12 @@
 # -*- coding:utf-8 -*-
 
 """模块注释：
-    公共参数
+    公共对象
 """
 __author__ = "HOU"
 
 import log
+import spark
 from lxml import objectify, etree
 
 
@@ -31,6 +32,9 @@ data_in = {}
 data_out = {}
 """输入数据 key-value"""
 logger = log.get_logger()
+"""日志对象"""
+spark = spark.get_spark()
+"""sparkSession"""
 
 
 class Params(object):

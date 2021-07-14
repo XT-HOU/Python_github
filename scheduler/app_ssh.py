@@ -191,7 +191,7 @@ def get_disks_use(cmd_disc):
     elif os_type == Default.OS_LINUX.value:
         res = os.popen(cmd_disc).readlines()
         disk_idle = ' '.join(res[-1].split()).split(" ")
-    return res
+    return disk_idle
 
 
 if __name__ == '__main__':

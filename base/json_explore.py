@@ -34,6 +34,11 @@ def dict2student(d):
 
 
 if __name__ == '__main__':
+
+    list = [{"我们": "52"}, {"id": "52"}]
+    print(json.dumps(list, ensure_ascii=False))
+
+
     a = {"status": 1, "info": "发布成功", "data": {"id": "52", "feed_id": "70"}}
     b = json2obj(json.dumps(a), JSON2Object)
     print(b.info)
