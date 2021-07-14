@@ -24,7 +24,7 @@ def get_spark():
         target_name = target_params['target_name']
 
     if not ip_service.__contains__(ip):
-        spark_single = SparkSession.builder.master("local[1]").appName(target_name).getOrCreate()
+        spark_single = SparkSession.builder.master("local[8]").appName(target_name).getOrCreate()
     else:
         spark_single = SparkSession.builder.appName(target_name).getOrCreate()
 
@@ -69,6 +69,7 @@ def spark_data_frame():
     # for item in res:
     #     print(item.time.value)
     print(1)
+
 
 def ji_fen():
     from scipy import integrate
