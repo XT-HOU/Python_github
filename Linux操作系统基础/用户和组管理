@@ -1,0 +1,27 @@
+--查看当前用户
+    who am i
+--查看用户信息
+    id username
+添加用户信息
+    useradd username
+切换用户
+    su username
+删除用户
+    userdel username
+--创建用户组
+    addgroup 新组名
+--分配权限
+    chmod [who] [+-=] [mode] 文件名
+    who：可以是下述字母的任意一个或组合
+        u(user)=所有者
+        g(group)=同组用户
+        o(other)=其它用户
+        a(all)=所有用户
+    mode:权限
+        r(4)=read 读
+        w(2)=write 写
+        x(1)=  执行
+    例子： chmod u+r a.c; chmod 744 a.c
+--修改文件所属用户
+    sudo chown 新用户 文件
+    sudo chown 新用户:新组名 文件

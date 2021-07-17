@@ -1,8 +1,0 @@
-查看用户信息
-    id username
-添加用户信息
-    useradd username
-切换用户
-    su username
-删除用户
-    userdel username

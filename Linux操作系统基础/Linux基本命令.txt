@@ -19,3 +19,9 @@ tab:命令补齐
 # 修改计算机名
     centos6 = vim /etc/sysconfig/network
     centos7 = vim /etc/hostname
+# 查看和修改 Linux 时间
+    date  "date -s 11/03/2009" "date -s 17:55:55"  将当前时间和日期写入BIOS，避免重启后失效命令 ： "hwclock -w"
+--man find
+    帮助手册
+--磁盘最小单位块
+    块=512字节

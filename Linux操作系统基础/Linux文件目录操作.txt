@@ -1,10 +1,14 @@
-1. touch   qwe.txt（文件名 ）
+--lrwxrwxrwx
+    第一位文件类型（文件/文件夹/软链接等）234 所属用户的权限 567 所属组的权限 8910 其它用户的权限
+--文件类型 七类
+    l/d/-
+--touch   qwe.txt（文件名 ）
     创建文件akk.txt文件
-2.vim akk.txt
+--vim akk.txt
     vi为进入vim编辑器命令，意为在vim编辑器中编辑qwe.txt文件
-3.i
+--i
     i意为insert为输入模式，输入i之后你就可以开始编辑这个txt文件了
-4.esc
+--esc
     退出编辑模式
 保存并退出
     ：wq 保存并退出(注意：在冒号后面需要加上一个空格，不然linux是不会识别出来的！)
@@ -32,9 +36,13 @@
     ./是当前目录;../是父级目录;/是根目录
 --复制文件
     cp ifcfg-eth0 ifcfg-eth0-backup
+--复制文件夹及内容
+    cp -r /home/packageA/* /home/cp/packageB/
 --读取文件
     cat hell0.txt  倒序读取文件 tac hello.txt
 --大文件读取
     more/less
 --递归查看所有文件
     ls -R
+--文件分发到其它电脑
+    scp -rp a.txt root@192.168.0.1:/root/
