@@ -1,27 +1,29 @@
 
-tab:命令补齐
-查看系统版本：lsb_release -a
-强制解除yum锁定
+--tab:命令补齐
+    查看系统版本：lsb_release -a
+--强制解除yum锁定
     rm -rf /var/run/yum.pid
-在/usr/bin下添加软连接
-    # ln -s 源文件/目录 目标文件/目录
+--在/usr/bin下添加软连接
+    --ln -s 源文件/目录 目标文件/目录
     ln -s /usr/local/anaconda3/bin/python3 /usr/bin/python3
-# 下载 ansible 全量依赖包
+--下载 ansible 全量依赖包
     repotrack ansible
-# 离线安装(切换到下载目录)
+--离线安装(切换到下载目录)
     rpm -Uvh --force --nodeps *.rpm
-# 查看所有服务centos6.5
+--查看所有服务centos6.5
     netstat -atunlp
-# 关机/重起
+--关机/重起
     7= poweroff reboot
-# 重启 网络服务
+--重启 网络服务
     systemctl restart network
-# 修改计算机名
+--修改计算机名
     centos6 = vim /etc/sysconfig/network
     centos7 = vim /etc/hostname
-# 查看和修改 Linux 时间
+--查看和修改 Linux 时间
     date  "date -s 11/03/2009" "date -s 17:55:55"  将当前时间和日期写入BIOS，避免重启后失效命令 ： "hwclock -w"
 --man find
     帮助手册
 --修改中文环境（7）
     修改 etc/locale.conf 内容 LANG=zh_CN.UTF-8; source /etc/locale.conf
+--alias 别名
+    alias pg ='ps aux | grep'

@@ -17,7 +17,7 @@
 --创建编译安装目录
     mkdir /usr/local/python3
 --删除文件
-    rm -f ifcfg-eth1
+    rm -rf ifcfg-eth1; r 递归删除，f 强制删除
 --删除所有包含gitlab文件
     find / -name gitlab | xargs rm -rf
 --查看隐藏文件
@@ -38,11 +38,19 @@
     cp ifcfg-eth0 ifcfg-eth0-backup
 --复制文件夹及内容
     cp -r /home/packageA/* /home/cp/packageB/
---读取文件
+--读取小文件 cat
     cat hell0.txt  倒序读取文件 tac hello.txt
---大文件读取
-    more/less
+--大文件读取 less
+    pagedown 向下翻页;pageup 向上翻页; / 搜索 n向下搜索;N向上搜索
 --递归查看所有文件
     ls -R
 --文件分发到其它电脑
     scp -rp a.txt root@192.168.0.1:/root/
+--umask
+    指定用户创建文件时的掩码 umask 002(默认)
+--pwd
+    查看当前绝对路径
+--tail 输出文件尾部内容
+    tail -n 10
+    tail -f 文件名 实时查看文件内容
+-- > 覆盖 和 >> 追加
