@@ -8,6 +8,8 @@
     who
 --添加用户信息
     useradd username
+--修改用户
+    passwd 用户名
 --切换用户
     su username
 --删除用户
