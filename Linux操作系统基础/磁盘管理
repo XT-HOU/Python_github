@@ -1,8 +1,10 @@
+# 块
+    b(块)=512 byte
 # 查看挂载结构（列出所有可用块设备的信息）
-lsblk
+    lsblk
 # 查看硬盘信息（分区情况）
-fdisk -l
+    fdisk -l
 # 查看硬盘使用情况
-df -h
+    df -h
 # 查看指定文件夹大小
-du -h /home
+    du -h /home

@@ -23,5 +23,5 @@ tab:命令补齐
     date  "date -s 11/03/2009" "date -s 17:55:55"  将当前时间和日期写入BIOS，避免重启后失效命令 ： "hwclock -w"
 --man find
     帮助手册
---磁盘最小单位块
-    块=512字节
+--修改中文环境（7）
+    修改 etc/locale.conf 内容 LANG=zh_CN.UTF-8; source /etc/locale.conf

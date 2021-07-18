@@ -1,6 +1,0 @@
---find命令
-    find 路径 -类型 '*文件名*'
-        -type 文件类型       find /home -type 'name';
-        -name 文件名         find /home -name '*name*';
-        -maxdepth 层级       find /home -maxdepth 1  -name 'name'
-        -size   按大小       find /home -size +20M -size -50M

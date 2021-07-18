@@ -2,11 +2,15 @@
     who am i
 --查看用户信息
     id username
-添加用户信息
+--查看所有用户
+    cut -d : -f 1 /etc/passwd
+--查看能登陆的用户
+    who
+--添加用户信息
     useradd username
-切换用户
+--切换用户
     su username
-删除用户
+--删除用户
     userdel username
 --创建用户组
     addgroup 新组名

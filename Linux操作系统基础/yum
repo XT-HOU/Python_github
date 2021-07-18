@@ -14,3 +14,6 @@ yum源地址
 
 
 阿里云的各种源可以点击http://mirrors.aliyun.com/repo/
+
+--强制解除yum锁定
+    rm -rf /var/run/yum.pid
