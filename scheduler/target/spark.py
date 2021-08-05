@@ -22,9 +22,15 @@ def get_spark():
 
     if target_params.params.get('target_name') is not None:
         target_name = target_params['target_name']
-
+#
     if not ip_service.__contains__(ip):
-        spark_single = SparkSession.builder.master("local[8]").appName(target_name).getOrCreate()
+        spark_single = SparkSession.builder.master("local[*]")\
+            .config("spark.executor.memory", "4g")\
+            .config("spark.dirver.memory", "4g")\
+            .config("hive.metastore.uris", "thrift://192.168.43.70:9083")\
+            .enableHiveSupport()\
+            .appName(target_name)\
+            .getOrCreate()
     else:
         spark_single = SparkSession.builder.appName(target_name).getOrCreate()
 
@@ -91,6 +97,9 @@ def time_change():
 
 
 if __name__ == '__main__':
-    print(spark_data_frame())
+    spark = get_spark()
+    sql = "select * from default.demo01 "
+    df = spark.sql(sql)
+    print(df.collect())
 
 

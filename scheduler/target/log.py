@@ -45,7 +45,7 @@ def get_fh_file():
     logfile = log_name
     open(logfile, 'a')
     fh = logging.FileHandler(logfile, mode='a')
-    fh.setLevel(logging.DEBUG)  # 输出到file的log等级的开关
+    fh.setLevel(logging.INFO)  # 输出到file的log等级的开关
     # 第三步，定义handler的输出格式
     formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
     fh.setFormatter(formatter)

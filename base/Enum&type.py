@@ -20,5 +20,7 @@ class Weekday(Enum):
 
 if __name__ == '__main__':
     # Weekday.SUN = 7
-    print(Weekday.SUN)
-    print(Weekday.SUN.value)
+    # print(Weekday.SUN)
+    # print(Weekday.SUN.value)
+    import time
+    print(str(time.strftime("%Y%m%d%H%M%S", time.localtime())))

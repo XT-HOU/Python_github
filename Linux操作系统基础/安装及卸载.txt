@@ -5,6 +5,8 @@
     -h 安装软件包时列出标记
 卸载: rpm -e package.rpm
 升级: rpm -Uvh file.rpm (rpm -upgrade file.rpm)
+查看：rpm -qa | grep rpm包名
+
 
 --yum 安装与卸载
 安装： yum install 软件包(yum install wget)

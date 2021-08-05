@@ -31,5 +31,6 @@ __author__ = "HOU"
 import uuid
 
 if __name__ == '__main__':
-    uuid1 = uuid.uuid1()
-    print(str(uuid1).replace('-', ''))
+    # uuid1 = uuid.uuid1()
+    # print(str(uuid1).replace('-', ''))
+    print(tuple(eval("(1,2,3)")))
