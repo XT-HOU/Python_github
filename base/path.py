@@ -2,7 +2,8 @@
 # -*- coding:utf-8 -*-
 
 import os
-import pysmb
+
+print('1123'.replace('1',''))
 
 print("===获取当前文件目录===")
 # 当前脚本工作的目录路径

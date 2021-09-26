@@ -20,7 +20,8 @@
     centos6 = vim /etc/sysconfig/network
     centos7 = vim /etc/hostname
 --查看和修改 Linux 时间
-    date  "date -s 11/03/2009" "date -s 17:55:55"  将当前时间和日期写入BIOS，避免重启后失效命令 ： "hwclock -w"
+    date -R 查看时区是否正确（东八区）   修改时区： timedatectl set-timezone Asia/Shanghai
+    date  "date -s 11/03/2009" "date -s 17:55:55"  将当前时间和日期写入BIOS，避免重启后失效命令 ： "clock -w"
 --man find
     帮助手册
 --修改中文环境（7）
