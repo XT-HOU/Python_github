@@ -1,6 +1,7 @@
-1.Xbrowser
+1.Xbrowser（linux远程桌面）
 
 　　Xbrowser使用xdcmp 协议通过图形化桌面远程可以连接到Unix/Linux主机；
+    https://blog.csdn.net/fgf00/article/details/50965686
 
 　　2.Xconfig
 

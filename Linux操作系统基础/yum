@@ -17,3 +17,4 @@ yum源地址
 
 --强制解除yum锁定
     rm -rf /var/run/yum.pid
+

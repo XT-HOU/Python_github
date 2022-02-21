@@ -3,6 +3,7 @@
     -i 显示软件包的相关信息
     -v 显示命令执行过程
     -h 安装软件包时列出标记
+    -nodeps 不检查依赖
 卸载: rpm -e package.rpm
 升级: rpm -Uvh file.rpm (rpm -upgrade file.rpm)
 查看：rpm -qa | grep rpm包名
@@ -25,3 +26,7 @@
 --批量安装：
     把所有的rpm包放在一个目录下。切换安装目录
     rpm -Uvh --force --nodeps *rpm
+
+--查看rpm软件包
+    rpm -qa
+    rpm -qa | grep rpm

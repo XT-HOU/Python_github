@@ -1,6 +1,8 @@
 
 --tab:命令补齐
     查看系统版本：lsb_release -a
+--shell
+    历史记录：history，移动到第一个字符：ctrl+a ,移动到最后一个字符：ctrl+e ,清空输入：ctrl+u
 --强制解除yum锁定
     rm -rf /var/run/yum.pid
 --在/usr/bin下添加软连接

@@ -1,5 +1,8 @@
 http://blog.itpub.net/29475508/viewspace-1978184/
 
+centos6的网卡重启方法：service network restart
+centos7的网卡重启方法：systemctl restart network
+
 vim /etc/udev/rules.d/70-persistent-net.rules
 具体网卡配置文件
 [root@rhel64 ~]# cat /etc/sysconfig/network-scripts/ifcfg-eth1

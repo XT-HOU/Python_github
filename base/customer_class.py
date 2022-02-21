@@ -63,8 +63,14 @@ class Fib(object):
 
 
 if __name__ == '__main__':
+    import pandas as pd
     s = Student('HOU')
-    print(s)
+    s.age = pd.DataFrame()
+    s1 = Student('HXT')
+    L = []
+    L.append(s)
+    L.append(s1)
+
 
     for n in Fib():
         print(n)

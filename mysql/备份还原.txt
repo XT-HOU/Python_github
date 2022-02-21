@@ -1,0 +1,35 @@
+--远程备份单数据库
+mysqldump --skip-opt -h192.168.0.137 -p3306 --default-character-set=utf8 --max_allowed_packet=1073742824 -uroot -p123456
+-B dbname > D:\dbname.sql
+
+--远程备份多数据库
+mysqldump --skip-opt -h192.168.0.137 -p3306 --default-character-set=utf8 --max_allowed_packet=1073742824 -uroot -p123456
+--databases dbname1 dbname2 > D:\dbname1+2.sql
+
+--远程备份多数据库
+mysqldump --skip-opt -h192.168.0.137 -p3306 --default-character-set=utf8 --max_allowed_packet=1073742824 -uroot -p123456
+--all-databases > D:\all.sql
+
+
+--还原数据库
+mysql --default-character-set=utf8 --max_allowed_packet=1073742824 -uroot -p123456 < all.sql
+--连接超时（要导入的mysqldump文件中insert的values值太多，超过了MySQL参数max_allowed_packet的值，进而导致导入操作中断退出。）
+mysql> set global max_allowed_packet=67108864;
+--source 还原数据库
+mysql> source D:\dbname1.sql
+
+
+
+
+
+
+
+
+
+--mysql source执行多个文件
+创建一个all.sql
+内容为：
+    source D:\dbname1.sql
+    source D:\dbname2.sql
+
+运行all.sql

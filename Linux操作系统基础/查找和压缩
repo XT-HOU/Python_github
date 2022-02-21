@@ -14,4 +14,4 @@
 
 --tar命令
     tar -zcvf 压缩文件名.tar.gz file1 dir2 压缩文件
-    tar -zxvf 压缩文件名.tar.gz   解压文件
+    tar -zxvf 压缩文件名.tar.gz  -C 解压路径  解压文件

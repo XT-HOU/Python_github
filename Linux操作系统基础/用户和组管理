@@ -31,3 +31,6 @@
 --修改文件所属用户
     sudo chown 新用户 文件
     sudo chown 新用户:新组名 文件
+--配置用户获取root权限
+    visudo
+    添加 hou   ALL=(ALL)     ALL
