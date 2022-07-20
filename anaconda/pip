@@ -1,6 +1,0 @@
-# time out
-    pip --default-timeout=100 install wad
-# 切换pip安装源
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pandas
-    永久
-    pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple

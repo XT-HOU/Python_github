@@ -1,6 +1,6 @@
 # ！/usr/bin/python3
 # -*- coding:utf-8 -*-
-# JSON-RPC server needing 'pip install jsonrpclib-pelix'
+# JSON-RPC server needing 'pip安装 install jsonrpclib-pelix'
 
 from jsonrpclib import Server
 

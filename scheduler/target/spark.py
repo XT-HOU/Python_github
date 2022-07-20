@@ -97,6 +97,8 @@ def time_change():
 
 
 if __name__ == '__main__':
+    spark_single = SparkSession.builder.appName("app").getOrCreate()
+
     spark = get_spark()
     sql = "select * from default.demo01 "
     df = spark.sql(sql)

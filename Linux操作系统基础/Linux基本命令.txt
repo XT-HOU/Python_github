@@ -24,6 +24,9 @@
 --查看和修改 Linux 时间
     date -R 查看时区是否正确（东八区）   修改时区： timedatectl set-timezone Asia/Shanghai
     date  "date -s 11/03/2009" "date -s 17:55:55"  将当前时间和日期写入BIOS，避免重启后失效命令 ： "clock -w"
+    centos6 修改时区
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
 --man find
     帮助手册
 --修改中文环境（7）

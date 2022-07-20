@@ -8,6 +8,7 @@
     df -h
 --查看指定文件夹大小
     du -h /home
+    du -h --max-depth=1
 --挂载和卸载
     mount [-t vfstype] [-o options] device dir; mount  /dev/cdrom /mnt/cdrom/
     umount 设备文件名或挂载点; umount /mnt/cdrom

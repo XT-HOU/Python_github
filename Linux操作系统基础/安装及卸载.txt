@@ -30,3 +30,8 @@
 --查看rpm软件包
     rpm -qa
     rpm -qa | grep rpm
+
+
+有时候我们想使用ifconfig命令，系统提示无此命令，但我们又不知道安装什么软件包的时候，可以通过下面这种方式查找要安装的软件是什么
+
+yum provides */ifconfig
