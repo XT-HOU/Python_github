@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.icode9.com/content-3-813351.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Linux上安装Matlab2020b</title>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+  <meta name="description" content="目录一、下载“Crack”和”ISO”镜像文件二、安装MATLAB1、挂载镜像并开始运行install文件2、选择“使用密钥安装”3、取消挂载三、激活MATLAB四、创建快捷启动方式一、下载“Crack”和”ISO”镜像文件安装包及破解文件链接：链接：https://pan.baidu.com/s/1GZZnDQ">
+  <meta name="keywords" content="Linux上安装Matlab2020b">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="icon" href="https://www.icode9.com/favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="https://www.icode9.com/favicon.ico">
+  <link href="./Linux上安装Matlab2020b_files/style.css" rel="stylesheet" type="text/css">
+  <link href="./Linux上安装Matlab2020b_files/prettify.css" rel="stylesheet">
+   <link href="./Linux上安装Matlab2020b_files/prettify(1).css" rel="stylesheet" type="text/css">
+  <script src="./Linux上安装Matlab2020b_files/f.txt" id="google_shimpl"></script><script type="text/javascript" async="" src="./Linux上安装Matlab2020b_files/analytics.js.下载"></script><script src="./Linux上安装Matlab2020b_files/hm.js.下载"></script><script src="./Linux上安装Matlab2020b_files/prettify.js.下载"></script>
+  <script src="./Linux上安装Matlab2020b_files/q.js.下载"></script>
+  <script src="./Linux上安装Matlab2020b_files/jquery.min.js.下载"></script>
+  <script>
+	$(window).load(function(){
+		 $("pre").addClass("prettyprint");
+		 prettyPrint();
+	})
+  </script>
+  <script>
+ $(window).scroll(function() {
+     var t = $(document).scrollTop();
+     if (t < 850) {
+         $(".sidebar1").removeClass('fiesd-top');
+     } else {
+         $(".sidebar1").addClass('fiesd-top');
+     }
+ });
+</script>
+<script async="" src="./Linux上安装Matlab2020b_files/f(1).txt" crossorigin="anonymous" data-checked-head="true"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="./Linux上安装Matlab2020b_files/js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-176051022-1');
+</script>
+ <meta http-equiv="origin-trial" content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A8FHS1NmdCwGqD9DwOicnHHY+y27kdWfxKa0YHSGDfv0CSpDKRHTQdQmZVPDUdaFWUsxdgVxlwAd6o+dhJykPA0AAACWeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A8zdXi6dr1hwXEUjQrYiyYQGlU3557y5QWDnN0Lwgj9ePt66XMEvNkVWOEOWPd7TP9sBQ25X0Q15Lr1Nn4oGFQkAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A4/Htern2udN9w3yJK9QgWQxQFruxOXsXL7cW60DyCl0EZFGCSme/J33Q/WzF7bBkVvhEWDlcBiUyZaim5CpFQwAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"></head>
+ <body class="single it">
+  <link rel="stylesheet" href="./Linux上安装Matlab2020b_files/top.css" type="text/css">
+  <div id="top5" class="category">
+ <div class="category_title">
+  <a href="https://www.icode9.com/">
+    <div>
+      <img src="./Linux上安装Matlab2020b_files/logo.png"></div>
+    <div>
+      <h1 class="categoryname">ICode9</h1></div>
+  </a>
+  <div class="sc" style="float:right!important;margin-top:0!important;">
+    <form action="https://www.icode9.com/" target="_blank">
+      <input id="bdcsMain" class="focus" size="24" name="q" accesskey="s" autosave="baidu" results="8" autocomplete="off">
+      <button type="submit" name="sa" onclick="window.open(&#39;http://zhannei.baidu.com/cse/search?s=13994943330572230277&amp;entry=1&amp;q=&#39;+document.getElementById(&#39;bdcsMain&#39;).value)">搜索</button></form>
+
+   <div class="extra_sc">精准搜索请尝试：
+      <a href="https://www.icode9.com/" target="_blank" class="js" title="精确搜索">精确搜索</a></div>
+  </div>
+</div>
+ <div class="category_nav">
+  <div class="item cu">
+    <a href="https://www.icode9.com/">首页</a></div>
+  <div class="item">
+    <a href="https://www.icode9.com/list-1-0.html">编程语言</a></div>
+  <div class="item">
+    <a href="https://www.icode9.com/list-2-0.html">数据库</a></div>
+  <div class="item">
+    <a href="https://www.icode9.com/list-3-0.html">系统相关</a></div>
+  <div class="item">
+    <a href="https://www.icode9.com/list-5-0.html">互联网</a></div>
+  <div class="item">
+    <a href="https://www.icode9.com/list-4-0.html">其他分享</a></div>
+  <div class="item">
+    <a href="https://www.icode9.com/tags-python-0.html">Python</a></div>
+  <div class="item">
+    <a href="https://www.icode9.com/tags-java-0.html">Java</a></div>
+  <div class="item">
+    <a href="https://www.icode9.com/tags-JavaScript-0.html">JavaScript</a></div>
+  <div class="item">
+    <a href="https://www.icode9.com/tags-android-0.html">android</a></div>
+  <div class="item">
+    <a href="https://www.icode9.com/tags-PHP-0.html">PHP</a></div>
+</div>
+  </div>  
+  <div id="tt50"><ul><li><a href="https://www.icode9.com/js/jump?adid=3" target="_blank"><span style="color: red;">衡天云_14年深耕海外IDC资源</span></a></li><li><a href="https://icode9.com/content-4-1017350.html" target="_blank"><span style="color: red;">抖音极速版2022最新下载</span></a></li><li><a href="https://icode9.com/eleme.html" target="_blank"><span style="color: red;">☺饿了么外卖漏洞，最高减15元☺</span></a></li><li><a href="https://icode9.com/contactus.html" target="_blank"><span style="color: blue;">【超实惠】广告位招租，详情联系</span></a></li></ul></div> <div class="topimg"><ul> <li><a href="https://www.icode9.com/js/jump?adid=3" target="_blank"><img alt="" src="./Linux上安装Matlab2020b_files/htstack_360_60.gif" width="360" height="60"></a></li><li><a href="https://icode9.com/eleme.html" target="_blank"><img alt="" src="./Linux上安装Matlab2020b_files/eleme.png" width="360" height="60"></a></li><li><a href="https://icode9.com/contactus.html" target="_blank"><img alt="" src="./Linux上安装Matlab2020b_files/gg3.gif" width="360" height="60"></a></li> </ul></div>
+  <div id="con">
+   <div id="wrapper">
+    <div class="content fl">
+     <div class="current_nav">
+<a href="https://www.icode9.com/">首页</a>&nbsp;&gt;&nbsp;<a href="https://www.icode9.com/list-3-0.html">系统相关</a>&gt; 文章详细
+     </div>
+<div class="post_title">  
+  </div>
+     <div class="post_title">
+      <h1>Linux上安装Matlab2020b</h1>
+      <span class="pt_info pre1"><span id="pubtime_baidu">2021-01-07 23:31:34&nbsp;&nbsp;</span><span id="source_baidu">阅读：3334&nbsp;&nbsp;</span><span id="author_baidu">来源：<strong>
+互联网</strong></span> <span id="hitcount"></span> </span>
+     </div>
+<div class="post_title"> 
+<!-- title_button_2 -->
+<script>
+     adload('title_button');
+</script><ins class="adsbygoogle" style="display: block; height: 280px;" data-ad-client="ca-pub-6297881353008806" data-ad-slot="3507405797" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="border: none; height: 280px; width: 728px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;"><ins id="aswift_1_anchor" style="border: none; height: 280px; width: 728px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"></ins></ins></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>    </div>
+     <div class="con-recom">
+      <div class="bx-recom3">
+<script>
+     adload('hncloud');
+</script><a href="https://www.icode9.com/js/jump?adid=2" target="_blank"><img src="./Linux上安装Matlab2020b_files/hncloud.gif"></a> 
+      </div>
+     </div>
+     <div class="post_content" id="paragraph">
+<p><strong>标签：</strong><a href="https://www.icode9.com/tags-Crack-0.html" target="_blank">Crack</a>&nbsp;<a href="https://www.icode9.com/tags-sudo-0.html" target="_blank">sudo</a>&nbsp;<a href="https://www.icode9.com/tags-Matlab2020b-0.html" target="_blank">Matlab2020b</a>&nbsp;<a href="https://www.icode9.com/tags-matlab-0.html" target="_blank">matlab</a>&nbsp;<a href="https://www.icode9.com/tags-Linux-0.html" target="_blank">Linux</a>&nbsp;<a href="https://www.icode9.com/tags-Matlab-0.html" target="_blank">Matlab</a>&nbsp;<a href="https://www.icode9.com/tags-%E5%AE%89%E8%A3%85-0.html" target="_blank">安装</a>&nbsp;<a href="https://www.icode9.com/tags-MATLAB-0.html" target="_blank">MATLAB</a>	</p><br>
+<script>adload('ee');</script><a class="eleme" href="https://curl.qcloud.com/LSWBc0Us" target="_blank">【腾讯云】云产品限时秒杀，2核2G 4M 40GB SSD仅40元/年,200元3年</a><br>
+
+
+
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+<path d="M5,0 0,2.5 5,5z" id="raphael-marker-block" stroke-linecap="round" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+</svg>
+<p></p>
+
+<h3>目录</h3>
+<ul><li><ul><li><ul><li><a href="https://www.icode9.com/content-3-813351.html#CrackISO_1">一、下载“Crack”和”ISO”镜像文件</a></li><li><a href="https://www.icode9.com/content-3-813351.html#MATLAB_4">二、安装MATLAB</a></li><li><ul><li><ul><li><a href="https://www.icode9.com/content-3-813351.html#1_install__5">1、挂载镜像并开始运行 install 文件</a></li><li><a href="https://www.icode9.com/content-3-813351.html#2_13">2、选择“使用密钥安装”</a></li><li><a href="https://www.icode9.com/content-3-813351.html#3_23">3、取消挂载</a></li></ul>
+</li></ul>
+</li><li><a href="https://www.icode9.com/content-3-813351.html#MATLAB_29">三、激活MATLAB</a></li><li><a href="https://www.icode9.com/content-3-813351.html#_35">四、创建快捷启动方式</a></li></ul>
+</li></ul>
+</li></ul>
+
+<p></p>
+<h3><a id="CrackISO_1"></a>一、下载“Crack”和”ISO”镜像文件</h3>
+<p>安装包及破解文件链接：链接：<a href="https://pan.baidu.com/s/1GZZnDQ3QSt0AhZoZ3LAX2A">https://pan.baidu.com/s/1GZZnDQ3QSt0AhZoZ3LAX2A </a><br> 提取码：5ko2</p>
+<h3><a id="MATLAB_4"></a>二、安装MATLAB</h3>
+<h5><a id="1_install__5"></a>1、挂载镜像并开始运行 install 文件</h5>
+<pre><code class="prism language-python">cd ~                    # 切换到home目录
+sudo mkdir matlab       # 创建一个文件夹，并命名为matlab
+cd matlab                #切换到matlab目录
+sudo mount -t auto -o loop Matlab98R2020a_Lin64.iso        # 挂载dvd，路径为iso镜像文件的路径
+sudo ./install # 开始安装
+</code></pre>
+<h5><a id="2_13"></a>2、选择“使用密钥安装”</h5>
+<p>①同意一些协之后输入安装Key:<strong>09806-07443-53955-64350-21751-41297</strong><br> <img alt="在这里插入图片描述" src="./Linux上安装Matlab2020b_files/saved_resource"><br> <img alt="在这里插入图片描述" src="./Linux上安装Matlab2020b_files/saved_resource(1)"><br> ②提示选择许可证，解压Linux_Patch.7z文件,得到<strong>Crack</strong>文件夹,选择其中的<strong>license_standalone.lic</strong>许可证文件,点击下一步;选择安装位置,默认下一步即可;<br> <img alt="在这里插入图片描述" src="./Linux上安装Matlab2020b_files/saved_resource(2)"><br> <img alt="在这里插入图片描述" src="./Linux上安装Matlab2020b_files/saved_resource(3)"><br> ③选择要安装的组件,自己选择,如果全选也可以,就是安装时间较长;点击下一步开始安装过程,大概半小时左右可以安装完成;(视磁盘性能而定)<br> <img alt="在这里插入图片描述" src="./Linux上安装Matlab2020b_files/saved_resource(4)"><br> <img alt="在这里插入图片描述" src="./Linux上安装Matlab2020b_files/saved_resource(5)"></p>
+<h5><a id="3_23"></a>3、取消挂载</h5>
+<pre><code class="prism language-python">sudo umount matlab/
+</code></pre>
+<p>到这里就安装完成了，接下来我们需要进行激活。</p>
+<h3><a id="MATLAB_29"></a>三、激活MATLAB</h3>
+<p>安装完成后,拷贝<strong>Crack</strong>文件夹中的<strong>libmwlmgrimpl.so</strong>文件到目录 <strong>/applications/Polyspace/r2020a/bin/maci64/matlab_startup_plugins/lmgrimpl/</strong> 替换同名文件即可；</p>
+<pre><code class="prism language-python">sudo cp Linux_Patch/Mathworks Matlab R2020a Linux x64 Crack/libmwlmgrimpl.so  /applications/Polyspace/r2020a/bin/maci64/matlab_startup_plugins/lmgrimpl
+</code></pre>
+<h3><a id="_35"></a>四、创建快捷启动方式</h3>
+<p>如果没有这一步操作，那么我们每次运行 matlab，都需要切换到安装路径的 bin 文件夹下面，然后执行 sudo ./matlab 才可运行 matlab，这样比较麻烦，下面我们在创建一个快捷启动方式以便于我们以后启动 matlab。<br> <strong>方法一：</strong><br> 1、创建一个桌面文件并输入下图中的内容</p>
+<pre><code class="prism language-python">sudo vim /usr/share/applications/Matlab2020b.desktop
+</code></pre>
+<p><img alt="在这里插入图片描述" src="./Linux上安装Matlab2020b_files/saved_resource(6)"></p>
+<blockquote>
+<p>[Desktop Entry]<br> Categories=Development;Matlab;<br> Comment[zh_CN]=Matlab: The Language of Technical Computing<br> Comment=Matlab: The Language of Technical Computing<br> Exec=sh /usr/local/MATLAB/R2020b/bin/matlab -desktop<br> GenericName[zh_CN]=Matlab2020b<br> GenericName=Matlab2020b<br> Icon=/usr/local/MATLAB/R2020b/toolbox/sl3d/mainpage/matlab_logo.gif<br> Mimetype=<br> Name[zh_CN]=MATLAB<br> Name=MATLAB<br> Path=<br> StartupNotify=true<br> Terminal=false<br> Type=Application</p>
+</blockquote>
+<p><strong>方法二：</strong><br> <img alt="在这里插入图片描述" src="./Linux上安装Matlab2020b_files/saved_resource(7)"><br> 在Ubuntu软件里找到MATLAB安装，然后根据要求将安装路径里的./bin/matlab放入，便可将通过桌面图标打开Matlab<br> <img alt="在这里插入图片描述" src="./Linux上安装Matlab2020b_files/saved_resource(8)"></p>
+
+
+
+<div class="post_title"> 
+<script>adload('b_utton');</script><ins class="adsbygoogle" style="display: block; text-align: center; height: 182px;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-6297881353008806" data-ad-slot="7083179606" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="border: none; height: 182px; width: 728px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;"><ins id="aswift_2_anchor" style="border: none; height: 182px; width: 728px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"></ins></ins></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script> </div>
+<p><strong>标签：</strong><a href="https://www.icode9.com/tags-Crack-0.html" target="_blank">Crack</a>,<a href="https://www.icode9.com/tags-sudo-0.html" target="_blank">sudo</a>,<a href="https://www.icode9.com/tags-Matlab2020b-0.html" target="_blank">Matlab2020b</a>,<a href="https://www.icode9.com/tags-matlab-0.html" target="_blank">matlab</a>,<a href="https://www.icode9.com/tags-Linux-0.html" target="_blank">Linux</a>,<a href="https://www.icode9.com/tags-Matlab-0.html" target="_blank">Matlab</a>,<a href="https://www.icode9.com/tags-%E5%AE%89%E8%A3%85-0.html" target="_blank">安装</a>,<a href="https://www.icode9.com/tags-MATLAB-0.html" target="_blank">MATLAB</a>	<br>
+来源： https://blog.csdn.net/Joker00007/article/details/112338703
+</p>
+	</div>
+     <div class="con-recom adblock">
+      <div class="bx-recom4">
+      </div>
+      <div class="bx-recom4">
+      </div>
+     </div>
+     </div>
+    <div class="sidebar">
+     <ul>
+      <li class="sb_list">
+       <div class="bx">
+<!-- 123 -->
+<script>
+adload('r123');
+</script><ins class="adsbygoogle" style="display: block; height: 600px;" data-ad-client="ca-pub-6297881353008806" data-ad-slot="1061832590" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done"><ins id="aswift_3_expand" style="border: none; height: 600px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;"><ins id="aswift_3_anchor" style="border: none; height: 600px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"></ins></ins></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div></li>
+      <li class="sb_list"> </li>
+      <li class="sb_list">
+       <div class="bx"><div class="sidebar1">
+<!-- 456 -->
+<script>
+adload('r456');
+</script><ins class="adsbygoogle" style="display: block; height: 600px;" data-ad-client="ca-pub-6297881353008806" data-ad-slot="4979120200" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done"><ins id="aswift_4_expand" style="border: none; height: 600px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;"><ins id="aswift_4_anchor" style="border: none; height: 600px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"></ins></ins></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div></div></li>
+      <li class="sb_list">
+       <div class="bx">
+ <script src="./Linux上安装Matlab2020b_files/mid.js.下载"></script>
+       </div></li>
+     </ul>
+     <ul id="crf1">
+      <li class="sb_list">
+       <div class="bx">
+       </div></li>
+      <li class="sb_list">
+       <div class="bx">
+       </div></li>
+     </ul>
+    </div>
+   </div>
+  </div>
+  <div id="ft">
+     <div class="if">
+    <div class="bx1">
+     <a href="https://www.icode9.com/about.html" target="_blank"><strong>关于我们</strong></a>
+     <span class="v">|</span>
+     <a href="https://www.icode9.com/contactus.html" target="_blank"><strong>联系我们</strong></a>
+     <span class="v">|</span>
+     <a href="https://www.icode9.com/" target="_blank"><strong>留言反馈</strong></a>
+    </div>
+    <div class="bx2">
+     <p>专注分享技术，共同学习，共同进步。侵权联系[admin#icode9.com]</p>
+     <p>Copyright (C)<a href="https://www.icode9.com/" target="_blank">ICode9.com</a>, All Rights Reserved.</p>
+     <p><a href="https://www.icode9.com/" target="_blank">ICode9</a>版权所有</p>
+    </div>
+   </div>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?55fe9c2619b337dd6c48f295325d1425";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  </div>
+  <div style="display:none">
+  </div>
+<script src="./Linux上安装Matlab2020b_files/xiong.js.下载"></script>
+ 
+<ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;"><ins id="aswift_0_expand" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;"><ins id="aswift_0_anchor" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"></ins></ins></ins></body><iframe id="google_esf" name="google_esf" src="./Linux上安装Matlab2020b_files/zrt_lookup.html" style="display: none;"></iframe></html>

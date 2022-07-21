@@ -1,0 +1,15 @@
+$(document).ready(function(){
+	var textgg='<ul><li><a href="https://www.icode9.com/js/jump?adid=3" target="_blank"><span style="color: red;">衡天云_14年深耕海外IDC资源</span></a></li>';
+textgg+='<li><a href="https://icode9.com/content-4-1017350.html" target="_blank"><span style="color: red;">抖音极速版2022最新下载</span></a></li>';
+textgg+='<li><a href="https://icode9.com/eleme.html" target="_blank"><span style="color: red;">☺饿了么外卖漏洞，最高减15元☺</span></a></li>';
+textgg+='<li><a href="https://icode9.com/contactus.html" target="_blank"><span style="color: blue;">【超实惠】广告位招租，详情联系</span></a></li>';
+
+var img_gg=' <div class="topimg"><ul>';
+ img_gg+=' <li><a href="https://www.icode9.com/js/jump?adid=3" target="_blank"><img alt="" src="/img/gg/htstack_360_60.gif" width="360" height="60"></a></li>';
+ img_gg+='<li><a href="https://icode9.com/eleme.html" target="_blank"><img alt="" src="/img/gg/eleme.png" width="360" height="60"></a></li>';
+ img_gg+='<li><a href="https://icode9.com/contactus.html" target="_blank"><img alt="" src="/img/gg/gg3.gif" width="360" height="60"></a></li>';
+ img_gg+=' </ul></div>';
+  
+$("#tt50").html(textgg);
+$("#tt50").after(img_gg);
+});
