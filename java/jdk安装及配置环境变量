@@ -1,0 +1,11 @@
+# 配置java jdk centos6
+--解压到 /opt/jdk1.8.0_291
+--配置环境变量
+    vim /etc/profile
+    export JAVA_HOME=/opt/jdk1.8.0_291
+    export PATH=$PATH:$JAVA_HOME/bin
+    export CLASSPATH=$:CLASSPATH:$JAVA_HOME/lib/
+--环境变量生效
+    source /etc/profile
+--查看是否安装成功
+    java -version

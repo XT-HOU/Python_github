@@ -26,6 +26,7 @@
 --批量安装：
     把所有的rpm包放在一个目录下。切换安装目录
     rpm -Uvh --force --nodeps *rpm
+    ls *.rpm | xargs -n1 sudo rpm -ivh
 
 --查看rpm软件包
     rpm -qa
