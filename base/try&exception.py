@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 """文档注释：
-flask框架例子
+    1.获取堆栈信息
 """
 __author__ = "HOU"
 
@@ -20,12 +20,13 @@ def f1(x):
 
 
 if __name__ == '__main__':
+    import traceback
     try:
-        print(f1(5))
-    except Exception as ex:
-        print(ex)
+        (int("5.0"))
+    except:
+        print(traceback.format_exc())
     finally:
-        print('finally')
+        print('-----------finally')
 
     # with as 退出是必须执行
     # 符合环境管理协议的 对象可以使用 with as（对象必须包含__enter__和 __exit__ 方法     ）
