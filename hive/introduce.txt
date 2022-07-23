@@ -35,5 +35,9 @@ Hive架构原理
 （3）优化器（Query Optimizer）：对逻辑执行计划进行优化。
 （4）执行器（Execution）：把逻辑执行计划转换成可以运行的物理计划。对于Hive来说，就是MR/Spark。
 
-安装Tez引擎
+Tez引擎
+    Tez是一个Hive的运行引擎，性能优于MR。
+
+连接hive
+    工具DBeaver,修改驱动添加文件hive-jdbc-3.1.2-standalone.jar(在Hive安装包中apache-hive-3.1.2-bin.tar.gz\apache-hive-3.1.2-bin\jdbc)
 
