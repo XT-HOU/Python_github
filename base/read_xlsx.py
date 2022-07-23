@@ -19,4 +19,4 @@ def save_hive(file_name):
 
 
 if __name__ == '__main__':
-    save_hive('myData.xlsx')
+    save_hive('../data/myData.xlsx')
