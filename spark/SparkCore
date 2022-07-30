@@ -1,0 +1,30 @@
+什么是RDD
+    RDD(Resilient Distributed DataSet)叫做弹性分布式数据集，是Spark中最基本的数据抽象。
+    代码中是一个抽象类，它代表一个弹性的、不可变、可分区、里面的元素可并行计算的集合。
+RDD特性
+    1)弹性
+    存储的弹性：内存和磁盘的自动切换
+    容错的弹性：数据丢失可以自动回复
+    计算的弹性：计算出错重试机制
+    分片的弹性：可根据需要重新分片
+    2)分布式
+    数据存储在大数据集群不同节点上
+    3)数据集
+    RDD封装了计算逻辑，并不保存数据
+    4)数据抽象
+    RDD是一个抽象类，需要子类具体实现
+    5)不可变
+    RDD封装了计算逻辑，是不可变的，想要改变，只能产生新的RDD，在新的RDD里面封装计算逻辑
+    6)可分区、可并行计算
+算子类型
+    Transformation转换算子,懒加载，并不会立即执行。
+    RDD整体上分为Value类型、双Value类型和Key-Value类型。
+    Value类型：
+        map()、groupBy()、filter()、sample()等
+    双Value类型：
+        union()并集、subtract()差集、intersection()交集、zip()拉链
+    Key-Value类型：
+        partitionBy()、 reduceByKey()、groupByKey()
+
+    Action行动算子是触发了整个作业的执行。
+        reduce()聚合、collect()以数组的形式返回数据集、foreach(f)遍历RDD中每一个元素
