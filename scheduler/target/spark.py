@@ -96,6 +96,11 @@ def time_change():
     print(timp)
 
 
+class Person(object):
+    def __init__(self,name=None):
+        self.name = name
+
+
 if __name__ == '__main__':
     spark_single = SparkSession.builder.appName("app").getOrCreate()
 
@@ -103,5 +108,5 @@ if __name__ == '__main__':
     sql = "select * from default.demo01 "
     df = spark.sql(sql)
     print(df.collect())
-
+import pyspark.str
 

@@ -29,6 +29,7 @@ Spark运行模式
         --deploy-mode client，表示Driver程序运行在本地客户端，Driver程序运行在客户端，适用于交互、调试，希望立即看到app的输出
         --deploy-mode cluster，表示Driver程序运行在集群，适用于生产环境
     YRAN模式：Spark使用Hadoop的YARN组件进行资源与任务调度。
+        spark-submit --master yarn pi.py
         --deploy-mode client，表示Driver程序运行在本地客户端，Driver程序运行在客户端，适用于交互、调试，希望立即看到app的输出
         --deploy-mode cluster，表示Driver程序运行在集群，Driver程序运行在由ResourceManager启动的APPMaster适用于生产环境
 Spark安装
