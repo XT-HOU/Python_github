@@ -5,7 +5,14 @@
 flask框架例子
 """
 __author__ = "HOU"
-import pyquaternion
+
+from numpy.char import isdecimal
+
+
+class test:
+    def __init__(self):
+        pass
+
 
 def tet(aa):
     """
@@ -17,12 +24,5 @@ def tet(aa):
 
 
 if __name__ == '__main__':
-    import matplotlib.pyplot as plt
-    import numpy as np
-
-    x = ['1','2','3']
-    y = ['1', '2', '3']
-
-    plt.plot(x, y)
-    plt.show()
-    pass
+    a = isdecimal(12)
+    print(a)

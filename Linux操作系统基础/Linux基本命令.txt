@@ -33,3 +33,5 @@
     修改 etc/locale.conf 内容 LANG=zh_CN.UTF-8; source /etc/locale.conf
 --alias 别名
     alias pg ='ps aux | grep'
+--查看当前路径
+    pwd
