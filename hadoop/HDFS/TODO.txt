@@ -1,8 +1,0 @@
-DataNode:目录可配置多个
-节点扩展
-hadoop3配置
-MapReduce切片大小等于块大小（128），最后一片大小有特殊规整，不会出现太小的片
-Yarn 配置
-
-
-hdfs dfs -chmod -R 777 文件名或目录名

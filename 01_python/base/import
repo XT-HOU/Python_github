@@ -1,0 +1,8 @@
+import
+    导入，方式就是在 import 位置将代码文件拷贝过去。
+模块
+    python 中一个 .py 文件就是一个模块。
+包
+    指软件包，举例 import matplotlib.pyplot 中（其中 pyplot 非函数，至少是一个模块或者包），matplotlib 就是一个软件包。
+
+__init__.py的作用是让一个呈结构化分布(以文件夹形式组织)的代码文件夹变成可以被导入import的软件包。

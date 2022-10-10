@@ -1,0 +1,12 @@
+hadoop
+    start-all.sh
+yarn历史服务
+    mr-jobhistory-daemon.sh start historyserver
+spark
+    start-master.sh
+    start-slaves.sh
+spark历史服务
+    start-history-server.sh
+hive
+    nohup hive --service metastore >> log.out 2>&1 &
+    nohup hive --service hiveserver2 >> log.out 2>&1 &

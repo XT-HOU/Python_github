@@ -1,0 +1,12 @@
+DHFS:存储
+    NameNode（nn）:存储文件的元数据，文件名，文件目录结构，文件属性等
+    DataNode(dn)：存储文件块数据
+    secondary NameNode(2nn)：每隔一段时间对NameNode源数据备份
+yarn：资源调度
+    Resource Manager(RM):处理客户端请求，监控NodeManager,资源的分配与调度，启动或监控ApplicationMaster
+    Node Manager(NM):管理单个节点的资源，处理来自ResourceManager的命令，处理来自ApplicationMaster的命令
+    ApplicationMaster(AM):负责数据的切分，为应用程序申请资源分配给内部的任务，任务的监控与容错
+    Container:是YARN中的资源抽象，他封装了某个节点上的多维度资源，如内存，CPU，磁盘，网络等
+map-reduce：计算过程分为两个阶段：Map 和 Reduce
+    Map:并行处理输入数据
+    Reduce:对 Map 记过进行汇总

@@ -36,7 +36,7 @@ from pyspark.sql import SparkSession
 #
 # def pands_to_spark():
 #     """
-#         pandas dataframe 与 spark dataframe 互相转换
+#         pandas dataframe 与 04_spark dataframe 互相转换
 #     :return:
 #     """
 #     global values, columns
@@ -46,8 +46,8 @@ from pyspark.sql import SparkSession
 #     values = pandas_df.values.tolist()
 #     columns = pandas_df.columns.tolist()
 #
-#     spark = SparkSession.builder.master("local[1]").appName("app_name").getOrCreate()
-#     spark_df = spark.createDataFrame(values, columns)
+#     04_spark = SparkSession.builder.master("local[1]").appName("app_name").getOrCreate()
+#     spark_df = 04_spark.createDataFrame(values, columns)
 #     spark_df.show()
 #     # spark转pandas
 #     pandas_df = spark_df.toPandas()

@@ -1,0 +1,39 @@
+下载anaconda安装包 Anaconda3-4.4.0-Linux-x86_64.sh
+切换目录（opt）运行 sh Anaconda3-4.4.0-Linux-x86_64.sh
+q 到最后一页
+/usr/local/anaconda3 指定安装目录
+
+在/usr/bin下添加软连接
+    # ln -s 源文件/目录 目标文件/目录
+    ln -s /usr/local/anaconda3/bin/python3 /usr/bin/python3
+#添加 pip 的软链接
+    ln -s /usr/local/anaconda3/bin/pip /usr/bin/pip
+#添加 pip3 的软链接
+    ln -s /usr/local/anaconda3/bin/pip3 /usr/bin/pip3
+
+修改系统pip安装源
+在家目录下新建.pip文件夹,进入文件夹新建文件pip.conf之后写入相应镜像网站地址
+
+cd ~
+mkdir .pip
+cd .pip
+vim pip.conf
+
+#进入后添加以下内容,保存退出.
+[global]
+index-url = https://mirrors.aliyun.com/pypi/simple
+
+修改pipenv安装源
+在自己的虚拟环境中找到 Pipfile 文件,将其中的url = "https://pypi.org/simple"修改为你需要的国内镜像,如https://mirrors.aliyun.com/pypi/simple/
+
+[root@localhost myproject]# vim Pipfile
+
+
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple" # 改为url = "https://mirrors.aliyun.com/pypi/simple/"
+verify_ssl = true
+
+[dev-packages] #这里是开发环境专属包,使用pipenv install --dev package来安装专属开发环境的包
+
+[packages] # 全部环境的通用包,安装在这里.

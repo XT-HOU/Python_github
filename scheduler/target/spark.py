@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 """文档注释：
-    spark 操作
+    04_spark 操作
 """
 __author__ = "HOU"
 
@@ -25,9 +25,9 @@ def get_spark():
 #
     if not ip_service.__contains__(ip):
         spark_single = SparkSession.builder.master("local[*]")\
-            .config("spark.executor.memory", "4g")\
-            .config("spark.dirver.memory", "4g")\
-            .config("hive.metastore.uris", "thrift://192.168.43.70:9083")\
+            .config("04_spark.executor.memory", "4g")\
+            .config("04_spark.dirver.memory", "4g")\
+            .config("03_hive.metastore.uris", "thrift://192.168.43.70:9083")\
             .enableHiveSupport()\
             .appName(target_name)\
             .getOrCreate()
