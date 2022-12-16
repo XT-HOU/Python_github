@@ -1,0 +1,119 @@
+Centos7安装Python3.8详细教程
+安装编译相关工具
+
+yum -y groupinstall "Development tools"
+yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
+yum install libffi-devel -y
+
+
+下载python安装包
+
+wget https://www.python.org/ftp/python/3.8.3/Python-3.8.3.tgz
+tar -zxvf  Python-3.8.3.tgz
+
+
+编译安装python
+
+mkdir /usr/local/python3 #创建编译安装目录
+cd Python-3.8.3
+./configure --prefix=/usr/local/python3
+make && make install
+
+
+安装过，出现下面两行就成功了
+
+Installing collected packages: setuptools, pip
+Successfully installed pip-19.2.3 setuptools-41.2.0
+
+
+创建软连接
+
+# 查看当前python软连接
+ll /usr/bin/ |grep python
+
+
+lrwxrwxrwx    1 root root           7 Nov 26  2018 python -> python2
+lrwxrwxrwx    1 root root           9 Nov 26  2018 python2 -> python2.7
+-rwxr-xr-x      1 root root        7216 Jul 13  2018 python2.7
+
+
+默认系统安装的是python2.7
+删除python软连接
+
+rm -rf /usr/bin/python
+
+
+配置软连接为python3
+
+#添加python3的软链接
+ln -s /usr/local/python3/bin/python3 /usr/bin/python
+
+
+这个时候看下python默认版本
+
+python -V
+
+
+删除默认pip软连接，并添加pip3新的软连接
+
+rm -rf /usr/bin/pip
+#添加 pip3 的软链接
+ln -s /usr/local/python3/bin/pip3 /usr/bin/pip
+
+
+更改yum配置
+
+因为其要用到python2才能执行，否则会导致yum不能正常使用（不管安装 python3的那个版本，都必须要做的）
+
+vi /usr/bin/yum
+把 #! /usr/bin/python 修改为 #! /usr/bin/python2
+vi /usr/libexec/urlgrabber-ext-down
+把 #! /usr/bin/python 修改为 #! /usr/bin/python2
+vi /usr/bin/yum-config-manager
+#!/usr/bin/python 改为 #!/usr/bin/python2
+
+
+在./configure过程中，如果没有加上–with-ssl参数时，默认安装的软件涉及到ssl的功能不可用，刚好pip3过程需要ssl模块，
+而由于没有指定，所以该功能不可用。解决办法是重新对python3.6进行编译安装，用一下过程来实现编译安装:
+
+cd Python-3.8.3
+./configure --with-ssl
+make && make install
+
+修改系统pip安装源
+在家目录下新建.pip文件夹,进入文件夹新建文件pip.conf之后写入相应镜像网站地址
+
+cd ~
+mkdir .pip
+cd .pip
+vim pip.conf
+
+#进入后添加以下内容,保存退出.
+[global]
+index-url = https://mirrors.aliyun.com/pypi/simple
+
+修改pipenv安装源
+在自己的虚拟环境中找到Pipfile文件,将其中的url = "https://pypi.org/simple"修改为你需要的国内镜像,如https://mirrors.aliyun.com/pypi/simple/
+
+[root@localhost myproject]# vim Pipfile
+
+
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple" # 改为url = "https://mirrors.aliyun.com/pypi/simple/"
+verify_ssl = true
+
+[dev-packages] #这里是开发环境专属包,使用pipenv install --dev package来安装专属开发环境的包
+
+[packages] # 全部环境的通用包,安装在这里.
+
+[requires]
+python_version = "3.8"
+
+
+
+卸载python3
+      rpm -qa|grep python3|xargs rpm -ev --allmatches --nodeps       卸载pyhton3
+      whereis python3 |xargs rm -frv           删除所有残余文件
+      成功卸载！
+      whereis   python       查看现有安装的python

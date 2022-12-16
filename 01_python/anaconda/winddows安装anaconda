@@ -1,0 +1,43 @@
+参考 https://zhuanlan.zhihu.com/p/75717350
+配置环境变量path
+    C:\Anaconda3（Python需要）
+    C:\Anaconda3\Scripts（conda自带脚本）
+    C:\Anaconda3\Library\mingw-w64\bin（使用C with python的时候）
+    C:\Anaconda3\Library\usr\bin
+    C:\Anaconda3\Library\bin（jupyter notebook动态库）
+查看信息
+    conda info
+
+修改清华镜像
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+
+错误修改
+CondaHTTPError: HTTP 000 CONNECTION FAILED for url <https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64
+/current_repodata.json>
+解决方法
+conda config --remove-key channels
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+
+
+Anaconda常用的命令：
+1）conda list 查看安装了哪些包；
+2）conda env list 查看当前存在哪些虚拟环境（environment）；
+3）conda -V 查看conda版本（version）；
+4）conda -h 查询conda的命令使用（help）
+
+
+
+
+
+
+
+
+
+
+
+
+

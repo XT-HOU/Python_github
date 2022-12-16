@@ -1,0 +1,35 @@
+1.Xbrowser（linux远程桌面）
+
+　　Xbrowser使用xdcmp 协议通过图形化桌面远程可以连接到Unix/Linux主机；
+    https://blog.csdn.net/fgf00/article/details/50965686
+
+　　2.Xconfig
+
+　　xconfig是linux下X Window环境中用于配制的一个工具，和menuconfig相似，但用法更友好方便；
+
+　　3.Xftp
+
+　　Xftp是一个用于MS Windows平台的强大的FTP和SFTP文件传输程序。Xftp让你能安全地在Unix/Linux和Windows PC之间传输文件；
+
+　　4.Xlpd
+
+　　Xlpd是一个用于MS Windows平台的LPD(行式打印机虚拟后台程序)应用程序。安装了Xlpd后，你的带有打印机的本地PC就成为了一个打印服务器，来自不同远程系统的打印任务都能在网络环境中得到请求和处理。
+
+　　5.Xmanager - Broadcast
+
+　　用于连接远程主机；
+
+　　6.Xmanager - Passive
+
+　　可以选择Xbrowser、Xstart、Xconfig以及Xsound来连接远程；
+
+　　7.Xshell
+
+　　Xshell是一个用于MS Windows平台的强大的SSH，TELNET，和RLOGIN终端仿真软件。它使得用户能轻松和安全地从Windows PC上访问Unix/Linux主机；
+
+　　8.Xstart
+
+　　Xstart通过图形化界面连接到Unix/Linux主机；
+
+xshell上传文件
+    cd 切换到opt目录，rz上传文件,ls 查看

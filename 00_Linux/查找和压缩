@@ -1,0 +1,17 @@
+--find命令
+    find 路径 -类型 '*文件名*'
+        -type 文件类型       find /home -type 'name';
+        -name             find /home -name '*name*';
+        -maxdepth 层级       find /home -maxdepth 1  -name 'name'
+        -size   按大小       find /home -size +20M -size -50M
+--查找执行
+    删除所有包含gitlab文件
+    find / -name gitlab | xargs rm -rf
+    find / -name gitlab | xargs ls -l
+--grep命令 内容查找
+    grep -r 'q213' ./ -n
+    ps aux | grep 'kernel' --查找‘kernel’进程
+
+--tar命令
+    tar -zcvf 压缩文件名.tar.gz file1 dir2 压缩文件
+    tar -zxvf 压缩文件名.tar.gz  -C 解压路径  解压文件

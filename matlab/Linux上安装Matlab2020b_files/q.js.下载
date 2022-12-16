@@ -1,0 +1,40 @@
+var title_button="";
+title_button+='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6297881353008806" data-ad-slot="3507405797" data-ad-format="auto" data-full-width-responsive="true"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>';
+var b_utton="";
+b_utton+='<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-6297881353008806" data-ad-slot="7083179606"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>';
+var r123="";
+r123+='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6297881353008806" data-ad-slot="1061832590" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
+var r456="";
+r456+='<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6297881353008806" data-ad-slot="4979120200" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
+var ee1="";
+ee1+='<a class="eleme" href="https://curl.qcloud.com/LSWBc0Us" target="_blank">【腾讯云】云产品限时秒杀，2核2G 4M 40GB SSD仅40元/年,200元3年</a></br>';
+var ee2="";
+ee2+='<a class="eleme" href="/eleme.html" target="_blank">【饿了么】☺饿了么外卖漏洞，满20减2~20元随机☺</a></br>';
+
+var hncloud='<a href="https://www.icode9.com/js/jump?adid=2" target="_blank"><img  src="/img/gg/hncloud.gif" ></a>';
+
+second = new Date().getSeconds();
+if((second % 2) == 0) ee=ee1;
+if((second % 2) == 1) ee=ee1;	
+ function adload(id) { 
+    var str = '';
+    if (id == 'title_button') {
+		str=title_button;
+    }
+    else if (id == 'b_utton') {
+        str = b_utton;
+    }
+    else if (id == 'r123') {
+        str =r123;
+    }
+    else if (id == 'r456') {
+        str = r456;
+    }
+    else if (id == 'ee') {
+        str = ee;
+    }
+    else if (id == 'hncloud') {
+        str = hncloud;
+    }	
+    document.write(str);
+}

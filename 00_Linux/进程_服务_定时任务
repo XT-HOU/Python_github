@@ -1,0 +1,29 @@
+--ps 命令
+    ps aux 所有进程
+    ps aux | grep 'kernel'
+    ps -ef | grep firefox  #查看父进程
+--kill 杀死进程
+    kill -9 id
+    killall firefox
+--env
+    查看环境
+
+-----------------------------服务----------------------------------
+--服务后台运行
+    nohup python3 -u app.py > app.log 2>&1 &
+--查看服务
+    netstat -tunpl
+--查看端口号占用情况
+    netstat -nlp | grep 8080
+--查看端口是否开启
+    lsof -i:8080+
+
+--查看进程号网络信息
+    netstat -anp | grep 1
+--查看服务是否自启动
+    systemctl list-unit-files | grep firefox
+    systemctl is-enabled firefox
+    systemctl status(disabled/enabled/start/stop/reload) firefox
+
+-----------------------------定时任务----------------------------------
+crontab

@@ -1,0 +1,38 @@
+Linux终端出现"(base)" 安装anaconda3
+默认激活conda的base环境
+单次关闭base环境
+    conda deactivate
+单次激活base环境
+    conda activate
+永久关闭base环境
+    1.conda config --show
+    2.conda config --set auto_activate_base False
+
+
+window激活base环境
+    cmd下输入activate
+
+# 查看所有环境
+    conda info --envs
+# 复制环境
+    conda create -n basecopy --clone base
+# 移除环境
+    conda remove -n basecopy --all
+
+
+anaconda设置默认的启动环境
+
+    有时候我们希望命令行启动的python是自定义的，而不是base或者root的，linux设置如下
+    在linux下，通过修改~/.bashrc或~/.bash_profile，最后面添加
+
+    export PATH="~/anaconda/envs/your_env_name/bin:$PATH" # your_env_name是你自定义的环境名
+
+    还有的时候，你希望命令行默认激活你想要的环境，linux设置如下
+    修改~/.bashrc，添加
+
+    conda activate your_env_name   # "your_env_name"就是你的环境名
+
+    还有的时候，你安装的anaconda环境默认启动base环境，想要关闭，linux设置如下
+
+    conda config --set auto_activate_base false # 设置非自动启动
+

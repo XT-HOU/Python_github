@@ -1,0 +1,7 @@
+--windows下需要编译的模块需要安装GCC
+
+MingW64下载地址：https://sourceforge.net/projects/mingw-w64/files/
+
+下载X86_64-posix-seh，解压到安装目录下,将安装目录下的bin目录添加到环境变量即可使用gcc。
+
+cmd gcc -v

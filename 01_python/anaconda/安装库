@@ -1,0 +1,10 @@
+安装 tensorflow-gpu， 1.14.0 版本
+conda install tensorflow-gpu==1.14.0
+安装 scikit-learn 最新版本
+conda install scikit-learn
+
+
+
+
+安装face_recognition库
+pip install face_recognition

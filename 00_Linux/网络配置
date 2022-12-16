@@ -1,0 +1,27 @@
+http://blog.itpub.net/29475508/viewspace-1978184/
+
+centos6的网卡重启方法：service network restart
+centos7的网卡重启方法：systemctl restart network
+
+/etc/init.d/network restart
+
+vim /etc/udev/rules.d/70-persistent-net.rules
+具体网卡配置文件
+[root@rhel64 ~]# cat /etc/sysconfig/network-scripts/ifcfg-eth1
+        DEVICE="eth1"                   网卡名称  要与配置文件名中一致
+        BOOTPROTO="static"              none 或者static是静态设置ip;dhcp是自动获取
+        IPADDR="192.168.8.9"            ip
+        NETMASK="255.255.255.0"         子网掩码或使用PREFIX
+        GATEWAY="192.168.43.1"          网关 默认路由
+        DNS1="8.8.8.8"
+        DNS2="8.8.4.4"
+        HWADDR="00:0C:29:06:1c:85"
+        IPV4_FAILURE_FATAL="yes"
+        IPV6INIT="no"
+        DEFROUTE="yes"
+        NM_CONTROLLED="yes"
+        ONBOOT="yes"                    重启操作系统后激活网卡
+        TYPE="Ethernet"                 以太网
+        UUID="ff81ee50-87bb-4d6a-ab92-8973ef29edff"
+        NAME="System eth1"
+

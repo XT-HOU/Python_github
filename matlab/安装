@@ -1,0 +1,20 @@
+安装步骤：
+https://www.icode9.com/content-3-813351.html
+
+配置环境变量
+
+修改/etc/profile 文件
+source /etc/profile
+
+1. cd ~
+2. mkdir matlab
+3. cd matlab
+4. mount -t auto -o loop /software/Matlab98R2020a_Lin64.iso ~/matlab
+5. cd ~/matlab
+6. ./install
+7. 同意一些协之后输入安装Key:09806-07443-53955-64350-21751-41297
+8. 提示选择许可证，解压Linux_Patch.7z文件,得到Crack文件夹,选择其中的license_standalone.lic许可证文件,
+点击下一步;选择安装位置,默认下一步即可
+9. 安装完成后,拷贝Crack文件夹中的libmwlmgrimpl.so文件到目录
+/applications/Polyspace/r2020a/bin/glnxa64/matlab_startup_plugins/lmgrimpl/ 替换同名文件即可；
+

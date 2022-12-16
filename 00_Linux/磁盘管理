@@ -1,0 +1,17 @@
+--块
+    b(块)=512 byte
+--查看挂载结构（列出所有可用块设备的信息）
+    lsblk
+--查看硬盘信息（分区情况）
+    fdisk -l
+--查看硬盘使用情况
+    df -h
+--查看指定文件夹大小
+    du -h /home
+    du -h --max-depth=1
+--挂载和卸载
+    mount [-t vfstype] [-o options] device dir; mount  /dev/cdrom /mnt/cdrom/
+    umount 设备文件名或挂载点; umount /mnt/cdrom
+--开机自动挂载
+    vim /etc/fstab
+    添加 /dev/cdrom /mnt/cdrom
