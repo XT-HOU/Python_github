@@ -1,0 +1,7 @@
+查看日志：
+    gitlab-ctl tail
+不要开启Anaconda环境
+    conda deactivate
+安装时卡在ruby_block[wait for logrotate service socket]不动
+    出现情况，卸载后重新安装
+    退出安装，再重启，再执行gitlab-ctl reconfigure即可

@@ -7,10 +7,17 @@ flask框架例子
 __author__ = "HOU"
 
 import time
+from datetime import datetime
 
-if __name__ == '__main__':
-    from datetime import datetime
-    import datetime as dt
+def unix_time(dt):
+  #转换成时间数组
+  timeArray = datetime.strptime(dt, "%Y-%m-%d %H:%M:%S.%f")
+  #转换成时间戳
+  timestamp = int(time.mktime(timeArray.timetuple()) * 1000 + timeArray.microsecond / 1000)
+  return timestamp
+
+
+def time_test():
     print(datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'))
     # '2016-07-21 19:49:15'
     print(datetime.now().isoformat())
@@ -21,8 +28,17 @@ if __name__ == '__main__':
     print((d_time + dt.timedelta(seconds=1)))
     r = int(time.mktime(datetime.now().timetuple()))
     print(r)
-
     timestr = '1971-01-01'
     datetime_obj = datetime.strptime(timestr, "%Y-%m-%d")
     obj_stamp = int(time.mktime(datetime_obj.timetuple()) * 1000.0 + datetime_obj.microsecond / 1000.0)
     print(obj_stamp)
+
+
+if __name__ == '__main__':
+
+    from datetime import datetime
+    import datetime as dt
+
+    aa = unix_time("2022-04-19 20:00:34.050")
+    print(aa)
+    # time_test()

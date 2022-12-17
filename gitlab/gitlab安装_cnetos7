@@ -1,5 +1,5 @@
 --https://blog.csdn.net/qq_39674002/article/details/100168557
-
+http://t.zoukankan.com/kevingrace-p-5985918.html
 
 wget 用于从外网上下载插件
     yum -y install wget
@@ -17,7 +17,7 @@ sudo firewall-cmd --permanent --add-service=http
 重启防火墙
 sudo systemctl reload firewalld
 安装Postfix以发送通知邮件
-sudo yum install postfix
+sudo yum -y install postfix
 将postfix服务设置成开机自启动
 sudo systemctl enable postfix
 启动postfix
@@ -43,3 +43,17 @@ vim /etc/gitlab/gitlab.rb
 重置并启动GitLab
 gitlab-ctl reconfigure
 gitlab-ctl restart
+
+
+强制修改密码
+gitlab-rails console -e production
+user = User.where(id: 1).first #查看id为1的账号
+或者 user = User.where(name:''root").first
+user.password=‘123456789’ #修改密码为12345678
+user.password_confirmation=‘123456789’ #确认密码
+user.save! #保存
+quit #退出‘’
+
+
+开机启动
+systemctl enable gitlab-runsvdir.service

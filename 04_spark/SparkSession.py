@@ -20,6 +20,8 @@ class SparkFactory:
         if self.model == 'standalone':
             spark = self.get_spark_standalone()
         elif self.model == 'yarn':
+            import math
+            pi = math.pi
             spark = self.get_spark_cluster()
         else:
             spark = self.get_spark_local()

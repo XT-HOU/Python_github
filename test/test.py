@@ -6,7 +6,8 @@ flask框架例子
 """
 __author__ = "HOU"
 
-from numpy.char import isdecimal
+import pandas as pd
+import numpy as np
 
 
 class test:
@@ -24,5 +25,9 @@ def tet(aa):
 
 
 if __name__ == '__main__':
-    a = isdecimal(12)
-    print(a)
+    x = [1,2,3,4,5]
+    y = ['a','a','a','b','b']
+    xvals = 3
+    # yinterp = np.interp(xvals, x, y)
+    # print(yinterp)
+    pd.DataFrame()
