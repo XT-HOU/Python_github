@@ -16,11 +16,11 @@ https://my.oschina.net/linch/blog/1825249
     #新建msyql用户禁止登录shell
     useradd -r -s /sbin/nologin -g mysql mysql -d /usr/local/mysql
 --改变目录权限
-    chown -R mysql.mysql /usr/local/mysql/mysql-5.7.32-linux-glibc2.12-x86_64/
+    chown -R mysql.mysql /usr/local/mysql/
     chown -R mysql.mysql /data/mysql/
 --初始化mysql 切换到 mysql 目录
     cd mysql
-    ./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql/mysql-5.7.32-linux-glibc2.12-x86_64/ --datadir=/data/mysql/
+    ./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql/ --datadir=/data/mysql/
 --编辑 /etc/my.cnf （初始化的时候mysql会自动生成一个配置文件）
     vim /etc/my.cnf
 替换下面内容
@@ -35,7 +35,7 @@ https://my.oschina.net/linch/blog/1825249
     # 设置mysql数据库的数据的存放目录
     datadir=/data/mysql
     # 允许最大连接数
-    max_connections=200
+    max_connections=800
     # 服务端使用的字符集默认为8比特编码的latin1字符集
     character-set-server=utf8
     # 创建新表时将使用的默认存储引擎
@@ -48,6 +48,7 @@ https://my.oschina.net/linch/blog/1825249
     cp -a ./support-files/mysql.server /etc/init.d/mysqld
 --创建 mysql 链接
     ln -fs /usr/local/mysql/bin/mysql /usr/bin/
+    ln -fs /usr/local/mysql/bin/mysqldump  /usr/bin/
 --启动服务
     service mysqld start
 --登录并修改密码
