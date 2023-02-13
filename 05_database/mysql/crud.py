@@ -23,6 +23,7 @@ def select_data1():
     cursor.execute("SELECT * FROM sys_config")
 
     # 使用 fetchone() 方法获取单条数据.
+    # todo
     data = cursor.fetchall()
 
     return data
