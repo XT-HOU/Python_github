@@ -9,12 +9,31 @@ __author__ = "HOU"
 import time
 from datetime import datetime
 
-def unix_time(dt):
-  #转换成时间数组
-  timeArray = datetime.strptime(dt, "%Y-%m-%d %H:%M:%S.%f")
-  #转换成时间戳
-  timestamp = int(time.mktime(timeArray.timetuple()) * 1000 + timeArray.microsecond / 1000)
-  return timestamp
+
+def unix_time_micro(str_dt):
+    """方法注释：
+        返回unix时间
+    :param str_dt: 时间字符串 例：2020-09-01 20:00:34.050
+    :return: 毫秒数
+    """
+    # 转换成时间数组
+    timeArray = datetime.strptime(str_dt, "%Y-%m-%d %H:%M:%S.%f")
+    # 转换成时间戳
+    timestamp = int(time.mktime(timeArray.timetuple()) * 1000 + timeArray.microsecond / 1000)
+    return timestamp
+
+
+def unix_time_sec(str_dt):
+    """方法注释：
+        返回unix时间
+    :param str_dt: 时间字符串 例：2020-09-01 20:00:34.050
+    :return: 秒数
+    """
+    # 转换成时间数组
+    timeArray = datetime.strptime(str_dt, "%Y-%m-%d %H:%M:%S.%f")
+    # 转换成时间戳
+    timestamp = int(time.mktime(timeArray.timetuple()))
+    return timestamp
 
 
 def time_test():
@@ -35,10 +54,10 @@ def time_test():
 
 
 if __name__ == '__main__':
-
     from datetime import datetime
     import datetime as dt
 
-    aa = unix_time("2022-04-19 20:00:34.050")
+    aa = unix_time_sec("2020-09-01 20:00:34.050")
+    # aa = (datetime.utcnow() - datetime(1970, 1, 1)).microseconds
     print(aa)
     # time_test()

@@ -1,0 +1,74 @@
+RESTful规范
+
+Restful API是目前比较成熟的一套互联网应用程序的API设计理念，Rest是一组架构约束条件和原则，如何Rest约束条件和原则的架构，我们就称为Restful架构，Restful架构具有结构清晰、符合标准、易于理解以及扩展方便等特点，受到越来越多网站的采用！
+
+Restful API接口规范包括以下部分：
+
+一、协议
+API与用户的通信协议，总是使用HTTPs协议。
+
+二、域名
+应该尽量将API部署在专用域名之下，如https://api.专属域名.com；如果确定API很简单，不会有进一步扩展，可以考虑放在主域名下，如https://专属域名.com/api/。
+
+三、版本
+可以将版本号放在HTTP头信息中，也可以放入URL中，如https://api.专属域名.com/v1/
+
+四、路径
+路径是一种地址，在互联网上表现为网址，在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。一般来说，数据库中的表都是同种记录的"集合"（collection），所以API中的名词也应该使用复数，如https://api.专属域名.com/v1/students。
+
+五、HTTP动词
+
+对于资源的具体操作类型，由HTTP动词表示，HTTP动词主要有以下几种，括号中对应的是SQL命令。
+1. GET（SELECT）：从服务器取出资源（一项或多项）；
+2. POST（CREATE）：在服务器新建一个资源；
+3. PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）；
+4. PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）；
+5. DELETE（DELETE）：从服务器删除资源；
+6. HEAD：获取资源的元数据；
+7. OPTIONS：获取信息，关于资源的哪些属性是客户端可以改变的。
+
+六、过滤信息
+
+如果记录数量很多，服务器不可能都将它们返回给用户，API会提供参数，过滤返回结果，常见的参数有：
+1. ?limit=20：指定返回记录的数量为20；
+2. ?offset=8：指定返回记录的开始位置为8；
+3. ?page=1&per_page=50：指定第1页，以及每页的记录数为50；
+4. ?sortby=name&order=asc：指定返回结果按照name属性进行升序排序；
+5. ?animal_type_id=2：指定筛选条件。
+
+七、状态码
+
+服务器会向用户返回状态码和提示信息，以下是常用的一些状态码：
+
+1. 200 OK - [GET]：服务器成功返回用户请求的数据；
+2. 201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功；
+3. 202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）；
+4. 204 NO CONTENT - [DELETE]：用户删除数据成功；
+5. 400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作；
+6. 401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）；
+7. 403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的；
+8. 404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作；
+9. 406 Not Acceptable - [GET]：用户请求的格式不可得；
+10. 410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的；
+11. 422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误；
+12. 500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。
+
+八、错误处理
+
+如果状态码是4xx，就会向用户返回出错信息，一般来说，返回的信息中将error作为键名，出错信息作为键值。
+
+九、返回结果
+
+针对不同操作，服务器向用户返回的结果应该符合以下规范：
+1. GET /collection：返回资源对象的列表（数组）；
+2. GET /collection/resource：返回单个资源对象；
+3. POST /collection：返回新生成的资源对象；
+4. PUT /collection/resource：返回完整的资源对象；
+5. PATCH /collection/resource：返回完整的资源对象；
+6. DELETE /collection/resource：返回一个空文档。
+
+十、Hypermedia API
+
+RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。
+
+以上是Restful API设计应遵循的十大规范，除此之外，Restful API还需注意身份认证应该使用OAuth 2.0框架，服务器返回的数据格式，应该尽量使用JSON，避免使用XML。
