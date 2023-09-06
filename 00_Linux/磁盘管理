@@ -22,4 +22,4 @@
 
 --linux非LVM管理的根目录扩容
     根目录上挂载的是/dev/sda3 这个分区，sda3是最后一个分区，所以刚好新增的空间跟sda3是连续的，删除sda3 这个分区，在新建sda3分区修改扇区位置即可。
-    它的格式是xfs的，所以要用xfs_growfs命令进行刷新文件系统容量，如果是ext的，使用resize2fs命令。
+    它的格式是xfs的，所以要用xfs_growfs(xfs_growfs /dev/sda3)命令进行刷新文件系统容量，如果是ext的，使用resize2fs命令。
