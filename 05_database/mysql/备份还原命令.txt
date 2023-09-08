@@ -6,6 +6,8 @@ mysqldump --skip-opt -h192.168.0.137 -p3306 --default-character-set=utf8 --max_a
 mysqldump --skip-opt -h192.168.0.137 -p3306 --default-character-set=utf8 --max_allowed_packet=1073742824 -uroot -p123456
 --databases dbname1 dbname2 > D:\dbname1+2.sql
 
+mysqldump --skip-opt -h127.0.0.1 -p3306 --default-character-set=utf8 --max_allowed_packet=1073742824 -uroot -p314315 --databases xanalystdb  > xanalystdb.sql
+
 --远程备份多数据库
 mysqldump --skip-opt -h192.168.0.137 -p3306 --default-character-set=utf8 --max_allowed_packet=1073742824 -uroot -p123456
 --all-databases > D:\all.sql

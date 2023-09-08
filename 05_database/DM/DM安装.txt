@@ -1,0 +1,62 @@
+https://blog.csdn.net/qq_38313548/article/details/128557507
+
+1.创建用户
+    useradd dmdba
+2.给用户dmdba设置密码
+    passwd dmdba
+3.登陆root用户，编辑limits.conf 文件
+    vim /etc/security/limits.conf
+    在limits.conf文件中加入以下配置
+    dmdba hard nofile 65536
+    dmdba soft nofile 65536
+    dmdba hard stack 32768
+    dmdba soft stack 16384
+登录dmdba用户，使用ulimit –a命令查看配置结果，若输出内容中显示有open files (-n) 65536 和 stack size (kbytes,-s) 16384，表明已经生效
+4.挂载iso
+    mount /opt/software/dm8_20230418_x86_rh6_64.iso /mnt/
+    挂载成功后，mnt文件夹中存在,DMInstall.bin 等文件
+5.登录dmdba用户安装
+    ./DMInstall.bin –i
+
+    安装时选项：
+    选择对应的语言，输入C表示使用中文
+    key文件路径，输入N表示不使用key
+    是否设置时区，输入y后进入时区设置
+    时区选择输入21，表示使用中国标准时间
+    安装目录输入时，输入 自己创建的安装文件夹路径，此处为：/opt/dm8/install
+
+6.创建数据存储文件夹data
+7.使用命令查看初始化参数说明
+    进入bin目录,./dminit help
+    初始化注意事项
+    在上诉的初始化参数中，以下四个参数一旦配置，之后无法修改，初始化时请谨慎设置：
+    页大小 (page_size)
+    簇大小 (extent_size)
+    大小写敏感 (case_sensitive)
+    字符集 (charset)
+8.初始化，进入 bin 目录
+    ./dminit path=/opt/dm8/data PAGE_SIZE=32 EXTENT_SIZE=32 CASE_SENSITIVE=N CHARSET=1 DB_NAME=test INSTANCE_NAME=DM_SERVER PORT_NUM=5236
+
+    # 说明：
+    # path=/home/dmdba/install/data： 指定数据存放目录
+    # PAGE_SIZE=32 ：数据文件的页大小32，设置后无法修改
+    # EXTENT_SIZE=32：簇大小32，设置后无法修改
+    # CASE_SENSITIVE=N：大小写不敏感，设置后无法修改
+    # CHARSET=1 ：字符集UTF-8，设置后无法修改
+    # DB_NAME=DMServer: 数据库名称，自定义,DMServer为我自定义的数据库名称
+    # INSTANCE_NAME=DMServer_SERVER：数据库服务名称，自定义，DMServer_SERVER为服务名称
+    # PORT_NUM=5236：服务端口号5236
+9.注册数据库服务
+    /opt/dm8/install/script/root目录下，看到dm_service_installer.sh**脚本文件，此脚本文件为数据库服务注册脚本文件
+    注册服务前建议使用命令查看注册服务脚本参数说明,./dm_service_installer.sh -h
+    # 说明：
+    # -t dmserver ：指定服务类型为dmserver
+    # -p DMSERVER：指定服务名后缀，后缀为DMSERVER，生成的启动脚本后缀
+    # -dm_ini=/opt/dm8/data/test/dm.ini ：指定test数据库的初始化文件地址
+    ./dm_service_installer.sh -t dmserver -p DMSERVER -dm_ini /opt/dm8/data/test/dm.ini
+10.启动服务
+    1.使用以下命令启动，会输出启动的详细日志，但是只在当前会话中有效
+        ./dmserver /opt/dm8/data/test/dm.ini
+    2.bin目录下
+        ./DmServerDMSERVER start
+

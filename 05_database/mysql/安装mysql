@@ -42,6 +42,8 @@ https://my.oschina.net/linch/blog/1825249
     default-storage-engine=INNODB
     # 不区分大小写
     lower_case_table_names = 1
+    # 修改数据包最大值
+    max_allowed_packet=100M
 
 
 --把mysql放到本地系统服务中

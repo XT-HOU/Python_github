@@ -1,0 +1,12 @@
+1.dmPython源码依赖DM安装目录中提供的include头文件，安装前需要检查环境中是否存在DM安装，并设置DM_HOME目录：
+2.进入安装目录找到dmPython文件夹，C:\dmdbms\drivers\python\dmPython
+3.cmd进入需要安装anaconda环境，执行 python setup.py install
+4. 把安装目录：C:\dmdbms\drivers\dpi 下的所有文件复制到 dmPython包安装目录：C:\Anaconda3\envs\flask\Lib\site-packages\dmPython-2.4.8-py3.7-win-amd64.egg
+5. 运行代码安装完成
+import dmPython
+    conn = dmPython.connect(user='SYSDBA', password='SYSDBA', server='127.0.0.1', port=5236)
+    cursor = conn.cursor()
+    sql = 'select 1 from dual'
+    cursor.execute(sql)
+    value = cursor.fetchall()
+    print(value)

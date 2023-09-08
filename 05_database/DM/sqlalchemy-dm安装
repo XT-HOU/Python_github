@@ -1,0 +1,10 @@
+1.需要先按照dmPython
+2.进入安装目录找到 sqlalchemy1.4.6 文件夹，C:\dmdbms\drivers\python\sqlalchemy1.4.6
+3.cmd进入需要安装anaconda环境，执行 python setup.py install
+4.安装成功，运行代码
+    conn_url = 'dm+dmPython://SYSDBA:SYSDBA@127.0.0.1:5236?schema=test'
+    # 创建Engine对象
+    engine = create_engine(conn_url,echo=True)
+    with engine.connect() as con:
+        rs = con.execute(('select 1 from dual'))
+        print(f"连接-达梦数据库:-成功!" if rs.rowcount == 1 else f"连接-达梦数据库:-失败！")
