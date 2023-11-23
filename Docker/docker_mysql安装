@@ -1,0 +1,42 @@
+1.搜索镜像
+    docker search mysql
+2.拉取下载镜像
+    docker pull mysql:5.7
+3.查看下载到的镜像
+    docker images |grep mysql
+4.运行docker容器
+    docker run -p 3306:3306 --name mymysql -v $PWD/conf:/etc/mysql/conf.d -v $PWD/logs:/logs -v $PWD/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+命令说明：
+    -p 3306:3306：将容器的 3306 端口映射到主机的 3306 端口。
+    -v $PWD/conf:/etc/mysql/conf.d：将主机当前目录下的 conf/my.cnf 挂载到容器的 /etc/mysql/my.cnf。
+    -v $PWD/logs:/logs：将主机当前目录下的 logs 目录挂载到容器的 /logs。
+    -v $PWD/data:/var/lib/mysql ：将主机当前目录下的data目录挂载到容器的 /var/lib/mysql 。
+    -e MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码。
+5.查看启动情况
+    docker ps
+
+问题：
+docker mysql登录时出现Access denied for user ‘root‘@‘localhost‘ (using password: YES)的解决方法
+
+1.先进入 mysql 容器安装 vim 工具
+    # 进入容器。注意：mysql57需要修改为你的mysql容器名
+    docker exec -it mysql57 bash
+
+    # 安装 vim 工具
+    apt-get update
+    apt-get -y install vim
+
+2.修改 /etc/mysql/conf.d/docker/cnf 文件，添加：skip-grant-tables（表示跳过密码验证）
+3.退出，重启mysql容器
+    docker restart mysql57
+4.再次进入容器，修改密码
+    # 进入容器
+    docker exec -it ${容器名} bash
+    # 登录
+    mysql -uroot -p
+    # 修改 root 账户密码为：123456
+    update mysql.user set authentication_string = password("123456") where user = "root";
+5.删除 /etc/mysql/conf.d/docker.cnf 文件中添加的 skip-grant-tables，再重启容器
+6.再次进入mysql就正常了
+7.允许任意地方远程
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '314315' WITH GRANT OPTION;

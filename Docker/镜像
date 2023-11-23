@@ -39,3 +39,14 @@
     设置镜像标签。docker tag 860c279d2fec runoob/centos:dev
     docker tag?镜像ID，这里是?860c279d2fec ,用户名称、镜像源名(repository name)和新的标签名(tag)。
 
+3.将镜像打包成tar包
+    docker save imageID > ./mongodb.tar
+
+4.在服务器上加载镜像包
+    docker load < ./mongodb.tar
+5.容器镜像迁移
+    对于必须迁移的容器，首先使用docker commit命令将其保存为Docker镜像
+    docker commit container-id image-name
+
+# 修改镜像地址
+"registry-mirrors": ["http://hub-mirror.c.163.com/"]

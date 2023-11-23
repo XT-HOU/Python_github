@@ -1,0 +1,9 @@
+1.Docker引擎
+    Docker daemon(dockerd)作为 dockerd systemd 服务持续运行，它负责构建 docker 镜像。
+    docerd 调用 docker-containerd 接口，来管理图像和运行容器。
+2.docker-containerd(containerd)
+    containerd 是一个系统 deamon 程序服务，它负责下载 docker 镜像并将他们作为容器运行。
+    containerd 通过公开 API 来接收来自 dockerd 服务的指令。
+3. docker-runc
+    runc 是容器运行时，负责创建容器所需的命名空间和 cgroup，然后在这些命名空间内运行容器命令。runc 运行时是按照
+    OCI（Open container Initiative 是容器运行时和规范的开放行业标准） 规范实现的。

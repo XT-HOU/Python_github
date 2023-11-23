@@ -1,0 +1,26 @@
+Docker 由以下几个组件组成：
+    Docker 守护进程 (dockerd)
+    Docker 客户端
+    Docker 镜像
+    Docker 注册表
+    Docker 容器
+
+Docker 守护进程
+    Docker 具有客户端-服务器架构。Docker Daemon ( dockerd) 或服务器负责与容器相关的所有操作。
+    守护进程通过 CLI 或 REST API 从 Docker 客户端接收命令。Docker 客户端可以与守护进程位于同一主机上，也可以位于任何其他主机上。
+    在默认情况下，docker 守护进程监听 docker.sock UNIX 套接字。如果有任何远程访问 docker API 的用例，则需要通过主机端口公开它。
+
+Docker 镜像
+    镜像是 Docker 的基本组成部分，我们需要镜像来运行 Docker 容器。镜像包含操作系统库、依赖项和运行应用程序的工具。
+    为了创建容器，我们可以用应用程序依赖项，来预先构建镜像。例如，如果要将 Nginx Web 服务器作为一个 Ubuntu 容器来运行，则需要使用 Nginx 二进制文件和运行 Nginx 所需的所有操作系统库，来创建 Docker 镜像。
+    Docker 有一个用于构建镜像的概念—— Dockerfile 。Dockerfile 基本上就是一个文本文件，每一行包含一个命令（指令）。
+
+Docker 注册表
+    Docker 注册表是 Docker 镜像的存储库。使用 Docker 注册表，我们可以共享镜像。Docker 注册表充当了 Docker 镜像的中央存储库。
+    注册中心可以是公共的，也可以是私有的。Docker Inc 提供了一项称为 Docker Hub 的托管注册表服务。它允许用户从一个中心位置上传和下载镜像。
+    注释：默认情况下，当安装 docker 时，除非在 Docker 设置中指定自定义注册表，否则它会从公共的 Docker Hub 中查找镜像。
+    Docker hub 的作用类似于 git，我们可以在本地构建镜像，然后镜像提交推送到 Docker Docker hub 上。
+    注释：在企业网络/项目中使用 docker 时，请设置自己的 docker 注册表，而不是使用公共的 docker hub。所有云提供商都有自己的容器注册服务。
+
+Docker 容器
+    Docker 容器是 Docker 的执行环境。容器是从镜像创建的，它属于镜像的可写层。

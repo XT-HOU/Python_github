@@ -1,4 +1,8 @@
 --docker command --help 更深入的了解指定的 Docker 命令使用方法。例：docker stats --help
+
+-- 进入容器命令行
+docker exec -it dockername bash
+
 --docker run
     在容器内运行一个应用程序，例：docker run ubuntu:15.10 /bin/echo "Hello world"
     docker: Docker 的二进制执行文件；
@@ -12,10 +16,10 @@
     -i: 允许你对容器内的标准输入 (STDIN) 进行交互。
     -d: 后台启动
 
---docker attach <容器 ID>
+--docker attach <容器 ID/name>
     进入容器，例：docker attach 1e560fca3906
 
---docker exec <容器 ID>
+--docker exec <容器 ID/name>
     退出容器，例：docker exec -it 243c32535da7 /bin/bash
 
 -- docker run -d -P training/webapp python app.py
@@ -27,7 +31,7 @@
 -- docker  --name
     容器命名。docker run -d -P --name runoob training/webapp python app.py
 
---docker ps
+--docker ps -a
     列出在运行的容器。
     CONTAINER ID: 容器 ID。
     IMAGE: 使用的镜像。
