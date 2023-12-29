@@ -26,8 +26,8 @@ def string_demo():
     print(str1[0:1])
     # 转义字符 \
     # 格式化字符串
-    print("123"+"456") # 类型必须一致
-    print("123",465) # 自带空格
+    print("123" + "456")  # 类型必须一致
+    print("123", 465)  # 自带空格
     # %s:字符串，%d:有符号的十进制整数（%0nd:0-位数不够用0代替，n-位数），%f:有符号的十进制浮点数（%.nf:.-代表小数点，n-代表小数位数）
     print("姓名：%s,学号：%03d,成绩：%.2f" % (str2, -123, -99.5))
     # f格式化字符串（推荐使用）
@@ -37,7 +37,7 @@ def string_demo():
 
 def list_demo():
     # 创建[]
-    names = ["张三","李四","王五","赵六","田七"]
+    names = ["张三", "李四", "王五", "赵六", "田七"]
     # 切片 [起始位置：结束位置：步长]
     print(names[-2:-1])
     print(names[1:4:2])
@@ -48,22 +48,22 @@ def list_demo():
 
 def tuple_demo():
     # tuple元组是一个不可变的序列
-    names = ("张三","李四","王五","赵六","田七")
-    #用法同list
+    names = ("张三", "李四", "王五", "赵六", "田七")
+    # 用法同list
 
 
 def set_demo():
     # set是一个不可重复的集合
-    names = {"张三","李四","王五","赵六","张三"}
+    names = {"张三", "李四", "王五", "赵六", "张三"}
     print(names)
-    #用法同list
+    # 用法同list
 
 
 def dict_demo():
     # 创建
-    name_dict = {1:"zhangsan",2:"lisi"}
+    name_dict = {1: "zhangsan", 2: "lisi"}
     # 添加或修改：dict[key]=123,删除：dict.pop(key),获取keys:dict.keys(),获取values：dict.values(),获取键值对：dict.items()
-    name_dict[3]="123"
+    name_dict[3] = "123"
     print(name_dict)
     pass
 
