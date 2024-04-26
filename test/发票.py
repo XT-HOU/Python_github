@@ -38,8 +38,8 @@ randomtimes('07:00','21:00',240)
 print('---------------------')
 import numpy as np
 
-for i in range(240):
+for i in range(20):
 
-    number = np.random.uniform(280.0, 320.0)
+    number = np.random.uniform(50, 100)
     print(round(number,0))
 

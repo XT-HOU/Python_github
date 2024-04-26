@@ -73,3 +73,9 @@ if __name__ == '__main__':
     # for row in df.itertuples():
     #     print(getattr(row, 'time'))
     print(df.to_dict(orient='records'))
+# 去重
+    DataFrame.drop_duplicates(subset=['列名','列名1'], keep='first', inplace=False)
+    # DataFrame：待去重的数据框。
+    # subset：用来指定特定的列。根据指定的列对数据框去重。默认值为None，即DataFrame中一行元素全部相同时才去除。
+    # keep：对重复值的处理方式。可选参数有first, last, False。默认值first，即保留重复数据第一条。若选last为保留重复数据的最后一条，若选False则删除全部重复数据。
+    # inplace：是否在原数据集上操作。默认值False，返回新数据框(原数据框不改变)。值为True时直接在原数据视图上删重，没有返回值。

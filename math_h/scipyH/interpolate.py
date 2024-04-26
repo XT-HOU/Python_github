@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 """文档注释：
-flask框架例子
+    插值算法
 """
 __author__ = "HOU"
 

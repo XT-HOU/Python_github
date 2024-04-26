@@ -50,3 +50,6 @@ docker exec -it dockername bash
 
 -- docker port?
     使用?docker port?可以查看指定 （ID 或者名字）容器的某个确定端口映射到宿主机的端口号
+
+-- 复制文件
+    docker cp aa.text  mysql_km:/data

@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 
 
 # 导入数据
-df = pd.read_csv(r'新航迹.csv',encoding='GBK')
+df = pd.read_csv(r'../../data/新航迹.csv', encoding='GBK')
 df.head()
 
 # 删除无关列

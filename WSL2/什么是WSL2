@@ -1,0 +1,15 @@
+WSL2（Windows Subsystem for Linux 2）是微软推出的一种技术，允许在Windows操作系统中运行真实的Linux内核。它是WSL的第二代版本，相较于WSL1，WSL2具有更好的性能和更高的兼容性。
+
+主要特点包括：
+
+真实的Linux内核： WSL2使用真实的Linux内核，而不是像WSL1那样通过适配层来模拟Linux系统调用。这使得WSL2更加接近原生Linux环境，提供了更好的兼容性和性能。
+
+更好的性能： 由于WSL2使用了真实的Linux内核，它可以提供更好的性能和更低的系统开销。这使得在WSL2中运行的Linux应用程序能够更快地响应和执行。
+
+全面的兼容性： WSL2支持更多的Linux发行版，用户可以在WSL2中运行不同的Linux发行版，而不再受限于WSL1中支持的特定版本。
+
+Docker支持： WSL2提供了与Docker的更好集成，使得在WSL2中运行Docker容器变得更加方便和高效。
+
+文件系统性能提升： WSL2的文件系统性能较WSL1有显著提升，这使得在Windows文件系统中的Linux文件操作更加高效。
+
+用户可以通过在Windows中安装WSL2并在WSL2中安装各种Linux发行版来体验这项技术。WSL2适用于开发人员、系统管理员和需要在Windows环境中同时使用Linux工具和应用程序的用户。

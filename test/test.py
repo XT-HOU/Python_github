@@ -1,54 +1,33 @@
-# 类定义
-class people:
-    # 定义基本属性
-    name = ''
-    age = 0
-    # 定义私有属性,私有属性在类外部无法直接进行访问
-    __weight = 0
+# ！/usr/bin/python3
+# -*- coding:utf-8 -*-
 
-    # 定义构造方法
-    def __init__(self, n, a, w):
-        self.name = n
-        self.age = a
-        self.__weight = w
-
-    def speak(self):
-        print("%s 说: 我 %d 岁。" % (self.name, self.age))
-
-# 另一个类，多重继承之前的准备
-class speaker():
-    topic = ''
-    name = ''
-
-    def __init__(self, n, t):
-        self.name = n
-        self.topic = t
-
-    def speak(self):
-        print("我叫 %s，我是一个演说家，我演讲的主题是 %s" % (self.name, self.topic))
+"""
+@author: hou
+@time: 2023-01-01
+模块注释：曲线拟合
+"""
+import numpy as np
+from scipy.optimize import curve_fit
+import matplotlib.pyplot as plt
 
 
-# 单继承示例
-class student(people):
-    grade = ''
-
-    def __init__(self, n, a, w, g):
-        # 调用父类的构函
-        people.__init__(self, n, a, w)
-        self.grade = g
-
-    # 覆写父类的方法
-    def speak(self):
-        print("%s 说: 我 %d 岁了，我在读 %d 年级" % (self.name, self.age, self.grade))
+# 定义要拟合的函数形式（这里选取二次多项式）
+def func(x, a, b, c):
+    return a * x ** 2 + b * x + c
 
 
-# 多重继承
-class sample(speaker, student):
-    a = ''
+# 生成随机样本点作为输入数据
+np.random.seed(0)
+x = np.linspace(-10, 10, 50)
+y = func(x, 3, -4, 7) + np.random.normal(size=len(x))
 
-    def __init__(self, n, a, w, g, t):
-        student.__init__(self, n, a, w, g)
-        speaker.__init__(self, n, t)
+# 调用 curve_fit() 函数进行曲线拟合
+params, _ = curve_fit(func, x, y)
+a, b, c = params
+print("拟合参数：", params)
 
-test = sample("Tim", 25, 80, 4, "Python")
-test.speak()  # 方法名同，默认调用的是在括号中参数位置排前父类的方法
+# 可视化结果
+plt.scatter(x, y, label='Data')
+plt.plot(x, func(x, a, b, c), 'r', label='Fit Curve')
+plt.legend()
+plt.show()

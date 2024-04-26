@@ -1,0 +1,37 @@
+下载源码
+cd /home/nginx/
+wget http://nginx.org/download/nginx-1.24.0.tar.gz
+tar -zxf nginx-nginx-1.24.0.tar.gz
+
+Nginx依赖
+yum install -y pcre pcre-devel openssl openssl-devel zlib zlib-devel
+
+修改安装路径
+cd ./nginx-1.24.0
+./configure --prefix=/home/nginx/
+
+编译源代码并安装
+make && make install
+
+检查Nginx启动是否有问题
+cd /home/nginx/sbin
+./nginx -t
+
+修改端口
+cd /home/nginx/conf
+修改 server 下的 listen
+
+参数解释
+nginx -s stop 快速停止nginx
+nginx -s quit 平滑停止nginx
+nginx -s reopen 重新打开日志文件
+nginx -s reload 平滑重载所有配置
+
+创建nginx命令软链接到环境变量
+ln -s /home/nginx/sbin/* /usr/local/sbin/
+
+开机启动
+vim /etc/rc.local
+添加/home/nginx/sbin/nginx
+
+开放端口 80（http） 443(https)

@@ -20,7 +20,7 @@ def main():
     :return:
     """
     target_params.get_params()
-    # 多个
+    # 获取多个数据
     target_data.add_data()
     algorithm.target_caluate()
     #

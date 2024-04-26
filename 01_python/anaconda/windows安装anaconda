@@ -1,4 +1,6 @@
 参考 https://zhuanlan.zhihu.com/p/75717350
+
+anaconda 清华源地址 https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/
 配置环境变量path
     C:\Anaconda3（Python需要）
     C:\Anaconda3\Scripts（conda自带脚本）
