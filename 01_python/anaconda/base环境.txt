@@ -18,6 +18,8 @@ window激活base环境
     conda create -n basecopy --clone base
 # 移除环境
     conda remove -n basecopy --all
+# 创建环境
+    conda create -n envname python=3.7
 
 
 anaconda设置默认的启动环境

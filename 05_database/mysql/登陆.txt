@@ -1,0 +1,3 @@
+cmd mysql -uroot -p12346
+
+cmd mysql -h192.168.0.123 -P3306 -uroot -p12346

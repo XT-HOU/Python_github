@@ -1,0 +1,11 @@
+Linux 内核版本
+    主线（mailine）
+    稳定版（stable ）
+    长期版本（longterm或LTS）。
+    所有内核版本都可以在内核开发官方网站上获取。其中，rc版本为候选版(RC)，开发版本可供公众测试
+Linux 发行版本
+    Linux 的发行版说简单点就是将 Linux 内核与应用软件做一个打包。Linux只是一个内核，不能直接当系统用。
+    Debian系列：Ubuntu、Knopix
+    Redhat系列：Fedora、Centos、欧拉、龙蜥
+    Slackware系列：openSUSE、Suse
+    其它系列：ArchLinux

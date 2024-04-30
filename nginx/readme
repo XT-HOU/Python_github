@@ -1,0 +1,23 @@
+
+5.nginx服务的常用指令
+
+注意不要直接双击nginx.exe，这样会导致修改配置后重启、停止nginx无效，需要手动关闭任务管理器内的所有nginx进程
+
+在nginx.exe目录，打开命令行工具，用命令 启动/关闭/重启nginx
+
+start nginx : 启动nginx
+
+nginx -s reload  ：修改配置后重新加载生效
+
+nginx -s reopen  ：重新打开日志文件
+nginx -t -c ./conf/nginx.conf 测试nginx配置文件是否正确
+
+关闭nginx：
+nginx -s stop  :快速停止nginx
+nginx -s quit  ：完整有序的停止nginx
+
+
+windows下自启动，通过安装服务方式
+https://www.jb51.net/article/268033.htm
+注意:根据nginx安装目录不同,修改对应的logpath、executable、stopexecutable标签
+cmd(管理员身份)进入nginx的安装目录,执行:nginx-service.exe install命令,然后进入系统服务,看是否注册nginx服务成功并且检查是否设置为自动启动

@@ -24,3 +24,6 @@ kill -9 18777
 5、删除所有包含gitlab文件
 
 find / -name gitlab | xargs rm -rf
+
+6.删除gitlab-ctl uninstall时自动在root下备份的配置文件
+ /root/gitlab*

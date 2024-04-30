@@ -1,0 +1,18 @@
+安装说明
+https://www.zentao.net/book/zentaopms/38.html
+离线下载地址：https://www.zentao.net/page/download.html
+
+常用命令
+启动所有服务：/opt/zbox/zbox start
+停止所有服务：/opt/zbox/zbox stop
+重启所有服务：/opt/zbox/zbox restart
+
+修改上传图片地址：
+cd /opt/zbox/app/zentao/www/data
+cp -r upload/  /home/zentao/upload
+mv upload upload_bk
+创建软连接
+ln -s /home/zentao/upload  upload
+
+修改数据库存储位置：
+https://blog.csdn.net/m0_47338917/article/details/115496561

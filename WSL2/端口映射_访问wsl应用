@@ -1,0 +1,23 @@
+在powershell中执行，获取虚拟机内ubuntu的ip地址
+wsl -- ifconfig eth0
+
+
+将ip地址的对应的端口映射到宿主win10对应的端口
+
+需要管理员权限（以管理员身份运行）
+
+netsh interface portproxy add v4tov4 listenport=[win10端口] listenaddress=0.0.0.0 connectport=[虚拟机的端口] connectaddress=[虚拟机的ip]
+
+netsh interface portproxy add v4tov4 listenport=22 listenaddress=0.0.0.0 connectport=22 connectaddress=172.24.161.5
+检测是否设置成功
+netsh interface portproxy show all
+
+--访问
+ssh yasin@10.1.118.131 -p 22
+#10.1.118.131为本机IP地址
+
+--删除端口映射
+netsh interface portproxy delete v4tov4 listenport=80 listenaddress=0.0.0.0
+
+
+

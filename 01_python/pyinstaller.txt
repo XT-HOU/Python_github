@@ -1,0 +1,78 @@
+简介
+    python提供了多种方法用于将普通的*.py程序文件编译成exe文件（有时这里的“编译”也称作“打包”）。exe文件即可执行文件，
+打包后的*.exe应用不用依赖python环境，可以在他人的电脑上运行。pyinstaller是一个第三方模块，专用于python程序的exe打包。
+pyinstaller的官网是：https://pyinstaller.org/
+
+安装
+    pip install pyinstaller
+    pyinstaller --version
+
+原理概述
+    pyinstaller先读取你需要打包的python文件，然后搜索其中使用的模块，然后将所需的模块以及Python解释器放到一起，并通过一些操作构建exe，
+最终形成你的应用程序。
+
+搜索模块
+    pyinstaller只会搜索import语句，然后根据import得到的模块再进行搜索。如果编程者使用了一些特殊的导入方式，比如使用__import__()函数，
+使用importlib里面的导入函数，那么pyinstaller很可能找不到你所需要的模块。这时，你可以通过参数来指定你所需要的模块，也可以使用“钩子”等等。
+
+打包效果概述
+    pyinstaller打包后会形成一个文件夹或单个的exe（可以用参数指定）。但不论是哪一种情况，都会包含一个exe文件，用户可以双击它运行该应用程序。
+假如你要打包myscript.py，那么打包完成后运行这个myscript.exe，效果就是运行myscript.py后的效果。默认情况下，打包会形成一个黑色的控制台（cmd的
+样子），也可以设置隐藏这个控制台。
+    python文件有一种后缀名*.pyw，这样的程序执行时默认会隐藏控制台。如果将文件后缀命名为pyw，那么pyinstaller也会认为它隐藏了控制台，不需要通过额外的选项来指定。
+
+打包成单个文件夹
+    这个文件夹的名字是你提供的，一般是你要求打包的python文件的名称。文件夹中包含一个exe文件，以及其他一些依赖文件（比如一些dll文件，可能还有你
+的应用所需要的图片等素材）。你只需要将该文件夹压缩就能发给别人运行了。当你运行里面的exe文件后，pyinstaller其实只是启动了解释器，然后通过解释器运行你的主程序。
+
+打包成单个exe
+    单个exe模式下，pyinstaller只会生成一个单独的exe文件，所有的依赖文件都会被压缩到exe文件中。和上面的文件夹模式类似，exe启动后，
+    pyinstaller也是通过调用python解释器来运行主程序的。
+    优点
+    打包成单个exe非常简单，用户只需要点击exe文件就能运行，而无需在一大堆的依赖文件中找到exe文件。并且在经过压缩后，这个exe文件的文件大小会大大减小。
+    缺点
+    单个exe的启动速度比较慢（通常会慢几秒，且只是启动时的速度，不是运行后的速度），这是因为pyinstaller会在这一段时间中将一些依赖文件写入到一个
+临时的文件夹（后文介绍该文件夹的调用方式）
+
+打包
+    pyinstaller最简单的打包方式是：
+    pyinstaller myscript.py ; pyinstaller -D -i "icon.ico" myscript.py ;
+    其中myscript.py是你想要打包的程序。
+    如果直接传递文件名，pyinstaller会生成一个spec文件将一些打包参数放到里面，然后进行打包。打包完成后，你会在你的目录下找到一个dist文件夹，
+里面存储了打包后的结果。pyinstaller还会生成一个build文件夹并写入一些日志信息。当然，你也可以自己构建一个*.spec文件（后文介绍），然后交给pyinstaller进行处理。
+    -D: 文件夹模式。
+    -F: 单文件模式
+    --add-data <SRC;DEST or SRC:DEST>: 	指定一个文件夹或文件（非二进制），将其嵌入到exe中。
+    --add-binary <SRC;DEST or SRC:DEST>:    和--add-data类似，不过指定的文件夹或文件是二进制的
+    --paths DIR(-p DIR):    提供一个路径进行搜索并且导入里面的模块（不同的路径使用路径分隔符os.pathsep分隔开，或者多次使用这个参数）。这可以解决有时候第三方模块找不到的问题。
+    --hidden-import MODULENAME: 需要进行额外导入的模块。当pyinstaller在程序中找不到一些模块时，需要你额外指定。这个参数可以多次使用，可以解决一些模块找不到的问题。
+    --splash IMAGE_FILE:    添加一个启动画面（图片文件）路径，在程序运行前显示指定的启动图片，起到加载提示的效果。
+    -c, --console, --nowindowed:    打包程序运行后出现一个黑色的控制台窗口（默认）
+    -w, --windowed, --noconsole:    打包程序运行后隐藏控制台窗口
+
+使用Spec文件打包
+    当你调用以上的打包方式时，会在脚本的文件夹下生成一个*.spec文件。*.spec文件包含了打包需要使用的所有配置信息。直接在命令行中将*.spec文件路径
+传给pyinstaller，也可以进行打包。
+pyinstaller my_app_name.spec；（其中my_app_name.spec是根据my_app_name.py生成的Spec文件）
+这样，当你多次打包同一个项目时，就无需每次都传入那么多参数，只需要传入*.spec文件的路径即可。
+
+Analysis对象
+    scripts：必选参数，需要分析的文件路径列表（一般就是需要打包的文件）；示例：["myscript.py"]
+    pathex：需要额外进行分析模块导入的文件（夹）路径，包含命令行--path参数指定内容；示例：["C:/Python310/Lib/site-packages", "C:/my_module]
+    binaries：需要嵌入的二进制文件列表，包含命令行--add-binary参数指定内容；
+    datas： 需要嵌入的非二进制文件（夹），包含命令行--add-data参数指定内容；示例：[("assets", "assets"), ("music/*.mp3", "music")]
+    hiddenimport：需要额外导入的模块列表；示例：["module1", "module2"]
+    hookspath：钩子文件路径列表（钩子文件用于配置一些模块特殊的导入）
+    hooksconfig： 一个字典，包含钩子的配置信息
+    excludes: 需要被忽略，不进行导入的模块列表
+    noarchive: 默认False，如果设为True，则不会将源代码放到一个存档中进行存储，而是作为多个单独的文件
+
+PYZ对象
+    完成分析后，将Analysis对象的一些属性传递给PYZ类。PYZ相当于一个压缩包，里面储存了所有的依赖文件。
+
+EXE对象
+    定义PYZ对象后，接下来需要定义EXE对象，也就是可执行文件对象。
+    console：默认值True，是否显示控制台，相当于命令行-w参数
+    disable_windowed_traceback： 默认值False，是否禁用异常提示，相当于命令行--disable-windowed-traceback参数
+    name：可执行文件的名称。在Windows上会自动添加".exe"后缀
+    icon：可执行文件的图标路径

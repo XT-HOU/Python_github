@@ -1,17 +1,25 @@
 --块
     b(块)=512 byte
---查看挂载结构（列出所有可用块设备的信息）
+--查看挂载结构（列出所有可用设备的信息）
     lsblk
---查看硬盘信息（分区情况）
+--查看硬盘信息（分区情况，可查看磁盘是否使用完成）
     fdisk -l
 --查看硬盘使用情况
-    df -h
---查看指定文件夹大小
-    du -h /home
-    du -h --max-depth=1
+    df -Th
+--添加分区
+    fdisk /dev/sdb
+    1.n(添加),2分区类型选 p，3.其它选项默认放到一个分区（或自己设置多个分区，设置开始结束扇区位置）,3.确认无误 w(保存)
+--格式化分区
+    mkfs.xfs  【-f[强制]】 /dev/sdb1
 --挂载和卸载
-    mount [-t vfstype] [-o options] device dir; mount  /dev/cdrom /mnt/cdrom/
-    umount 设备文件名或挂载点; umount /mnt/cdrom
+    mount [-t vfstype] [-o options] device dir; mount  /dev/sdb1 /mnt/sdb1/
+    umount 设备文件名或挂载点; umount /mnt/sdb1
 --开机自动挂载
     vim /etc/fstab
-    添加 /dev/cdrom /mnt/cdrom
+    blkid 查看分区ID
+    添加 /dev/cdrom /mnt/cdrom 或 UUID=123 /mnt/cdrom （建议使用UUID进行挂载）
+    mount -a 查看挂载是否正确，正确则不打印
+
+--linux非LVM管理的根目录扩容
+    根目录上挂载的是/dev/sda3 这个分区，sda3是最后一个分区，所以刚好新增的空间跟sda3是连续的，删除sda3 这个分区，在新建sda3分区修改扇区位置即可。
+    它的格式是xfs的，所以要用xfs_growfs(xfs_growfs /dev/sda3)命令进行刷新文件系统容量，如果是ext的，使用resize2fs命令。

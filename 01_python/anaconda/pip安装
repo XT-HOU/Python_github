@@ -30,3 +30,6 @@ pip download  -d ./pip_packages flask_cors
 pip install --no-index --find-links=d:\packages -r environment.txt
 
 # --find-links指定的是包文件的存放地址，-r指定的是txt文件的位置
+
+5、更新包
+ pip install --upgrade xxx

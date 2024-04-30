@@ -8,7 +8,7 @@
     who
 --添加用户信息
     useradd username
---修改用户
+--修改用户密码
     passwd 用户名
 --切换用户
     su username
